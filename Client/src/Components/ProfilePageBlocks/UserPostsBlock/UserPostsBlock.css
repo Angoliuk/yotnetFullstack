@@ -1,0 +1,13 @@
+.profilePagePostsEmptySection {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.profilePagePostsName {
+  font-weight: 700;
+  font-size: 21px;
+}
+
+.profilePagePostsBlock {
+  width: 100%;
+}

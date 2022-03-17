@@ -1,0 +1,32 @@
+@import "../../Constants/queries.scss";
+.chooseInfoTypeBlock {
+  margin-right: 60px;
+}
+
+.profilePageMainBlock {
+  width: 80%;
+  display: flex;
+}
+
+@media screen and (max-width: $laptop) {
+  .profilePageMainBlock {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: $preTablet) {
+  .profilePageMainBlock {
+    flex-direction: column;
+  }
+
+  .chooseInfoTypeBlock {
+    margin-right: 0px;
+    display: flex;
+  }
+}
+
+@media screen and (max-width: $tablet) {
+  .chooseInfoTypeBlock {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,36 @@
+@import"../../../Constants/queries.scss";
+.profilePagePersonalBlock {
+  width: 60%;
+}
+
+.profilePagePersonalName {
+  font-weight: 700;
+  font-size: 21px;
+}
+
+.profilePagePersonalInfoBlock {
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.profilePagePersonalAvatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 5px;
+  border: 2px solid var(--black);
+}
+
+.profilePagePersonalInfo {
+  margin-left: 25px;
+}
+
+@media screen and (max-width: $preTablet) {
+  .profilePagePersonalBlock {
+    margin-left: 15px;
+  }
+
+  .profilePagePersonalBlock {
+    width: 90%;
+  }
+}

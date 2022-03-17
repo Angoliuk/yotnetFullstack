@@ -1,0 +1,62 @@
+@import"../../../Constants/queries.scss";
+.notLoggedNavBar,
+.loggedNavBar {
+  width: 80%;
+  height: 65px;
+  padding: 15px 10%;
+  background-color: var(--mainBlue);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: fixed;
+  top: 0;
+}
+
+nav.loggedNavBar > * {
+  margin: 0px 10px;
+}
+
+.navElem {
+  transition: 0.7s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+}
+
+.navElem:hover {
+  background-color: var(--hoverBlue);
+  border-radius: 10px;
+}
+
+.navElemLogout:hover {
+  border-radius: 100%;
+}
+
+.notLoggedNavBar > a,
+.notLoggedNavBar > p {
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 21px;
+  color: var(--white);
+  margin: 0px 15px;
+}
+
+.notLoggedNavBar > a:hover,
+.notLoggedNavBar > p:hover {
+  color: var(--hoverSecondBlue);
+}
+
+.profilePicNavBar {
+  border-radius: 100%;
+  width: 60px;
+  height: 60px;
+}
+
+@media screen and (max-width: $preTablet) {
+  .loggedNavBar,
+  .notLoggedNavBar {
+    justify-content: center;
+  }
+}

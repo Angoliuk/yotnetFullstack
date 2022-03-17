@@ -1,0 +1,85 @@
+.postCard {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  padding: 25px;
+  border-radius: 15px;
+  margin: 20px 0px;
+}
+
+.showCommentsText {
+  width: 100px;
+}
+
+.postAuthorInfoBlock {
+  display: flex;
+  align-items: center;
+}
+
+.postInfoTextBlock {
+  margin-left: 20px;
+}
+
+.postDate {
+  font-size: 13px;
+}
+
+.postAuthorPic {
+  border-radius: 100%;
+  width: 60px;
+  height: 60px;
+}
+
+.showCommentsText > svg {
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.postInfoBlock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.buttonsForUserPostsBlock {
+  border: 2px solid var(--black);
+  background-color: var(--black);
+  position: absolute;
+  margin: 8px 0px 0px -6px;
+}
+
+.buttonsForUserPostsBlock button {
+  width: 80px;
+  height: 30px;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+}
+
+.buttonsForUserPostsBlock div {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.buttonsForUserPostsBlock a {
+  text-decoration: none;
+}
+
+.postBody {
+  white-space: pre-wrap;
+}
+
+.loaderInPostCard {
+  height: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loaderInPostCard > * {
+  position: static !important;
+}
+
+.postCardContentBlock > * {
+  word-wrap: break-word;
+}

@@ -1,0 +1,21 @@
+@import"../../Constants/queries.scss";
+.loginPageBlock {
+  margin: auto;
+  width: 40%;
+}
+
+.loginPageBlock button {
+  margin-left: 0px;
+}
+
+@media screen and (max-width: $miniLaptop) {
+  .loginPageBlock {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: $prePhone) {
+  .loginPageBlock {
+    width: 80%;
+  }
+}

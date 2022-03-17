@@ -1,0 +1,80 @@
+.announcementInfoBlock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: -25px;
+}
+
+.announcementCard {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.announcementAuthorInfoBlock {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.announcementAuthorPicBlock {
+  margin-right: 15px;
+}
+
+.announcementDate {
+  font-size: 13px;
+  padding-bottom: 10px;
+}
+
+.announcementAuthorPic {
+  /* border-radius: 100%; */
+  width: 60px;
+  height: 60px;
+}
+
+.buttonsForUserAnnouncementBlock {
+  display: flex;
+  margin-right: 20px;
+}
+
+.announcementLoaderInCommentsBlock {
+  height: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.announcementLoaderInCommentsBlock > * {
+  position: static !important;
+}
+
+.buttonsForUserAnnouncementsBlock {
+  padding: 2px;
+  background-color: var(--black);
+  position: absolute;
+  margin: 8px 0px 0px 0px;
+}
+
+.buttonsForUserAnnouncementsBlock button {
+  width: 70px;
+  height: 30px;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+}
+
+.buttonsForUserAnnouncementsBlock a {
+  text-decoration: none;
+}
+
+.buttonsForUserAnnouncementsBlock div {
+  margin: 0;
+}
+
+.announcementBody {
+  white-space: pre-wrap;
+}
+
+.announcementCardContentBlock > * {
+  word-wrap: break-word;
+}

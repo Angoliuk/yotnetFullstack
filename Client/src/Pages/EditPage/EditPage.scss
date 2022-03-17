@@ -1,0 +1,19 @@
+@import"../../Constants/queries.scss";
+.editPostBlock {
+  width: 45%;
+  margin: auto;
+}
+
+@media screen and (max-width: $miniDesktop) {
+  .editPostBlock {
+    width: 70%;
+    margin: auto;
+  }
+}
+
+@media screen and (max-width: $tablet) {
+  .editPostBlock {
+    width: 90%;
+    margin: auto;
+  }
+}

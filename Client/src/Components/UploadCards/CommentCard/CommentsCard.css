@@ -1,0 +1,64 @@
+.commentAuthorInfoBlock {
+  display: flex;
+  align-items: center;
+}
+
+.commentInfoBlock {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.commentInfoTextBlock {
+  margin-left: 20px;
+}
+
+.commentDate {
+  font-size: 13px;
+}
+
+.commentAuthorPic {
+  border-radius: 100%;
+  width: 60px;
+  height: 60px;
+}
+
+.commentCard {
+  margin-left: 15px;
+}
+
+.commentLoaderInCommentCard {
+  height: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.commentLoaderInCommentCard > * {
+  position: static !important;
+}
+
+.buttonsForUserCommentCard {
+  border: 2px solid var(--black);
+  background-color: var(--black);
+  position: absolute;
+  margin: 8px 0px 0px -6px;
+}
+
+.buttonsForUserCommentCard button {
+  width: 80px;
+  height: 30px;
+  padding: 0px;
+  margin: 0px;
+  border-radius: 0;
+}
+
+.buttonsForUserCommentCard div {
+  margin: 0;
+}
+
+.commentBody {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}

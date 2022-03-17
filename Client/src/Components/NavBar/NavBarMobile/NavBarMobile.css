@@ -1,0 +1,81 @@
+.notLoggedNavBarMobile,
+.loggedNavBarMobile {
+  width: 80%;
+  height: 65px;
+  padding: 15px 10%;
+  background-color: var(--mainBlue);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: fixed;
+  top: 0;
+}
+
+nav.loggedNavBarMobile > * {
+  margin: 0px 10px;
+}
+
+.navElemMobile {
+  transition: 0.7s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+}
+
+.navElemMobile:hover {
+  background-color: var(--hoverBlue);
+  border-radius: 10px;
+}
+
+.notLoggedNavBarMobile > a,
+.notLoggedNavBarMobile > p {
+  margin: 0px 15px;
+}
+
+.notLoggedNavBarMobile > a:hover,
+.notLoggedNavBarMobile > p:hover {
+  color: var(--hoverSecondBlue);
+}
+
+.menuModalNavBarMobile {
+  background-color: var(--mainBlue);
+  top: 0;
+  left: 0;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition-duration: 1s;
+}
+
+.menuModalNavBarMobile > a,
+.menuModalNavBarMobile > p {
+  text-decoration: none;
+  color: var(--white);
+  font-weight: 700;
+  font-size: 21px;
+  margin-top: 20px;
+  margin-bottom: 0px;
+  display: flex;
+  justify-content: center;
+}
+
+.hrMenuNavBarMobile {
+  width: 65%;
+}
+
+.menuModalNavBarMobile > a:hover,
+.menuModalNavBarMobile > p:hover {
+  color: var(--hoverSecondBlue);
+}
+
+.menuNavBarClose {
+  left: -100%;
+}
+
+.menuNavBarOpen {
+  left: 0;
+}

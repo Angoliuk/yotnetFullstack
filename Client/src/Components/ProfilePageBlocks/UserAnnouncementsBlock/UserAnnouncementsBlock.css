@@ -1,0 +1,18 @@
+.blockName {
+  font-weight: 700;
+  font-size: 21px;
+}
+
+.profilePageAnnouncementsEmptySection {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.profilePageAnnouncementsBlock {
+  width: 80%;
+}
+
+.profilePageAnnouncementsName {
+  font-weight: 700;
+  font-size: 21px;
+}

@@ -1,0 +1,21 @@
+@import"../../Constants/queries.scss";
+.registerPageMainBlock {
+  margin: auto;
+  width: 40%;
+}
+
+.registerPageMainBlock button {
+  margin: 0;
+}
+
+@media screen and (max-width: $miniLaptop) {
+  .registerPageMainBlock {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: $prePhone) {
+  .registerPageMainBlock {
+    width: 80%;
+  }
+}

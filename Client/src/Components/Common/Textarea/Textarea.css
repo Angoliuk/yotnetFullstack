@@ -1,0 +1,16 @@
+.textarea {
+  width: 100%;
+  resize: none;
+  border-radius: 5px;
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.createPostTextarea {
+  width: 99%;
+}
+
+.editPostTextarea {
+  padding: 1%;
+  width: 97.7%;
+  margin-top: 15px;
+}

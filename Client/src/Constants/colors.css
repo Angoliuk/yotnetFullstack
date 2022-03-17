@@ -1,0 +1,14 @@
+:root {
+  --white: #fff;
+  --black: #000;
+  --grey: #858585;
+  --mainBlue: #6389e1;
+  --secondBlue: #00a8ff;
+  --darkBlue: #005baa;
+  --hoverBlue: #7897dd;
+  --hoverSecondBlue: #3c5287;
+  --mainRed: #f14e4e;
+  --secondRed: #f44336;
+  --errorRed: #d04b38;
+  --errorGreen: #43b649;
+}

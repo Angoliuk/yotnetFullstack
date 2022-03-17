@@ -1,0 +1,26 @@
+@import "../../../Constants/queries.scss";
+.createPostBlock {
+  width: 50%;
+  background-color: var(--white);
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+  position: fixed;
+  z-index: 1;
+}
+
+@media screen and (max-width: $miniLaptop) {
+  .createPostBlock {
+    width: 75.6%;
+  }
+}
+
+.isAnnouncementCheckbox {
+  width: 30px;
+  height: 30px;
+}
+
+.isAnnouncementBlock {
+  display: flex;
+  align-items: center;
+}

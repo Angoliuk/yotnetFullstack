@@ -1,0 +1,32 @@
+.input {
+  background: var(--white);
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  margin: 15px;
+  border: 1px solid var(--grey);
+  border-radius: 10px;
+}
+
+.createPostInput {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0px 0px 15px 0px;
+}
+
+.editPostInput {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 20px 0px 0px 0px;
+}
+
+.personalInfoProfilePageInput {
+  box-sizing: border-box;
+  margin: 10px 0px;
+  width: 100%;
+}
+
+.inputLoginPage {
+  box-sizing: border-box;
+  width: 100%;
+  margin-left: 0px;
+}

@@ -1,0 +1,79 @@
+@import"../../../Constants/queries.scss";
+.navElem {
+  transition: 0.7s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+}
+
+.navElem:hover {
+  background-color: var(--hoverBlue);
+  border-radius: 10px;
+}
+
+.navElemAnnouncements {
+  padding: 2px 0px;
+}
+
+.navBarAnnouncementsBlock {
+  background-color: #f0f3fc;
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin-right: 15%;
+  margin-top: 77px;
+  z-index: 1;
+  width: 400px;
+  height: 600px;
+  overflow-y: scroll;
+  padding: 20px;
+  border-radius: 5px;
+  border: 1.5px solid black;
+}
+
+@media screen and (max-width: $tablet) {
+  .navBarAnnouncementsBlock {
+    margin-right: 10%;
+  }
+}
+
+@media screen and (max-width: $prePhone) {
+  .navBarAnnouncementsBlock {
+    width: 250px;
+    height: 400px;
+    margin-right: 10px;
+  }
+}
+
+.navBarAnnouncementsBlock::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.navBarAnnouncementsBlock::-webkit-scrollbar-thumb {
+  background: #aaa;
+  border-radius: 15px;
+}
+
+.navBarAnnouncementsBlock::-webkit-scrollbar {
+  width: 10px;
+}
+
+.navBarAnnouncementsName {
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.navBarAnnouncementsBlockLoader {
+  height: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navBarAnnouncementsBlockLoader > * {
+  position: static !important;
+}
