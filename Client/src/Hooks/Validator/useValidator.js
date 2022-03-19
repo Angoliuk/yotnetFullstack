@@ -7,6 +7,7 @@ export const useValidator = () => {
       .catch((e) => {
         throw new Error(e.errors.join(". "));
       });
+    // console.log(1);
   };
   return {
     validate,

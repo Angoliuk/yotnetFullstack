@@ -8,25 +8,25 @@ export const SECRET = "Soi-hn&D#%v209Fsv7n=a,(d+Gs)&s^hSd#";
 export const SALT = 10;
 
 export const PATHS = {
-  getUser: "/user/:id",
-  getUsers: "/users",
-  updateUser: "/users/:id",
+  getUser: "/:id",
+  getUsers: "",
+  updateUser: "/:id",
 
-  getPost: "/post/:id",
-  getPosts: "/posts",
-  deletePost: "/posts/:id",
-  updatePost: "/posts/:id",
-  createPost: "/posts",
+  getPost: "/:id",
+  getPosts: "",
+  deletePost: "/:id",
+  updatePost: "/:id",
+  createPost: "",
 
-  getAnnouncements: "/announcements",
-  getAnnouncement: "/announcement/:id",
-  deleteAnnouncement: "/announcements/:id",
-  updateAnnouncement: "/announcements/:id",
-  createAnnouncement: "/announcements",
+  getAnnouncements: "",
+  getAnnouncement: "/:id",
+  deleteAnnouncement: "/:id",
+  updateAnnouncement: "/:id",
+  createAnnouncement: "",
 
-  getComments: "/comments",
-  getComment: "/comment/:id",
-  deleteComment: "/comments/:id",
-  updateComment: "/comments/:id",
-  createComment: "/comments",
+  getComments: "",
+  getComment: "/:id",
+  deleteComment: "/:id",
+  updateComment: "/:id",
+  createComment: "",
 };

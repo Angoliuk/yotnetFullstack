@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-export const UserRegisterSchema = yup.object().shape({
+const UserRegisterSchema = yup.object().shape({
   email: yup
     .string("Type Error")
     .email("Enter correct email")
@@ -28,7 +28,7 @@ export const UserRegisterSchema = yup.object().shape({
     .required("Age field if required"),
 });
 
-export const UserLoginSchema = yup.object().shape({
+const UserLoginSchema = yup.object().shape({
   email: yup
     .string("Type Error")
     .email("Enter correct email")
@@ -41,7 +41,7 @@ export const UserLoginSchema = yup.object().shape({
     .required("Password field is required"),
 });
 
-export const UserUpdateSchema = yup.object().shape({
+const UserUpdateSchema = yup.object().shape({
   email: yup.string("Type Error").email("Enter correct email"),
   password: yup
     .string("Type Error")
@@ -62,7 +62,7 @@ export const UserUpdateSchema = yup.object().shape({
     .min(14, "You may be under 14"),
 });
 
-export const PostSchema = yup.object().shape({
+const PostSchema = yup.object().shape({
   title: yup
     .string("Type Error")
     .max(1000, "Max title lenght is 1000")
@@ -71,28 +71,87 @@ export const PostSchema = yup.object().shape({
     .string("Type Error")
     .max(3000, "Max body lenght is 3000")
     .required("Body field is required"),
+  userId: yup.string("Type error").required("Owner id is required"),
   updatedAt: yup.date("Type Error").required("Update date is required"),
   createdAt: yup.date("Type Error").required("Creation date is required"),
 });
 
-export const AnnouncementSchema = yup.object().shape({
+const PostUpdateSchema = yup.object().shape({
   title: yup
     .string("Type Error")
-    .max(500, "Max password lenght is 500")
+    .max(1000, "Max title lenght is 1000")
     .required("Title field is required"),
   body: yup
     .string("Type Error")
-    .max(1500, "Max password lenght is 1500")
+    .max(3000, "Max body lenght is 3000")
     .required("Body field is required"),
+  userId: yup.string("Type error"),
+  updatedAt: yup.date("Type Error").required("Update date is required"),
+  createdAt: yup.date("Type Error"),
+});
+
+const AnnouncementSchema = yup.object().shape({
+  title: yup
+    .string("Type Error")
+    .max(500, "Max title lenght is 500")
+    .required("Title field is required"),
+  body: yup
+    .string("Type Error")
+    .max(1500, "Max body lenght is 1500")
+    .required("Body field is required"),
+  userId: yup.string("Type error").required("Owner id is required"),
   updatedAt: yup.date("Type Error").required("Update date is required"),
   createdAt: yup.date("Type Error").required("Creation date is required"),
 });
 
-export const CommentSchema = yup.object().shape({
+const AnnouncementUpdateSchema = yup.object().shape({
+  title: yup
+    .string("Type Error")
+    .max(500, "Max title lenght is 500")
+    .required("Title field is required"),
   body: yup
     .string("Type Error")
-    .max(1000, "Max password lenght is 1000")
+    .max(1500, "Max body lenght is 1500")
     .required("Body field is required"),
+  userId: yup.string("Type error"),
+  updatedAt: yup.date("Type Error").required("Update date is required"),
+  createdAt: yup.date("Type Error"),
+});
+
+const CommentSchema = yup.object().shape({
+  body: yup
+    .string("Type Error")
+    .max(1000, "Max body lenght is 1000")
+    .required("Body field is required"),
+  userId: yup.string("Type error").required("Owner id is required"),
+  postId: yup.string("Type error").required("Post id is required"),
   updatedAt: yup.date("Type Error").required("Update date is required"),
   createdAt: yup.date("Type Error").required("Creation date is required"),
 });
+
+const CommentUpdateSchema = yup.object().shape({
+  body: yup
+    .string("Type Error")
+    .max(1000, "Max body lenght is 1000")
+    .required("Body field is required"),
+  userId: yup.string("Type error"),
+  postId: yup.string("Type error"),
+  updatedAt: yup.date("Type Error").required("Update date is required"),
+  createdAt: yup.date("Type Error"),
+});
+
+export const schemas = {
+  POST: {
+    login: UserLoginSchema,
+    register: UserRegisterSchema,
+    posts: PostSchema,
+    comments: CommentSchema,
+    announcements: AnnouncementSchema,
+  },
+  PATCH: {
+    users: UserUpdateSchema,
+    posts: PostUpdateSchema,
+    comments: CommentUpdateSchema,
+    announcements: AnnouncementUpdateSchema,
+  },
+};

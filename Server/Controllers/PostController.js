@@ -28,16 +28,17 @@ class PostController {
         createdAt,
         updatedAt,
       });
-      return res.json(post);
+      return res.status(200).json(post);
     } catch (e) {
+      console.log(e);
       res.status(500).json(e);
     }
   }
 
   async delete(req, res) {
     try {
-      const post = await PostService.delete(req.params.id);
-      return res.json(post);
+      await PostService.delete(req.params.id, req.userId);
+      return res.sendStatus(200);
     } catch (e) {
       res.status(500).json(e);
     }
@@ -46,14 +47,17 @@ class PostController {
   async create(req, res) {
     try {
       const { title, body, userId, createdAt, updatedAt } = req.body;
-      const post = await PostService.create({
-        title,
-        body,
-        userId,
-        createdAt,
-        updatedAt,
-      });
-      res.json(post);
+      const post = await PostService.create(
+        {
+          title,
+          body,
+          userId,
+          createdAt,
+          updatedAt,
+        },
+        req.userId
+      );
+      return res.json(post);
     } catch (e) {
       res.status(500).json(e);
     }

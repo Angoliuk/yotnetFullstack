@@ -1,7 +1,10 @@
 import { useCallback, useState } from "react";
 import { useApiAnnouncementService } from "../ApiRequests/useApiAnnouncementService";
 import { useReduxAnnouncementService } from "../ReduxRequests/useReduxAnnouncementService";
-import { AnnouncementSchema } from "../../Hooks/Validator/Schemas/Schemas";
+import {
+  AnnouncementSchema,
+  AnnouncementUpdateSchema,
+} from "../../Hooks/Validator/Schemas/Schemas";
 import { useValidator } from "../../Hooks/Validator/useValidator";
 
 export const useAnnouncementService = () => {
@@ -62,7 +65,7 @@ export const useAnnouncementService = () => {
     async (_id, changes) => {
       try {
         setAnnouncementLoading(true);
-        await validate(changes, AnnouncementSchema);
+        await validate(changes, AnnouncementUpdateSchema);
         const updatedAnnouncement =
           await apiAnnouncementService.patchAnnouncementApi(_id, changes);
         reduxAnnouncementService.patchAnnouncementRedux(updatedAnnouncement);

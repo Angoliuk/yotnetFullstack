@@ -2,19 +2,19 @@ import jwt from "jsonwebtoken";
 import { SECRET } from "../config.js";
 
 const AuthMiddleware = (req, res, next) => {
-  const authHeader = req.headers.authorization;
-  if (authHeader) {
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) throw "No JWT token";
     const token = authHeader.split(" ")[1];
-    jwt.verify(token, SECRET, (err, user) => {
-      if (err) {
-        res.status(403).json(err);
-        console.log(err);
+    jwt.verify(token, SECRET, (e, tokenData) => {
+      if (e) {
+        throw e;
       }
-      req.user = user;
+      req.userId = tokenData._id;
     });
     next();
-  } else {
-    res.sendStatus(401);
+  } catch (e) {
+    res.status(400).json([e.message]);
   }
 };
 export default AuthMiddleware;

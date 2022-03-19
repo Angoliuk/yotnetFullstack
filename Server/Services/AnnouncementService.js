@@ -1,11 +1,15 @@
 import { QueryFilter } from "../Helpers/QueryFilter.js";
+import {
+  DeleteFromUserUploads,
+  AddToUserUploads,
+} from "../Helpers/userUploads.js";
 import AnnouncementModel from "../Models/AnnouncementModel.js";
 
 class AnnouncementService {
-  async update(_id, postData) {
+  async update(announcementId, announcementData) {
     const announcement = await AnnouncementModel.findOneAndUpdate(
-      { _id },
-      postData,
+      { _id: announcementId },
+      announcementData,
       { new: true }
     );
     return announcement;
@@ -14,19 +18,22 @@ class AnnouncementService {
     const announcements = await QueryFilter(AnnouncementModel, query);
     return announcements;
   }
-  async getOne(_id) {
-    if (!_id) {
+  async getOne(announcementId) {
+    if (!announcementId) {
       throw new Error("get one");
     }
-    const announcements = await AnnouncementModel.findOne({ _id });
+    const announcements = await AnnouncementModel.findOne({
+      _id: announcementId,
+    });
     return announcements;
   }
-  async delete(_id) {
-    const announcement = await AnnouncementModel.findOneAndDelete({ _id });
-    return announcement;
+  async delete(announcementId, userId) {
+    await AnnouncementModel.findOneAndDelete({ _id: announcementId });
+    await DeleteFromUserUploads(userId, announcementId);
   }
-  async create(postData) {
-    const announcement = await AnnouncementModel.create(postData);
+  async create(announcementData, userId) {
+    const announcement = await AnnouncementModel.create(announcementData);
+    await AddToUserUploads(userId, announcement._id);
     return announcement;
   }
 }

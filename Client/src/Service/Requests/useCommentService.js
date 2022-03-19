@@ -2,7 +2,10 @@ import { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { useApiCommentService } from "../ApiRequests/useApiCommentService";
 import { useReduxCommentService } from "../ReduxRequests/UseReduxCommentService";
-import { CommentSchema } from "../../Hooks/Validator/Schemas/Schemas";
+import {
+  CommentSchema,
+  CommentUpdateSchema,
+} from "../../Hooks/Validator/Schemas/Schemas";
 import { useValidator } from "../../Hooks/Validator/useValidator";
 
 export const useCommentService = () => {
@@ -47,7 +50,7 @@ export const useCommentService = () => {
     async (_id, changes) => {
       try {
         setCommentLoading(true);
-        await validate(changes, CommentSchema);
+        await validate(changes, CommentUpdateSchema);
         const changedComment = await apiCommentService.patchCommentApi(
           _id,
           changes

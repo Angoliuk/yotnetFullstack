@@ -1,11 +1,19 @@
 import { QueryFilter } from "../Helpers/QueryFilter.js";
+import {
+  DeleteFromUserUploads,
+  AddToUserUploads,
+} from "../Helpers/userUploads.js";
 import CommentModel from "../Models/CommentModel.js";
 
 class CommentService {
-  async update(_id, postData) {
-    const comment = await CommentModel.findOneAndUpdate({ _id }, postData, {
-      new: true,
-    });
+  async update(commentId, commenttData) {
+    const comment = await CommentModel.findOneAndUpdate(
+      { _id: commentId },
+      commenttData,
+      {
+        new: true,
+      }
+    );
 
     return comment;
   }
@@ -13,19 +21,20 @@ class CommentService {
     const comments = await QueryFilter(CommentModel, query);
     return comments;
   }
-  async getOne(_id) {
-    if (!_id) {
+  async getOne(commentId) {
+    if (!commentId) {
       throw new Error("get one");
     }
-    const comments = await CommentModel.findOne({ _id });
+    const comments = await CommentModel.findOne({ _id: commentId });
     return comments;
   }
-  async delete(_id) {
-    const comment = await CommentModel.findOneAndDelete({ _id });
-    return comment;
+  async delete(commentId, userId) {
+    await CommentModel.findOneAndDelete({ _id: commentId });
+    await DeleteFromUserUploads(userId, commentId);
   }
-  async create(commentData) {
+  async create(commentData, userId) {
     const comment = await CommentModel.create(commentData);
+    await AddToUserUploads(userId, comment._id);
     return comment;
   }
 }

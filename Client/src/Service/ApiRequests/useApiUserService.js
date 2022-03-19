@@ -8,7 +8,7 @@ export const useApiUserService = () => {
 
   const loginApi = useCallback(
     async (loginData) => {
-      const user = await request("/login", "POST", loginData);
+      const user = await request("/200/login", "POST", loginData);
       return user;
     },
     [request]
@@ -16,7 +16,7 @@ export const useApiUserService = () => {
 
   const registerApi = useCallback(
     async (registerData) => {
-      const user = await request("/register", "POST", registerData);
+      const user = await request("/200/register", "POST", registerData);
       return user;
     },
     [request]
@@ -24,7 +24,7 @@ export const useApiUserService = () => {
 
   const getUserApi = useCallback(
     async (_id) => {
-      const user = await request(`/200/user/${_id}`, "GET");
+      const user = await request(`/200/users/${_id}`, "GET");
       return user;
     },
     [request]

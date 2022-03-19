@@ -36,8 +36,8 @@ class AnnouncementController {
 
   async delete(req, res) {
     try {
-      const announcement = await AnnouncementService.delete(req.params.id);
-      return res.json(announcement);
+      await AnnouncementService.delete(req.params.id, req.userId);
+      return res.sendStatus(200);
     } catch (e) {
       res.status(500).json(e);
     }
@@ -46,13 +46,16 @@ class AnnouncementController {
   async create(req, res) {
     try {
       const { title, body, userId, createdAt, updatedAt } = req.body;
-      const announcement = await AnnouncementService.create({
-        title,
-        body,
-        userId,
-        createdAt,
-        updatedAt,
-      });
+      const announcement = await AnnouncementService.create(
+        {
+          title,
+          body,
+          userId,
+          createdAt,
+          updatedAt,
+        },
+        req.userId
+      );
       res.json(announcement);
     } catch (e) {
       res.status(500).json(e);

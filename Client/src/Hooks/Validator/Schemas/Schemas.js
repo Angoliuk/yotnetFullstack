@@ -71,28 +71,56 @@ export const PostSchema = yup.object().shape({
     .string("Type Error")
     .max(3000, "Max body lenght is 3000")
     .required("Body field is required"),
+  userId: yup.string("Type error").required("Owner id is required"),
   updatedAt: yup.date("Type Error").required("Update date is required"),
   createdAt: yup.date("Type Error").required("Creation date is required"),
+});
+
+export const PostUpdateSchema = yup.object().shape({
+  title: yup.string("Type Error").max(1000, "Max title lenght is 1000"),
+  body: yup.string("Type Error").max(3000, "Max body lenght is 3000"),
+  userId: yup.string("Type error"),
+  updatedAt: yup.date("Type Error"),
+  createdAt: yup.date("Type Error"),
 });
 
 export const AnnouncementSchema = yup.object().shape({
   title: yup
     .string("Type Error")
-    .max(500, "Max password lenght is 500")
+    .max(500, "Max title lenght is 500")
     .required("Title field is required"),
   body: yup
     .string("Type Error")
-    .max(1500, "Max password lenght is 1500")
+    .max(1500, "Max body lenght is 1500")
     .required("Body field is required"),
+  userId: yup.string("Type error").required("Owner id is required"),
   updatedAt: yup.date("Type Error").required("Update date is required"),
   createdAt: yup.date("Type Error").required("Creation date is required"),
+});
+
+export const AnnouncementUpdateSchema = yup.object().shape({
+  title: yup.string("Type Error").max(500, "Max title lenght is 500"),
+  body: yup.string("Type Error").max(1500, "Max body lenght is 1500"),
+  userId: yup.string("Type error"),
+  updatedAt: yup.date("Type Error"),
+  createdAt: yup.date("Type Error"),
 });
 
 export const CommentSchema = yup.object().shape({
   body: yup
     .string("Type Error")
-    .max(1000, "Max password lenght is 1000")
+    .max(1000, "Max body lenght is 1000")
     .required("Body field is required"),
+  userId: yup.string("Type error").required("Owner id is required"),
+  postId: yup.string("Type error").required("Post id is required"),
   updatedAt: yup.date("Type Error").required("Update date is required"),
   createdAt: yup.date("Type Error").required("Creation date is required"),
+});
+
+export const CommentUpdateSchema = yup.object().shape({
+  body: yup.string("Type Error").max(1000, "Max body lenght is 1000"),
+  userId: yup.string("Type error"),
+  postId: yup.string("Type error"),
+  updatedAt: yup.date("Type Error"),
+  createdAt: yup.date("Type Error"),
 });

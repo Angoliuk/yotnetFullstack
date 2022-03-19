@@ -39,14 +39,16 @@ const EditPage = (props) => {
   const saveUploadChanges = async () => {
     try {
       if (uploadType === "post") {
-        await postService.patchPost(id, postChanges);
+        await postService.patchPost(id, {
+          ...postChanges,
+          updatedAt: new Date(),
+        });
         navigate("/");
       } else if (uploadType === "announcement") {
         await announcementService.patchAnnouncement(
           id,
-          postChanges,
-          user,
-          user.accessToken
+          { ...postChanges, updatedAt: new Date() },
+          user
         );
         navigate("/");
       } else {

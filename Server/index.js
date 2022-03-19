@@ -14,17 +14,19 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.use("", ValidationMiddleware, AuthRouter);
-app.use("/:access", [ValidationMiddleware, AccessMiddleware], UserRouter);
-app.use("/:access", [ValidationMiddleware, AccessMiddleware], PostRouter);
-app.use("/:access", [ValidationMiddleware, AccessMiddleware], CommentRouter);
+app.use("/200", ValidationMiddleware, AuthRouter);
+app.use("/:access/users", [ValidationMiddleware, AccessMiddleware], UserRouter);
+app.use("/:access/posts", [ValidationMiddleware, AccessMiddleware], PostRouter);
 app.use(
-  "/:access",
+  "/:access/comments",
+  [ValidationMiddleware, AccessMiddleware],
+  CommentRouter
+);
+app.use(
+  "/:access/announcements",
   [ValidationMiddleware, AccessMiddleware],
   AnnouncementRouter
 );
-
-//validation
 
 const start = async () => {
   try {

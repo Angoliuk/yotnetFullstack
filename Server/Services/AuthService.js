@@ -1,4 +1,4 @@
-import { compareSync, hashSync } from "bcrypt";
+import argon2 from "argon2";
 import { SALT, SECRET } from "../config.js";
 import UserModel from "../Models/UserModel.js";
 import jwt from "jsonwebtoken";
@@ -19,7 +19,7 @@ class AuthService {
     if (!candidate) {
       throw new Error("no user");
     }
-    const isSamePasswords = compareSync(password, candidate.password);
+    const isSamePasswords = argon2.verify(candidate.password, password);
     if (isSamePasswords) {
       const token = generateJWT(candidate._id);
       return { ...candidate._doc, accessToken: token };
@@ -32,9 +32,9 @@ class AuthService {
     const candidate = await UserModel.findOne({ email: userData.email });
     if (candidate) {
       console.log("error");
-      throw new Error("already exists");
+      throw new Error("User already exists");
     }
-    const hashedPassword = hashSync(userData.password, SALT);
+    const hashedPassword = await argon2.hash(userData.password);
     const user = new UserModel({
       ...userData,
       password: hashedPassword,

@@ -20,25 +20,25 @@ class CommentController {
 
   async update(req, res) {
     try {
-      const { title, body, userId, createdAt, updatedAt } = req.body;
+      const { body, createdAt, updatedAt, postId, userId } = req.body;
       const comment = await CommentService.update(req.params.id, {
-        title,
         body,
-        userId,
         createdAt,
         updatedAt,
+        postId,
+        userId,
       });
-
       return res.json(comment);
     } catch (e) {
+      console.log(e);
       res.status(500).json(e);
     }
   }
 
   async delete(req, res) {
     try {
-      const comment = await CommentService.delete(req.params.id);
-      return res.json(comment);
+      await CommentService.delete(req.params.id, req.userId);
+      return res.sendStatus(200);
     } catch (e) {
       res.status(500).json(e);
     }
@@ -47,13 +47,16 @@ class CommentController {
   async create(req, res) {
     try {
       const { body, createdAt, updatedAt, postId, userId } = req.body;
-      const comment = await CommentService.create({
-        body,
-        postId,
-        userId,
-        createdAt,
-        updatedAt,
-      });
+      const comment = await CommentService.create(
+        {
+          body,
+          postId,
+          userId,
+          createdAt,
+          updatedAt,
+        },
+        req.userId
+      );
       res.json(comment);
     } catch (e) {
       res.status(500).json(e);

@@ -7,7 +7,7 @@ class AuthController {
       const user = await AuthService.login(email, password);
       return res.json(user);
     } catch (e) {
-      res.status(400).json(e);
+      res.status(500).json([e.message]);
     }
   }
 
@@ -21,10 +21,11 @@ class AuthController {
         lastname,
         avatar,
         age,
+        uploads: [],
       });
       return res.json(user);
     } catch (e) {
-      res.status(400).json(e);
+      res.status(500).json([e.message]);
     }
   }
 }

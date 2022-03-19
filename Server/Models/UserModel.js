@@ -6,6 +6,7 @@ const UserModel = new mongoose.Schema({
   lastname: { type: String, required: true },
   avatar: { type: String, required: true },
   age: { type: Number, required: true },
+  uploads: { type: Array },
 });
 
 export default mongoose.model("UserModel", UserModel);

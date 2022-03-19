@@ -1,7 +1,10 @@
 import { useCallback, useState } from "react";
 import { useApiPostService } from "../ApiRequests/useApiPostService";
 import { useReduxPostService } from "../ReduxRequests/useReduxPostService";
-import { PostSchema } from "../../Hooks/Validator/Schemas/Schemas";
+import {
+  PostSchema,
+  PostUpdateSchema,
+} from "../../Hooks/Validator/Schemas/Schemas";
 import { useValidator } from "../../Hooks/Validator/useValidator";
 
 export const usePostService = () => {
@@ -59,7 +62,7 @@ export const usePostService = () => {
     async (_id, changes) => {
       try {
         setPostLoading(true);
-        await validate(changes, PostSchema);
+        await validate(changes, PostUpdateSchema);
         const updatedPost = await apiPostService.patchPostApi(_id, changes);
         reduxPostService.patchPostRedux(updatedPost);
       } catch (e) {
@@ -75,7 +78,6 @@ export const usePostService = () => {
     async (post) => {
       try {
         setPostLoading(true);
-        console.log(post);
         await validate(post, PostSchema);
         const newPostFromDB = await apiPostService.createPostApi(post);
         reduxPostService.createPostRedux(newPostFromDB);
