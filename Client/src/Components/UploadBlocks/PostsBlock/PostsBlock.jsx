@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import PostCard from "../../UploadCards/PostCard/PostCard";
-import "./PostsBlock.css";
+import "./PostsBlock.scss";
 import React, { useCallback, useEffect, useState } from "react";
 import { Loader } from "../../Common/Loader/Loader";
 import { usePostService } from "../../../Service/Requests/usePostService";

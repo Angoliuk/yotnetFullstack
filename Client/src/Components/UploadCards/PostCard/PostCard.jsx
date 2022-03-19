@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import { Button } from "../../Common/Button/Button";
-import "./PostCard.css";
+import "./PostCard.scss";
 import { Loader } from "../../Common/Loader/Loader";
 import CommentsBlock from "../../UploadBlocks/CommentsBlock/CommentsBlock";
 import { usePostService } from "../../../Service/Requests/usePostService";

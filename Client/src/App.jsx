@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import "./App.css";
-import "./Constants/colors.css";
+import "./App.scss";
+import "./Constants/colors.scss";
 import RoutesList from "./Pages/Routes";
 import { autoLogin } from "./ReduxStorage/actions/userActions";
 

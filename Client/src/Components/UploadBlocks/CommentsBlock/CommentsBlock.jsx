@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Button } from "../../Common/Button/Button";
 import CommentCard from "../../UploadCards/CommentCard/CommentCard";
 import { Textarea } from "../../Common/Textarea/Textarea";
-import "./CommentsBlock.css";
+import "./CommentsBlock.scss";
 import { Loader } from "../../Common/Loader/Loader";
 import { useCommentService } from "../../../Service/Requests/useCommentService";
 

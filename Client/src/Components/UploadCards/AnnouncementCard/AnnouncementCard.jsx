@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { connect } from "react-redux";
-import "./AnnouncementCard.css";
+import "./AnnouncementCard.scss";
 import { Link, NavLink } from "react-router-dom";
 import { Button } from "../../Common/Button/Button";
 import { Loader } from "../../Common/Loader/Loader";

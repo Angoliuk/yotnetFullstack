@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { logout } from "../../../ReduxStorage/actions/userActions";
-import "./NavBarMobile.css";
+import "./NavBarMobile.scss";
 import AnnouncementsBlock from "../../UploadBlocks/AnnouncementsBlock/AnnouncementsBlock";
 const NavBarMobile = (props) => {
   const { isAuth, _id, logout, showAlertHandler } = props;

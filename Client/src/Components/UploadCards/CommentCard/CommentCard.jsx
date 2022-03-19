@@ -5,7 +5,7 @@ import { useCommentService } from "../../../Service/Requests/useCommentService";
 import { Button } from "../../Common/Button/Button";
 import { Loader } from "../../Common/Loader/Loader";
 import { Textarea } from "../../Common/Textarea/Textarea";
-import "./CommentsCard.css";
+import "./CommentsCard.scss";
 
 const CommentCard = (props) => {
   const { showAlertHandler, comments, userId, commentId } = props;

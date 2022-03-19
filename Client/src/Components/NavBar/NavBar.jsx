@@ -1,5 +1,4 @@
 import React from "react";
-import "./NavBar.css";
 import NavBarDesktop from "./NavBarDesktop/NavBarDesktop";
 import NavBarMobile from "./NavBarMobile/NavBarMobile";
 

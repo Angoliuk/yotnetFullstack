@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import AnnouncementCard from "../../UploadCards/AnnouncementCard/AnnouncementCard";
-import "./UserAnnouncementsBlock.css";
+import "./UserAnnouncementsBlock.scss";
 
 const UserAnnouncementsBlock = (props) => {
   const { userId, announcements, userInfo } = props;
