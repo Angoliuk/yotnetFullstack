@@ -5,7 +5,6 @@
 # TODO
 - TypeScript???
 - Axios
-- Change hash method
 - delete user 
 - auth with google
 - share post to social networks
