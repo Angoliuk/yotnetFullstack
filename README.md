@@ -19,3 +19,4 @@
 - chat???????? 
 - fully use of scss
 - Formik
+- change password and email
