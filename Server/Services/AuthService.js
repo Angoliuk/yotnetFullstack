@@ -19,7 +19,7 @@ class AuthService {
     if (!candidate) {
       throw new Error("no user");
     }
-    const isSamePasswords = argon2.verify(candidate.password, password);
+    const isSamePasswords = await argon2.verify(candidate.password, password);
     if (isSamePasswords) {
       const token = generateJWT(candidate._id);
       return { ...candidate._doc, accessToken: token };

@@ -1,49 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import "./UserPersonalBlock.scss";
 import { Button } from "../../Common/Button/Button";
 import { Input } from "../../Common/Input/Input";
-import InputsWithUserData from "../../Common/InputsWithUserData/InputsWithUserData";
 import { useUserService } from "../../../Service/Requests/useUserService";
 import { Modal } from "../../Common/Modal/Modal";
 import { Loader } from "../../Common/Loader/Loader";
+import { Form, Formik } from "formik";
+import { UserUpdateSchema } from "../../../Hooks/Validator/Schemas/Schemas";
 
 const UserPersonalBlock = (props) => {
   const { showAlertHandler, accessToken, userId, userInfo } = props;
   const _id = useParams().id;
   const userService = useUserService();
 
-  const [newPassword, setNewPassword] = useState("");
-  const [showAvatarsBlock, setShowAvatarsBlock] = useState(false);
-
-  const [user, setUser] = useState(userInfo);
-
-  const inputChangeHandler = (event) =>
-    setUser({
-      ...user,
-      [event.target.name]: event.target.value,
-    });
-
-  const passwordInputChangeHandler = (event) =>
-    setNewPassword(event.target.value);
-
-  const avatarChangeHandler = (event) => {
-    setUser({
-      ...user,
-      avatar: event.target.src,
-    });
-
-    setShowAvatarsBlock(!showAvatarsBlock);
-  };
-
-  const updateUserProfile = async () => {
+  const updateUserProfile = async (user) => {
     try {
-      await userService.updateUser(
-        _id,
-        { ...user, password: newPassword },
-        accessToken
-      );
+      await userService.updateUser(_id, user, accessToken);
       showAlertHandler({
         show: true,
         text: `Everything successfully saved`,
@@ -64,50 +38,98 @@ const UserPersonalBlock = (props) => {
 
       <p className="profilePagePersonalName">
         Information about{" "}
-        {String(userId) === String(_id) ? "you" : user.firstname}
+        {String(userId) === String(_id) ? "you" : userInfo.firstname}
       </p>
-
       {String(userId) === String(_id) ? (
-        <div>
-          <InputsWithUserData
-            showPassword={false}
-            stateForInputs={user}
-            onChangeInput={inputChangeHandler}
-            onChangeAvatar={avatarChangeHandler}
-            showAvatarsBlock={showAvatarsBlock}
-          />
+        <Formik
+          initialValues={{
+            firstname: userInfo.firstname,
+            lastname: userInfo.lastname,
+            age: userInfo.age,
+          }}
+          validationSchema={UserUpdateSchema}
+          onSubmit={(values) => updateUserProfile(values)}
+        >
+          <Form>
+            <div>
+              {/* <Input
+                name="password"
+                label="Password"
+                className="input personalInfoProfilePageInput"
+                type="password"
+              /> */}
 
-          <Input
-            name="password"
-            value={newPassword}
-            htmlForText="Password"
-            className="input personalInfoProfilePageInput"
-            onChange={passwordInputChangeHandler}
-            type="password"
-          />
+              <Input
+                name="firstname"
+                label="Firstname"
+                className="input personalInfoProfilePageInput"
+              />
 
-          <Button
-            onClick={updateUserProfile}
-            text="Save"
-            name="saveButton"
-            className="button personalInfoProfilePageButton"
-          />
-        </div>
+              <Input
+                name="lastname"
+                label="Lastname"
+                className="input personalInfoProfilePageInput"
+              />
+
+              <Input
+                name="age"
+                label="Age"
+                className="input personalInfoProfilePageInput"
+                type="number"
+              />
+
+              {/* <img
+                onClick={onChangeAvatar}
+                title="click to choose new avatar"
+                className="chosenAvatar"
+                alt="avatar"
+                src={stateForInputs.avatar}
+              /> */}
+
+              {/* {showAvatarsBlock &&
+        Modal(
+          <div className="avatarModalBlock">
+            {avatarLinks.map((avatar, i) => {
+              return (
+                <div key={i}>
+                  <img
+                    onClick={onChangeAvatar}
+                    name="avatar"
+                    id={`avatar${i}`}
+                    className="avatarImg"
+                    src={avatar}
+                    alt="avatar pic"
+                  />
+                </div>
+              );
+            })}
+        )} */}
+              <Button
+                type="Submit"
+                text="Save"
+                name="saveButton"
+                className="button personalInfoProfilePageButton"
+              />
+            </div>
+          </Form>
+        </Formik>
       ) : (
         <div className="profilePagePersonalInfoBlock">
           <div>
             <img
               className="profilePagePersonalAvatar"
               alt="avatar"
-              src={user.avatar ? user.avatar : "https://picsum.photos/200"}
+              src={
+                userInfo.avatar ? userInfo.avatar : "https://picsum.photos/200"
+              }
             />
           </div>
 
           <div className="profilePagePersonalInfo">
             <p>
-              Fullname: {user.firstname} {user.lastname}
+              Fullname: {userInfo.firstname} {userInfo.lastname}
             </p>
-            <p>Age: {user.age}</p>
+            <p>Age: {userInfo.age}</p>
           </div>
         </div>
       )}

@@ -62,6 +62,17 @@ export const UserUpdateSchema = yup.object().shape({
     .min(14, "You may be under 14"),
 });
 
+export const PostOnCreateSchema = yup.object().shape({
+  title: yup
+    .string("Type Error")
+    .max(1000, "Max title lenght is 1000")
+    .required("Title field is required"),
+  body: yup
+    .string("Type Error")
+    .max(3000, "Max body lenght is 3000")
+    .required("Body field is required"),
+});
+
 export const PostSchema = yup.object().shape({
   title: yup
     .string("Type Error")
@@ -115,6 +126,13 @@ export const CommentSchema = yup.object().shape({
   postId: yup.string("Type error").required("Post id is required"),
   updatedAt: yup.date("Type Error").required("Update date is required"),
   createdAt: yup.date("Type Error").required("Creation date is required"),
+});
+
+export const CommentOnCreateSchema = yup.object().shape({
+  body: yup
+    .string("Type Error")
+    .max(1000, "Max body lenght is 1000")
+    .required("Body field is required"),
 });
 
 export const CommentUpdateSchema = yup.object().shape({

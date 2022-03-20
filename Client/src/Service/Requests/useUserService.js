@@ -2,7 +2,6 @@ import { useCallback, useState } from "react";
 import { useApiUserService } from "../ApiRequests/useApiUserService";
 import { useReduxUserService } from "../ReduxRequests/useReduxUserService";
 import {
-  UserLoginSchema,
   UserRegisterSchema,
   UserUpdateSchema,
 } from "../../Hooks/Validator/Schemas/Schemas";
@@ -18,7 +17,6 @@ export const useUserService = () => {
     async (loginData) => {
       try {
         setUserLoading(true);
-        await validate(loginData, UserLoginSchema);
         const user = await apiUserService.loginApi(loginData);
         reduxUserService.loginRedux(user);
       } catch (e) {
@@ -34,7 +32,6 @@ export const useUserService = () => {
     async (registerData) => {
       try {
         setUserLoading(true);
-        await validate(registerData, UserRegisterSchema);
         const user = await apiUserService.registerApi(registerData);
         reduxUserService.loginRedux(user);
       } catch (e) {

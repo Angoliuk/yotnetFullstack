@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "../../Components/Common/Button/Button";
@@ -10,9 +10,11 @@ import { Modal } from "../../Components/Common/Modal/Modal";
 import { Loader } from "../../Components/Common/Loader/Loader";
 import { useAnnouncementService } from "../../Service/Requests/useAnnouncementService";
 import { usePostService } from "../../Service/Requests/usePostService";
+import { Form, Formik } from "formik";
+import { PostOnCreateSchema } from "../../Hooks/Validator/Schemas/Schemas";
 
 const EditPage = (props) => {
-  const { showAlertHandler, user, posts, announcements } = props;
+  const { showAlertHandler, posts, announcements } = props;
   const navigate = useNavigate();
   const { id, uploadType } = useParams();
   const postService = usePostService();
@@ -25,31 +27,19 @@ const EditPage = (props) => {
           (announcement) => String(id) === String(announcement._id)
         );
 
-  const [postChanges, setPostChanges] = useState({
-    body: upload.body,
-    title: upload.title,
-  });
-
-  const postEditInputHandler = (event) =>
-    setPostChanges({
-      ...postChanges,
-      [event.target.name]: event.target.value,
-    });
-
-  const saveUploadChanges = async () => {
+  const saveUploadChanges = async (post) => {
     try {
       if (uploadType === "post") {
         await postService.patchPost(id, {
-          ...postChanges,
+          ...post,
           updatedAt: new Date(),
         });
         navigate("/");
       } else if (uploadType === "announcement") {
-        await announcementService.patchAnnouncement(
-          id,
-          { ...postChanges, updatedAt: new Date() },
-          user
-        );
+        await announcementService.patchAnnouncement(id, {
+          ...post,
+          updatedAt: new Date(),
+        });
         navigate("/");
       } else {
         throw new Error("Unknown type of post");
@@ -68,30 +58,37 @@ const EditPage = (props) => {
       {(postService.postLoading || announcementService.announcementLoading) &&
         Modal(<Loader />)}
 
-      <Input
-        name="title"
-        value={postChanges.title}
-        placeholder="Title"
-        className="editPostInput input"
-        onChange={postEditInputHandler}
-      />
+      <Formik
+        initialValues={{
+          body: upload.body,
+          title: upload.title,
+        }}
+        validationSchema={PostOnCreateSchema}
+        onSubmit={(values) => saveUploadChanges(values)}
+      >
+        <Form>
+          <Input
+            name="title"
+            placeholder="Title"
+            className="editPostInput input"
+          />
 
-      <Textarea
-        name="body"
-        value={postChanges.body}
-        onChange={postEditInputHandler}
-        rows={15}
-        className="editPostTextarea textarea"
-        placeholder="What`s on your mind?"
-      />
+          <Textarea
+            name="body"
+            rows={15}
+            className="editPostTextarea textarea"
+            placeholder="What`s on your mind?"
+          />
 
-      <Button
-        text="Save"
-        name="savePostButton"
-        classNameBlock="editPostButtonBlock"
-        className="editPostButton button"
-        onClick={saveUploadChanges}
-      />
+          <Button
+            text="Save"
+            type="Submit"
+            name="savePostButton"
+            classNameBlock="editPostButtonBlock"
+            className="editPostButton button"
+          />
+        </Form>
+      </Formik>
     </div>
   );
 };

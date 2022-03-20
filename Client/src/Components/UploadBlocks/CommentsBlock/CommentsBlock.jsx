@@ -6,25 +6,17 @@ import { Textarea } from "../../Common/Textarea/Textarea";
 import "./CommentsBlock.scss";
 import { Loader } from "../../Common/Loader/Loader";
 import { useCommentService } from "../../../Service/Requests/useCommentService";
+import { Form, Formik } from "formik";
+import { CommentOnCreateSchema } from "../../../Hooks/Validator/Schemas/Schemas";
 
 const CommentsBlock = (props) => {
   const { userInfo, showAlertHandler, comments, postId } = props;
   const commentService = useCommentService();
 
-  const [newComment, setNewComment] = useState({
-    text: "",
-  });
-
-  const newCommentInputHandler = (event) =>
-    setNewComment({
-      ...newComment,
-      [event.target.name]: event.target.value,
-    });
-
-  const createNewComment = async () => {
+  const createNewComment = async (values) => {
     try {
       await commentService.createComment({
-        body: newComment.text,
+        body: values.body,
         createdAt: new Date(),
         updatedAt: new Date(),
         postId: postId,
@@ -35,11 +27,6 @@ const CommentsBlock = (props) => {
         show: true,
         text: `${e}`,
         type: "error",
-      });
-    } finally {
-      setNewComment({
-        ...newComment,
-        text: "",
       });
     }
   };
@@ -143,22 +130,26 @@ const CommentsBlock = (props) => {
   return (
     <div>
       {userInfo.accessToken && (
-        <div>
-          <Textarea
-            name="text"
-            value={newComment.text}
-            onChange={newCommentInputHandler}
-            rows={7}
-          />
+        <Formik
+          initialValues={{ body: "" }}
+          validationSchema={CommentOnCreateSchema}
+          onSubmit={(values, { resetForm }) => {
+            createNewComment(values);
+            resetForm();
+          }}
+        >
+          <Form>
+            <Textarea className="textarea" name="body" rows={7} />
 
-          <Button
-            text="comment"
-            name={`commentButton${postId}`}
-            className="commentButton"
-            classNameBlock="commentButtonBlock"
-            onClick={createNewComment}
-          />
-        </div>
+            <Button
+              text="comment"
+              name={`commentButton${postId}`}
+              className="commentButton"
+              classNameBlock="commentButtonBlock"
+              type="Submit"
+            />
+          </Form>
+        </Formik>
       )}
 
       {commentService.commentLoading && (
