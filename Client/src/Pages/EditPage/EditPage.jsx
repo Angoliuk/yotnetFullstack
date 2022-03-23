@@ -12,6 +12,7 @@ import { useAnnouncementService } from "../../Service/Requests/useAnnouncementSe
 import { usePostService } from "../../Service/Requests/usePostService";
 import { Form, Formik } from "formik";
 import { PostOnCreateSchema } from "../../Hooks/Validator/Schemas/Schemas";
+import { DropZone } from "../../Components/Common/DropZone/DropZone";
 
 const EditPage = (props) => {
   const { showAlertHandler, posts, announcements } = props;
@@ -29,17 +30,15 @@ const EditPage = (props) => {
 
   const saveUploadChanges = async (post) => {
     try {
+      const updatedUpload = {
+        ...post,
+        updatedAt: new Date(),
+      };
       if (uploadType === "post") {
-        await postService.patchPost(id, {
-          ...post,
-          updatedAt: new Date(),
-        });
+        await postService.patchPost(id, updatedUpload);
         navigate("/");
       } else if (uploadType === "announcement") {
-        await announcementService.patchAnnouncement(id, {
-          ...post,
-          updatedAt: new Date(),
-        });
+        await announcementService.patchAnnouncement(id, updatedUpload);
         navigate("/");
       } else {
         throw new Error("Unknown type of post");
@@ -62,6 +61,8 @@ const EditPage = (props) => {
         initialValues={{
           body: upload.body,
           title: upload.title,
+          photos: [],
+          oldPhotos: upload.photos,
         }}
         validationSchema={PostOnCreateSchema}
         onSubmit={(values) => saveUploadChanges(values)}
@@ -78,6 +79,18 @@ const EditPage = (props) => {
             rows={15}
             className="editPostTextarea textarea"
             placeholder="What`s on your mind?"
+          />
+
+          <DropZone
+            dropZoneClassname="photosForPostUpload"
+            filesClassname="photosForPostPreview"
+            filesBlockClassname="photosBlockForPostPreview"
+            elemOnActive={<p>Drop here...</p>}
+            elemOnPassive={<p>You can drop some files</p>}
+            filesInputClassname="photosForPostInput"
+            fieldName="photos"
+            acceptedTypes="image/*"
+            startingFiles={upload.photos}
           />
 
           <Button

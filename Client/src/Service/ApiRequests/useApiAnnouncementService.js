@@ -8,7 +8,7 @@ export const useApiAnnouncementService = () => {
   const getAnnouncementsApi = useCallback(
     async (page, limit) => {
       const announcementsFromDB = await request(
-        `/200/announcements?_page=${page}&_limit=${limit}&_expand=user&_sort=createdAt&_order=desc`,
+        `/announcements/200?_page=${page}&_limit=${limit}&_expand=user&_sort=createdAt&_order=desc`,
         "GET"
       );
       return announcementsFromDB;
@@ -19,7 +19,7 @@ export const useApiAnnouncementService = () => {
   const getUserAnnouncementsApi = useCallback(
     async (_id) => {
       const announcementsFromDB = await request(
-        `/200/announcements?_expand=user&userId_like=${_id}&_sort=createdAt&_order=desc`,
+        `/announcements/200?_expand=user&userId_like=${_id}&_sort=createdAt&_order=desc`,
         "GET"
       );
       return announcementsFromDB;
@@ -29,7 +29,7 @@ export const useApiAnnouncementService = () => {
 
   const deleteAnnouncementApi = useCallback(
     async (_id) => {
-      await request(`/440/announcements/${_id}`, "DELETE", null, {
+      await request(`/announcements/440/${_id}`, "DELETE", null, {
         Authorization: `Bearer ${token}`,
       });
     },
@@ -39,13 +39,16 @@ export const useApiAnnouncementService = () => {
   const patchAnnouncementApi = useCallback(
     async (_id, changes) => {
       const updatedAnnouncement = await request(
-        `/440/announcements/${_id}`,
+        `/announcements/440/${_id}`,
         "PATCH",
         {
           ...changes,
           updatedAt: new Date(),
         },
-        { Authorization: `Bearer ${token}` }
+        {
+          "content-type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        }
       );
       return updatedAnnouncement;
     },
@@ -55,10 +58,11 @@ export const useApiAnnouncementService = () => {
   const createAnnouncementApi = useCallback(
     async (announcement) => {
       const newAnnouncementFromDB = await request(
-        "/420/announcements",
+        "/announcements/420",
         "POST",
         announcement,
         {
+          "content-type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
         }
       );

@@ -32,7 +32,17 @@ export const useUserService = () => {
     async (registerData) => {
       try {
         setUserLoading(true);
-        const user = await apiUserService.registerApi(registerData);
+        const formData = new FormData();
+        for (const key in registerData) {
+          if (key !== "photos") {
+            formData.append(key, registerData[key]);
+          } else {
+            for (let i = 0; i < registerData.photos.length; i++) {
+              formData.append("photos", registerData.photos[i]);
+            }
+          }
+        }
+        const user = await apiUserService.registerApi(formData);
         reduxUserService.loginRedux(user);
       } catch (e) {
         throw e;
@@ -48,7 +58,17 @@ export const useUserService = () => {
       try {
         setUserLoading(true);
         await validate(user, UserUpdateSchema);
-        const updatedUser = await apiUserService.updateUserApi(_id, user);
+        const formData = new FormData();
+        for (const key in user) {
+          if (key !== "photos") {
+            formData.append(key, user[key]);
+          } else {
+            for (let i = 0; i < user.photos.length; i++) {
+              formData.append("photos", user.photos[i]);
+            }
+          }
+        }
+        const updatedUser = await apiUserService.updateUserApi(_id, formData);
         reduxUserService.updateUserRedux({
           ...updatedUser,
           accessToken: token,

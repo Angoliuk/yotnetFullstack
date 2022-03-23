@@ -4,6 +4,7 @@ import {
   AddToUserUploads,
 } from "../Helpers/userUploads.js";
 import AnnouncementModel from "../Models/AnnouncementModel.js";
+import { DeleteFiles } from "../Helpers/DeleteFiles.js";
 
 class AnnouncementService {
   async update(announcementId, announcementData) {
@@ -28,6 +29,10 @@ class AnnouncementService {
     return announcements;
   }
   async delete(announcementId, userId) {
+    const announcementToDelete = await AnnouncementModel.findById({
+      _id: announcementId,
+    });
+    DeleteFiles(announcementToDelete.photos);
     await AnnouncementModel.findOneAndDelete({ _id: announcementId });
     await DeleteFromUserUploads(userId, announcementId);
   }

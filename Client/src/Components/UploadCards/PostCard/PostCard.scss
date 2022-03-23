@@ -1,3 +1,5 @@
+@import"../../../Constants/queries.scss";
+
 .postCard {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   padding: 25px;
@@ -9,6 +11,31 @@
   width: 100px;
 }
 
+.postPhotos{
+  width: 30%;
+  margin: 0% 1.5%;
+}
+
+.postPhotosBlock{
+  flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+}
+
+@media screen and (max-width: $preTablet) {
+  .postPhotos{
+    width: 48%;
+    margin: 0% 1%;
+  }
+}
+
+@media screen and (max-width: $tablet) {
+  .postPhotos{
+    width: 98%;
+    margin: 0% 1%;
+  }
+}
+
 .postAuthorInfoBlock {
   display: flex;
   align-items: center;
@@ -17,7 +44,13 @@
 .postInfoTextBlock {
   margin-left: 20px;
 }
-
+// $phone: 420px;
+// $prePhone: 500px;
+// $tablet: 670px;
+// $preTablet: 840px;
+// $miniLaptop: 1100px;
+// $laptop: 1300px;
+// $miniDesktop: 1500px;
 .postDate {
   font-size: 13px;
 }

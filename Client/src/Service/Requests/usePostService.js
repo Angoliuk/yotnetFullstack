@@ -63,7 +63,25 @@ export const usePostService = () => {
       try {
         setPostLoading(true);
         await validate(changes, PostUpdateSchema);
-        const updatedPost = await apiPostService.patchPostApi(_id, changes);
+        const formData = new FormData();
+        for (const key in changes) {
+          if (key !== "photos") {
+            formData.append(key, changes[key]);
+          } else if (key === "photos") {
+            for (let i = 0; i < changes.photos.length; i++) {
+              formData.append("photos", changes.photos[i]);
+            }
+          }
+          // } else if (key === "oldPhotos") {
+          //   for (let i = 0; i < changes.photos.length; i++) {
+          //     formData.append("oldPhotos", changes.photos[i]);
+          //   }
+          // }
+        }
+        for (const key in changes) {
+          console.log(key, formData.getAll(key));
+        }
+        const updatedPost = await apiPostService.patchPostApi(_id, formData); //formData
         reduxPostService.patchPostRedux(updatedPost);
       } catch (e) {
         throw e;
@@ -79,7 +97,17 @@ export const usePostService = () => {
       try {
         setPostLoading(true);
         await validate(post, PostSchema);
-        const newPostFromDB = await apiPostService.createPostApi(post);
+        const formData = new FormData();
+        for (const key in post) {
+          if (key !== "photos") {
+            formData.append(key, post[key]);
+          } else {
+            for (let i = 0; i < post.photos.length; i++) {
+              formData.append("photos", post.photos[i]);
+            }
+          }
+        }
+        const newPostFromDB = await apiPostService.createPostApi(formData);
         reduxPostService.createPostRedux(newPostFromDB);
       } catch (e) {
         throw e;

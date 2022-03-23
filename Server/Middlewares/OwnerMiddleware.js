@@ -14,9 +14,9 @@ const OwnerMiddleware = async (req, res, next) => {
       req.userId = tokenData._id;
       return tokenData._id;
     });
-    const uploadId = req._parsedUrl.pathname.split("/")[3];
+    const uploadId = req._parsedUrl.pathname.split("/")[2];
+    console.log(req._parsedUrl);
     const userUploads = await UserService.getUserUploads(userId);
-    console.log(uploadId, userUploads, userId);
     if (
       userUploads.uploads.find(
         (userUploadId) => String(userUploadId) === String(uploadId)

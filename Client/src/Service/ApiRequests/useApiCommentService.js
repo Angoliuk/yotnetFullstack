@@ -9,7 +9,7 @@ export const useApiCommentService = () => {
   const getCommentsApi = useCallback(
     async (_id) => {
       const commentsFromDB = await request(
-        `/200/comments?postId_like=${_id}&_sort=createdAt&_order=desc&_expand=user`,
+        `/comments/200?postId_like=${_id}&_sort=createdAt&_order=desc&_expand=user`,
         "GET"
       );
       return commentsFromDB;
@@ -19,7 +19,7 @@ export const useApiCommentService = () => {
 
   const deleteCommentApi = useCallback(
     async (_id) => {
-      await request(`/440/comments/${_id}`, "DELETE", null, {
+      await request(`/comments/440/${_id}`, "DELETE", null, {
         Authorization: `Bearer ${token}`,
       });
     },
@@ -29,7 +29,7 @@ export const useApiCommentService = () => {
   const patchCommentApi = useCallback(
     async (_id, changes) => {
       const changedComment = await request(
-        `/440/comments/${_id}`,
+        `/comments/440/${_id}`,
         "PATCH",
         {
           ...changes,
@@ -44,7 +44,7 @@ export const useApiCommentService = () => {
 
   const createCommentApi = useCallback(
     async (comment) => {
-      const newCommentFromDB = await request(`/420/comments`, "POST", comment, {
+      const newCommentFromDB = await request(`/comments/420`, "POST", comment, {
         Authorization: `Bearer ${token}`,
       });
       return newCommentFromDB;

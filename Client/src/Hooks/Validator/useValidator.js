@@ -1,5 +1,6 @@
 export const useValidator = () => {
   const validate = async (data, schema) => {
+    console.log(data);
     await schema
       .validate(data, {
         abortEarly: false,

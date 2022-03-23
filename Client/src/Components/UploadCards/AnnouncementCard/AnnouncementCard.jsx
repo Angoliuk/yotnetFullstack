@@ -115,6 +115,16 @@ const AnnouncementCard = (props) => {
       <div className="announcementCardContentBlock">
         <h3>{announcement.title}</h3>
         <p className="announcementBody">{announcement.body}</p>
+        {announcement.photos.map((photo) => {
+          return (
+            <img
+              key={photo.filename}
+              className="announcementPhotos"
+              alt="announcement upload"
+              src={photo.exactPath}
+            />
+          );
+        })}
       </div>
 
       <hr />

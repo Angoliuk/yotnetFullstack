@@ -9,7 +9,7 @@ export const useApiPostService = () => {
   const getPostsApi = useCallback(
     async (page, limit) => {
       const postsFromDB = await request(
-        `/200/posts?_page=${page}&_limit=${limit}&_expand=user&_sort=createdAt&_order=desc`,
+        `/posts/200?_page=${page}&_limit=${limit}&_expand=user&_sort=createdAt&_order=desc`,
         "GET"
       );
       return postsFromDB;
@@ -20,7 +20,7 @@ export const useApiPostService = () => {
   const getUserPostsApi = useCallback(
     async (_id) => {
       const postsFromDB = await request(
-        `/200/posts?_expand=user&userId_like=${_id}&_sort=createdAt&_order=desc`,
+        `/posts/200?_expand=user&userId_like=${_id}&_sort=createdAt&_order=desc`,
         "GET"
       );
       return postsFromDB;
@@ -30,7 +30,7 @@ export const useApiPostService = () => {
 
   const deletePostApi = useCallback(
     async (_id) => {
-      await request(`/440/posts/${_id}`, "DELETE", null, {
+      await request(`/posts/440/${_id}`, "DELETE", null, {
         Authorization: `Bearer ${token}`,
       });
     },
@@ -39,15 +39,10 @@ export const useApiPostService = () => {
 
   const patchPostApi = useCallback(
     async (_id, changes) => {
-      const updatedPost = await request(
-        `/440/posts/${_id}`,
-        "PATCH",
-        {
-          ...changes,
-          updatedAt: new Date(),
-        },
-        { Authorization: `Bearer ${token}` }
-      );
+      const updatedPost = await request(`/posts/440/${_id}`, "PATCH", changes, {
+        "content-type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      });
       return updatedPost;
     },
     [request, token]
@@ -55,7 +50,8 @@ export const useApiPostService = () => {
 
   const createPostApi = useCallback(
     async (post) => {
-      const newPostFromDB = await request("/420/posts", "POST", post, {
+      const newPostFromDB = await request("/posts/420", "POST", post, {
+        "content-type": "multipart/form-data",
         Authorization: `Bearer ${token}`,
       });
       return newPostFromDB;

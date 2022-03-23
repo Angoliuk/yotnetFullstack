@@ -6,6 +6,7 @@ const AnnouncementModel = new mongoose.Schema({
   userId: { type: String, required: true },
   createdAt: { type: Date, required: true },
   updatedAt: { type: Date, required: true },
+  photos: { type: Array },
 });
 
 export default mongoose.model("AnnouncementModel", AnnouncementModel);

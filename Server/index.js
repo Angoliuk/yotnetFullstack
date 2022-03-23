@@ -6,27 +6,18 @@ import CommentRouter from "./Routers/CommentRouter.js";
 import AnnouncementRouter from "./Routers/AnnouncementRouter.js";
 import AuthRouter from "./Routers/AuthRouter.js";
 import { DB_URL, PORT } from "./config.js";
-import AccessMiddleware from "./Middlewares/AccessMiddleware.js";
 import cors from "cors";
-import ValidationMiddleware from "./Middlewares/Validation/ValidationMiddleware.js";
+import path from "path";
 
 const app = express();
-
 app.use(express.json());
+app.use(express.static(path.resolve() + "/Static"));
 app.use(cors());
-app.use("/200", ValidationMiddleware, AuthRouter);
-app.use("/:access/users", [ValidationMiddleware, AccessMiddleware], UserRouter);
-app.use("/:access/posts", [ValidationMiddleware, AccessMiddleware], PostRouter);
-app.use(
-  "/:access/comments",
-  [ValidationMiddleware, AccessMiddleware],
-  CommentRouter
-);
-app.use(
-  "/:access/announcements",
-  [ValidationMiddleware, AccessMiddleware],
-  AnnouncementRouter
-);
+app.use("/auth", AuthRouter);
+app.use("/users", UserRouter);
+app.use("/posts", PostRouter);
+app.use("/comments", CommentRouter);
+app.use("/announcements", AnnouncementRouter);
 
 const start = async () => {
   try {

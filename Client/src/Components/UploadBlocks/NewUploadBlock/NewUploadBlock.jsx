@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Button } from "../../Common/Button/Button";
 import { Textarea } from "../../Common/Textarea/Textarea";
@@ -9,11 +9,9 @@ import "./NewUploadBlock.scss";
 import { usePostService } from "../../../Service/Requests/usePostService";
 import { useAnnouncementService } from "../../../Service/Requests/useAnnouncementService";
 import { Form, Formik } from "formik";
-import {
-  AnnouncementOnCreateSchema,
-  PostOnCreateSchema,
-} from "../../../Hooks/Validator/Schemas/Schemas";
+import { PostOnCreateSchema } from "../../../Hooks/Validator/Schemas/Schemas";
 import { Checkbox } from "../../Common/Checkbox/Checkbox";
+import { DropZone } from "../../Common/DropZone/DropZone";
 
 const NewUploadBlock = (props) => {
   const { userInfo, showAlertHandler } = props;
@@ -24,14 +22,23 @@ const NewUploadBlock = (props) => {
 
   const createNewPost = async (values) => {
     try {
+      // const formData = new FormData();
       const upload = {
         title: values.title,
         body: values.body,
-        createdAtOld: values.createdAt,
         createdAt: new Date(),
         updatedAt: new Date(),
         userId: userInfo._id,
+        photos: values.photos,
       };
+      // console.log(values.photos);
+      // formData.append("title", values.title);
+      // formData.append("body", values.body);
+      // formData.append("createdAt", new Date());
+      // formData.append("updatedAt", new Date());
+      // formData.append("userId", userInfo._id);
+      // formData.append("photos", values.photos);
+      // console.log(formData.get("photos"));
 
       values.isAnnouncement
         ? await announcementService.createAnnouncement(upload)
@@ -71,11 +78,14 @@ const NewUploadBlock = (props) => {
                 title: "",
                 body: "",
                 isAnnouncement: false,
+                photos: [],
               }}
-              validationSchema={PostOnCreateSchema}
-              onSubmit={(values) => createNewPost(values)}
+              // validationSchema={PostOnCreateSchema}
+              onSubmit={(values) => {
+                createNewPost(values);
+              }}
             >
-              <Form>
+              <Form encType="multipart/form-data" method="post">
                 <Input
                   name="title"
                   placeholder="Title"
@@ -95,6 +105,24 @@ const NewUploadBlock = (props) => {
                   placeholder=""
                   name="isAnnouncement"
                   className="isAnnouncementCheckbox"
+                />
+
+                {/* <Input
+                  name="photos"
+                  type="file"
+                  placeholder="Photos"
+                  className="createPostInput input"
+                /> */}
+
+                <DropZone
+                  dropZoneClassname="photosForPostUpload"
+                  filesClassname="photosForPostPreview"
+                  filesBlockClassname="photosBlockForPostPreview"
+                  elemOnActive={<p>Drop here...</p>}
+                  elemOnPassive={<p>You can drop some files</p>}
+                  filesInputClassname="photosForPostInput"
+                  fieldName="photos"
+                  acceptedTypes="image/*"
                 />
 
                 <Button

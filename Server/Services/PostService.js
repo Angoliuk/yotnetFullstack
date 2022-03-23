@@ -4,6 +4,7 @@ import {
   AddToUserUploads,
   DeleteFromUserUploads,
 } from "../Helpers/userUploads.js";
+import { DeleteFiles } from "../Helpers/DeleteFiles.js";
 
 class PostService {
   async update(postId, postData) {
@@ -24,8 +25,9 @@ class PostService {
     return post;
   }
   async delete(postId, userId) {
+    const postToDelete = await PostModel.findById({ _id: postId });
+    DeleteFiles(postToDelete.photos);
     await PostModel.findOneAndDelete({ _id: postId });
-    console.log("working with uploads");
     await DeleteFromUserUploads(userId, postId);
   }
   async create(postData, userId) {

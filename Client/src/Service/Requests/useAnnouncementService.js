@@ -66,8 +66,18 @@ export const useAnnouncementService = () => {
       try {
         setAnnouncementLoading(true);
         await validate(changes, AnnouncementUpdateSchema);
+        const formData = new FormData();
+        for (const key in changes) {
+          if (key !== "photos") {
+            formData.append(key, changes[key]);
+          } else {
+            for (let i = 0; i < changes.photos.length; i++) {
+              formData.append("photos", changes.photos[i]);
+            }
+          }
+        }
         const updatedAnnouncement =
-          await apiAnnouncementService.patchAnnouncementApi(_id, changes);
+          await apiAnnouncementService.patchAnnouncementApi(_id, formData);
         reduxAnnouncementService.patchAnnouncementRedux(updatedAnnouncement);
       } catch (e) {
         throw e;
@@ -83,8 +93,18 @@ export const useAnnouncementService = () => {
       try {
         setAnnouncementLoading(true);
         await validate(announcement, AnnouncementSchema);
+        const formData = new FormData();
+        for (const key in announcement) {
+          if (key !== "photos") {
+            formData.append(key, announcement[key]);
+          } else {
+            for (let i = 0; i < announcement.photos.length; i++) {
+              formData.append("photos", announcement.photos[i]);
+            }
+          }
+        }
         const newAnnouncementFromDB =
-          await apiAnnouncementService.createAnnouncementApi(announcement);
+          await apiAnnouncementService.createAnnouncementApi(formData);
         reduxAnnouncementService.createAnnouncementRedux(newAnnouncementFromDB);
       } catch (e) {
         throw e;

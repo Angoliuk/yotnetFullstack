@@ -1,3 +1,4 @@
+import { CreateExactPathes } from "../Helpers/ExactPath.js";
 import AnnouncementService from "../Services/AnnouncementService.js";
 
 class AnnouncementController {
@@ -53,6 +54,7 @@ class AnnouncementController {
           userId,
           createdAt,
           updatedAt,
+          photos: CreateExactPathes(req.files),
         },
         req.userId
       );

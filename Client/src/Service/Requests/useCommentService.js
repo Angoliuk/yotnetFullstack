@@ -73,6 +73,7 @@ export const useCommentService = () => {
       try {
         setCommentLoading(true);
         await validate(comment, CommentSchema);
+        console.log(comment);
         const newCommentFromDB = await apiCommentService.createCommentApi(
           comment
         );

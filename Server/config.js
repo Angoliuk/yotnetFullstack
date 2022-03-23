@@ -7,26 +7,32 @@ export const SECRET = "Soi-hn&D#%v209Fsv7n=a,(d+Gs)&s^hSd#";
 
 export const SALT = 10;
 
+export const POST_PHOTOS_LIMIT = 10;
+export const ANNOUNCEMENT_PHOTOS_LIMIT = 2;
+
 export const PATHS = {
-  getUser: "/:id",
-  getUsers: "",
-  updateUser: "/:id",
+  login: "/:access/login",
+  register: "/:access/register",
 
-  getPost: "/:id",
-  getPosts: "",
-  deletePost: "/:id",
-  updatePost: "/:id",
-  createPost: "",
+  getUser: "/:access/:id",
+  getUsers: "/:access",
+  updateUser: "/:access/:id",
 
-  getAnnouncements: "",
-  getAnnouncement: "/:id",
-  deleteAnnouncement: "/:id",
-  updateAnnouncement: "/:id",
-  createAnnouncement: "",
+  getPost: "/:access/:id",
+  getPosts: "/:access",
+  deletePost: "/:access/:id",
+  updatePost: "/:access/:id",
+  createPost: "/:access",
 
-  getComments: "",
-  getComment: "/:id",
-  deleteComment: "/:id",
-  updateComment: "/:id",
-  createComment: "",
+  getAnnouncements: "/:access",
+  getAnnouncement: "/:access/:id",
+  deleteAnnouncement: "/:access/:id",
+  updateAnnouncement: "/:access/:id",
+  createAnnouncement: "/:access",
+
+  getComments: "/:access",
+  getComment: "/:access/:id",
+  deleteComment: "/:access/:id",
+  updateComment: "/:access/:id",
+  createComment: "/:access",
 };

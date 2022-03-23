@@ -1,3 +1,4 @@
+import { CreateExactPathes } from "../Helpers/ExactPath.js";
 import PostService from "../Services/PostService.js";
 
 class PostController {
@@ -20,13 +21,14 @@ class PostController {
 
   async update(req, res) {
     try {
-      const { title, body, userId, createdAt, updatedAt } = req.body;
+      const { title, body, userId, createdAt, updatedAt, oldPhotos } = req.body;
       const post = await PostService.update(req.params.id, {
         title,
         body,
         userId,
         createdAt,
         updatedAt,
+        photos: [...oldPhotos, ...CreateExactPathes(req.files)],
       });
       return res.status(200).json(post);
     } catch (e) {
@@ -54,6 +56,7 @@ class PostController {
           userId,
           createdAt,
           updatedAt,
+          photos: CreateExactPathes(req.files),
         },
         req.userId
       );

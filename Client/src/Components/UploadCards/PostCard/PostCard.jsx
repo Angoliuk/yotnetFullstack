@@ -139,6 +139,18 @@ const PostCard = (props) => {
       <div className="postCardContentBlock">
         <h3>{post.title}</h3>
         <p className="postBody">{post.body}</p>
+        <div className="postPhotosBlock">
+          {post.photos.map((photo) => {
+            return (
+              <img
+                key={photo.filename}
+                className="postPhotos"
+                alt="post upload"
+                src={photo.exactPath}
+              />
+            );
+          })}
+        </div>
       </div>
 
       <div>

@@ -8,7 +8,7 @@ export const useApiUserService = () => {
 
   const loginApi = useCallback(
     async (loginData) => {
-      const user = await request("/200/login", "POST", loginData);
+      const user = await request("/auth/200/login", "POST", loginData);
       return user;
     },
     [request]
@@ -16,7 +16,9 @@ export const useApiUserService = () => {
 
   const registerApi = useCallback(
     async (registerData) => {
-      const user = await request("/200/register", "POST", registerData);
+      const user = await request("/auth/200/register", "POST", registerData, {
+        "content-type": "multipart/form-data",
+      });
       return user;
     },
     [request]
@@ -24,7 +26,7 @@ export const useApiUserService = () => {
 
   const getUserApi = useCallback(
     async (_id) => {
-      const user = await request(`/200/users/${_id}`, "GET");
+      const user = await request(`/users/200/${_id}`, "GET");
       return user;
     },
     [request]
@@ -35,6 +37,7 @@ export const useApiUserService = () => {
       if (user.password === "") delete user.password;
 
       const updatedUser = await request(`/440/users/${_id}`, "PATCH", user, {
+        "content-type": "multipart/form-data",
         Authorization: `Bearer ${token}`,
       });
 
