@@ -17,5 +17,5 @@
 - interceptor for auth token
 - complete jwt token
 - chat???????? 
-- fully use of scss
+- fully use of scss and correct imports
 - change password and email
