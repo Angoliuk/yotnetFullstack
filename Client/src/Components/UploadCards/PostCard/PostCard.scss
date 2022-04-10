@@ -36,6 +36,27 @@
   }
 }
 
+.enlargedPhotoBlock{
+  width: 80%;
+  height: 80%;
+  // box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+  position: fixed;
+  // object-fit: cover;
+  z-index: 1;
+}
+
+@media screen and (min-width: $miniDesktop) {
+  .enlargedPhotoBlock{
+    width: 60%;
+  }
+}
+
+.enlargedPhoto{
+  object-fit:contain;
+  width: 100%;
+  height: 100%;
+}
+
 .postAuthorInfoBlock {
   display: flex;
   align-items: center;

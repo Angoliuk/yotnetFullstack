@@ -7,6 +7,7 @@ import { Loader } from "../../Common/Loader/Loader";
 import CommentsBlock from "../../UploadBlocks/CommentsBlock/CommentsBlock";
 import { usePostService } from "../../../Service/Requests/usePostService";
 import { useCommentService } from "../../../Service/Requests/useCommentService";
+import { Modal } from "../../Common/Modal/Modal";
 
 const PostCard = (props) => {
   const { posts, userInfo, showAlertHandler, postId } = props;
@@ -18,6 +19,7 @@ const PostCard = (props) => {
 
   const [showButtonsForUserPosts, setShowButtonsForUserPosts] = useState(false);
   const [showComments, setShowComments] = useState(false);
+  const [enlargedPhoto, setEnlargedPhoto] = useState();
 
   const dataRequest = useCallback(async () => {
     //here were comments in ()
@@ -140,16 +142,29 @@ const PostCard = (props) => {
         <h3>{post.title}</h3>
         <p className="postBody">{post.body}</p>
         <div className="postPhotosBlock">
-          {post.photos.map((photo) => {
-            return (
-              <img
-                key={photo.filename}
-                className="postPhotos"
-                alt="post upload"
-                src={photo.exactPath}
-              />
-            );
-          })}
+          {post.photos.map((photo) => (
+            <img
+              onClick={() => setEnlargedPhoto(photo)}
+              key={photo.filename}
+              className="postPhotos"
+              alt="upload"
+              src={photo.exactPath}
+            />
+          ))}
+          {enlargedPhoto &&
+            Modal(
+              <div
+                onClick={() => setEnlargedPhoto()}
+                className="enlargedPhotoBlock"
+              >
+                <img
+                  className="enlargedPhoto"
+                  src={enlargedPhoto.exactPath}
+                  alt={enlargedPhoto.fillename}
+                />
+              </div>,
+              () => setEnlargedPhoto()
+            )}
         </div>
       </div>
 
