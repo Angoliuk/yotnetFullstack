@@ -1,20 +1,25 @@
 import { CreateExactPathes } from "../Helpers/ExactPath.js";
+import { logger } from "../Logs/Logger.js";
 import PostService from "../Services/PostService.js";
 
 class PostController {
   async getAll(req, res) {
     try {
       const posts = await PostService.getAll(req.query);
+      logger.info("PostController getAll done");
       return res.json(posts);
     } catch (e) {
+      logger.error(`PostController getAll. ${e.message}`);
       res.status(500).json(e);
     }
   }
   async getOne(req, res) {
     try {
       const posts = await PostService.get(req.params.id);
+      logger.info("PostController getOne done");
       return res.json(posts);
     } catch (e) {
+      logger.error(`PostController getOne. ${e.message}`);
       res.status(500).json(e);
     }
   }
@@ -28,11 +33,12 @@ class PostController {
         userId,
         createdAt,
         updatedAt,
-        photos: [...oldPhotos, ...CreateExactPathes(req.files)],
+        photos: [...JSON.parse(oldPhotos), ...CreateExactPathes(req.files)],
       });
+      logger.info("PostController update done");
       return res.status(200).json(post);
     } catch (e) {
-      console.log(e);
+      logger.error(`PostController update. ${e.message}`);
       res.status(500).json(e);
     }
   }
@@ -40,8 +46,10 @@ class PostController {
   async delete(req, res) {
     try {
       await PostService.delete(req.params.id, req.userId);
+      logger.info("PostController delete done");
       return res.sendStatus(200);
     } catch (e) {
+      logger.error(`PostController delete. ${e.message}`);
       res.status(500).json(e);
     }
   }
@@ -60,8 +68,10 @@ class PostController {
         },
         req.userId
       );
+      logger.info("PostController create done");
       return res.json(post);
     } catch (e) {
+      logger.error(`PostController create. ${e.message}`);
       res.status(500).json(e);
     }
   }

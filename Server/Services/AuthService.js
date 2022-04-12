@@ -17,22 +17,25 @@ class AuthService {
   async login(email, password) {
     const candidate = await UserModel.findOne({ email });
     if (!candidate) {
-      throw new Error("no user");
+      logger.error("AuthService login. No such user");
+      throw { message: "no such user" };
     }
     const isSamePasswords = await argon2.verify(candidate.password, password);
     if (isSamePasswords) {
       const token = generateJWT(candidate._id);
+      logger.info("AuthService login done");
       return { ...candidate._doc, accessToken: token };
     } else {
-      throw new Error("wrong password");
+      logger.info("AuthService login. Wrong password");
+      throw { message: "wrong password" };
     }
   }
 
   async register(userData) {
     const candidate = await UserModel.findOne({ email: userData.email });
     if (candidate) {
-      console.log("error");
-      throw new Error("User already exists");
+      logger.error("AuthService register. User already exists");
+      throw { message: "User already exists" };
     }
     const hashedPassword = await argon2.hash(userData.password);
     const user = new UserModel({
@@ -41,6 +44,7 @@ class AuthService {
     });
     await user.save();
     const token = generateJWT(user._doc._id);
+    logger.info("AuthService register done");
     return { ...user._doc, accessToken: token };
   }
 }

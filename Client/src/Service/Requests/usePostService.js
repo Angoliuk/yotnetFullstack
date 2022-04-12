@@ -64,6 +64,8 @@ export const usePostService = () => {
         setPostLoading(true);
         await validate(changes, PostUpdateSchema);
         const formData = new FormData();
+        if (changes.oldPhotos)
+          changes.oldPhotos = JSON.stringify(changes.oldPhotos);
         for (const key in changes) {
           if (key !== "photos") {
             formData.append(key, changes[key]);
@@ -72,14 +74,6 @@ export const usePostService = () => {
               formData.append("photos", changes.photos[i]);
             }
           }
-          // } else if (key === "oldPhotos") {
-          //   for (let i = 0; i < changes.photos.length; i++) {
-          //     formData.append("oldPhotos", changes.photos[i]);
-          //   }
-          // }
-        }
-        for (const key in changes) {
-          console.log(key, formData.getAll(key));
         }
         const updatedPost = await apiPostService.patchPostApi(_id, formData); //formData
         reduxPostService.patchPostRedux(updatedPost);

@@ -8,6 +8,7 @@ import AuthRouter from "./Routers/AuthRouter.js";
 import { DB_URL, PORT } from "./config.js";
 import cors from "cors";
 import path from "path";
+import { logger } from "./Logs/Logger.js";
 
 const app = express();
 app.use(express.json());
@@ -25,9 +26,9 @@ const start = async () => {
       useUnifiedTopology: true,
       useNewUrlParser: true,
     });
-    app.listen(PORT, () => console.log("Running on the port " + PORT));
+    app.listen(PORT, () => logger.info("Running on the port " + PORT));
   } catch (e) {
-    console.log(e);
+    logger.error(e);
   }
 };
 

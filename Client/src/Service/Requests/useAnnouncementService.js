@@ -67,10 +67,12 @@ export const useAnnouncementService = () => {
         setAnnouncementLoading(true);
         await validate(changes, AnnouncementUpdateSchema);
         const formData = new FormData();
+        if (changes.oldPhotos)
+          changes.oldPhotos = JSON.stringify(changes.oldPhotos);
         for (const key in changes) {
           if (key !== "photos") {
             formData.append(key, changes[key]);
-          } else {
+          } else if (key === "photos") {
             for (let i = 0; i < changes.photos.length; i++) {
               formData.append("photos", changes.photos[i]);
             }

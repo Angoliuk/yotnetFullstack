@@ -22,7 +22,6 @@ const NewUploadBlock = (props) => {
 
   const createNewPost = async (values) => {
     try {
-      // const formData = new FormData();
       const upload = {
         title: values.title,
         body: values.body,
@@ -31,14 +30,6 @@ const NewUploadBlock = (props) => {
         userId: userInfo._id,
         photos: values.photos,
       };
-      // console.log(values.photos);
-      // formData.append("title", values.title);
-      // formData.append("body", values.body);
-      // formData.append("createdAt", new Date());
-      // formData.append("updatedAt", new Date());
-      // formData.append("userId", userInfo._id);
-      // formData.append("photos", values.photos);
-      // console.log(formData.get("photos"));
 
       values.isAnnouncement
         ? await announcementService.createAnnouncement(upload)
@@ -80,7 +71,7 @@ const NewUploadBlock = (props) => {
                 isAnnouncement: false,
                 photos: [],
               }}
-              // validationSchema={PostOnCreateSchema}
+              validationSchema={PostOnCreateSchema}
               onSubmit={(values) => {
                 createNewPost(values);
               }}
@@ -107,13 +98,6 @@ const NewUploadBlock = (props) => {
                   className="isAnnouncementCheckbox"
                 />
 
-                {/* <Input
-                  name="photos"
-                  type="file"
-                  placeholder="Photos"
-                  className="createPostInput input"
-                /> */}
-
                 <DropZone
                   dropZoneClassname="photosForPostUpload"
                   filesClassname="photosForPostPreview"
@@ -123,6 +107,7 @@ const NewUploadBlock = (props) => {
                   filesInputClassname="photosForPostInput"
                   fieldName="photos"
                   acceptedTypes="image/*"
+                  deleteOnClick={true}
                 />
 
                 <Button

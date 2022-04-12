@@ -91,7 +91,7 @@ export const PostUpdateSchema = yup.object().shape({
   title: yup.string("Type Error").max(1000, "Max title lenght is 1000"),
   body: yup.string("Type Error").max(3000, "Max body lenght is 3000"),
   userId: yup.string("Type error"),
-  updatedAt: yup.date("Type Error"),
+  updatedAt: yup.date("Type Error").required(),
   createdAt: yup.date("Type Error"),
 });
 
@@ -113,7 +113,7 @@ export const AnnouncementUpdateSchema = yup.object().shape({
   title: yup.string("Type Error").max(500, "Max title lenght is 500"),
   body: yup.string("Type Error").max(1500, "Max body lenght is 1500"),
   userId: yup.string("Type error"),
-  updatedAt: yup.date("Type Error"),
+  updatedAt: yup.date("Type Error").required(),
   createdAt: yup.date("Type Error"),
 });
 
@@ -128,15 +128,11 @@ export const CommentSchema = yup.object().shape({
   createdAt: yup.date("Type Error").required("Creation date is required"),
 });
 
-export const CommentOnCreateSchema = yup.object().shape({
+export const CommentUpdateSchema = yup.object().shape({
   body: yup
     .string("Type Error")
     .max(1000, "Max body lenght is 1000")
-    .required("Body field is required"),
-});
-
-export const CommentUpdateSchema = yup.object().shape({
-  body: yup.string("Type Error").max(1000, "Max body lenght is 1000"),
+    .required(),
   userId: yup.string("Type error"),
   postId: yup.string("Type error"),
   updatedAt: yup.date("Type Error"),

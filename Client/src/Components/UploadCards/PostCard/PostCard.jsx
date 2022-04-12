@@ -22,7 +22,6 @@ const PostCard = (props) => {
   const [enlargedPhoto, setEnlargedPhoto] = useState();
 
   const dataRequest = useCallback(async () => {
-    //here were comments in ()
     try {
       await commentService.getComments(postId);
     } catch (e) {

@@ -1,9 +1,11 @@
 import jwt from "jsonwebtoken";
 import { SECRET } from "../config.js";
+import { logger } from "../Logs/Logger.js";
 import UserService from "../Services/UserService.js";
 
 const OwnerMiddleware = async (req, res, next) => {
   try {
+    logger.info("Entered to OwnerMiddleware");
     const authHeader = req.headers.authorization;
     if (!authHeader) throw "No JWT token";
     const token = authHeader.split(" ")[1];
@@ -15,7 +17,6 @@ const OwnerMiddleware = async (req, res, next) => {
       return tokenData._id;
     });
     const uploadId = req._parsedUrl.pathname.split("/")[2];
-    console.log(req._parsedUrl);
     const userUploads = await UserService.getUserUploads(userId);
     if (
       userUploads.uploads.find(
@@ -31,7 +32,7 @@ const OwnerMiddleware = async (req, res, next) => {
       };
     }
   } catch (e) {
-    console.log(e);
+    logger.error(`OwnerMiddleware. ${e.message}`);
     res.status(e.status ? e.status : 400).json([e.message]);
   }
 };

@@ -1,6 +1,11 @@
+import { Form, Formik } from "formik";
 import React, { useCallback, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
+import {
+  CommentOnCreateSchema,
+  CommentUpdateSchema,
+} from "../../../Hooks/Validator/Schemas/Schemas";
 import { useCommentService } from "../../../Service/Requests/useCommentService";
 import { Button } from "../../Common/Button/Button";
 import { Loader } from "../../Common/Loader/Loader";
@@ -18,10 +23,6 @@ const CommentCard = (props) => {
   const [showButtonsForUserComments, setShowButtonsForUserComments] =
     useState(false);
 
-  const [commentChanges, setCommentChanges] = useState({
-    body: comment.body,
-  });
-
   const deleteComment = async () => {
     try {
       commentService.deleteComment(commentId);
@@ -34,13 +35,7 @@ const CommentCard = (props) => {
     }
   };
 
-  const commentEditInputHandler = (event) =>
-    setCommentChanges({
-      ...commentChanges,
-      [event.target.name]: event.target.value,
-    });
-
-  const saveChangedComment = async () => {
+  const saveChangedComment = async (commentChanges) => {
     try {
       await commentService.patchComment(commentId, commentChanges);
     } catch (e) {
@@ -139,22 +134,23 @@ const CommentCard = (props) => {
 
       <div>
         {userId === comment.user._id && editingComment ? (
-          <>
-            <Textarea
-              name="body"
-              value={commentChanges.body}
-              onChange={commentEditInputHandler}
-              rows={5}
-            />
+          <Formik
+            initialValues={{ body: comment.body }}
+            validationSchema={CommentUpdateSchema}
+            onSubmit={(values) => saveChangedComment(values)}
+          >
+            <Form>
+              <Textarea name="body" rows={5} />
 
-            <Button
-              text="save changes"
-              name={`saveButton${commentId}`}
-              className="commentButton"
-              classNameBlock="commentButtonBlock"
-              onClick={saveChangedComment}
-            />
-          </>
+              <Button
+                text="save changes"
+                name={`saveButton${commentId}`}
+                type="Submit"
+                className="commentButton"
+                classNameBlock="commentButtonBlock"
+              />
+            </Form>
+          </Formik>
         ) : (
           <p className="commentBody">{comment.body}</p>
         )}

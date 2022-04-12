@@ -1,9 +1,8 @@
 @import"../../../Constants/queries.scss";
 .photosForPostUpload{
     background-color: var(--dropZone);
-    border: 3px dashed black;
-    margin-top: 10px;
-    padding: 0px 15px 15px 15px;
+    border: 3px dashed var(--black);
+    margin: 10px 0px;
     height: auto;
 }
 
@@ -20,11 +19,20 @@
 }
 
 .photosForPostPreview{
-    width: 48%;
-    margin: 0% 1%;
+    width: 46%;
+    box-sizing: border-box;
+    border: 10px solid var(--white);
+    transition: all ease 1.5s;
+    margin: 1px;
 }
 
-@media screen and (max-width: $tablet) {
+.photosForPostPreview:hover{
+    border-color: var(--mainRed);
+    border-radius: 10px;
+}
+
+
+@media screen and (max-width: $preTablet) {
     .photosForPostPreview{
         width: 99%;
     }

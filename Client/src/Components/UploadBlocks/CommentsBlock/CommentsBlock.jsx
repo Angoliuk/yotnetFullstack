@@ -7,7 +7,10 @@ import "./CommentsBlock.scss";
 import { Loader } from "../../Common/Loader/Loader";
 import { useCommentService } from "../../../Service/Requests/useCommentService";
 import { Form, Formik } from "formik";
-import { CommentOnCreateSchema } from "../../../Hooks/Validator/Schemas/Schemas";
+import {
+  CommentOnCreateSchema,
+  CommentUpdateSchema,
+} from "../../../Hooks/Validator/Schemas/Schemas";
 
 const CommentsBlock = (props) => {
   const { userInfo, showAlertHandler, comments, postId } = props;
@@ -132,7 +135,7 @@ const CommentsBlock = (props) => {
       {userInfo.accessToken && (
         <Formik
           initialValues={{ body: "" }}
-          validationSchema={CommentOnCreateSchema}
+          validationSchema={CommentUpdateSchema}
           onSubmit={(values, { resetForm }) => {
             createNewComment(values);
             resetForm();

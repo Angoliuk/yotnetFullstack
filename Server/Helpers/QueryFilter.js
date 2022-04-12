@@ -1,3 +1,4 @@
+import { logger } from "../Logs/Logger.js";
 import UserService from "../Services/UserService.js";
 
 export const QueryFilter = async (model, query) => {
@@ -8,6 +9,7 @@ export const QueryFilter = async (model, query) => {
     _sort = "_id",
     _order = "asc",
   } = query;
+  logger.info("Entered to QueryFilter");
   const sortInFind = {};
   const sortInFindQueriesTypes = ["_like", "_gte", "_lte"];
   const orderNum = _order === "asc" ? 1 : -1;

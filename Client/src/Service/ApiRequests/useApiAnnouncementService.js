@@ -41,10 +41,7 @@ export const useApiAnnouncementService = () => {
       const updatedAnnouncement = await request(
         `/announcements/440/${_id}`,
         "PATCH",
-        {
-          ...changes,
-          updatedAt: new Date(),
-        },
+        changes,
         {
           "content-type": "multipart/form-data",
           Authorization: `Bearer ${token}`,

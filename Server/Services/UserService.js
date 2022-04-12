@@ -1,4 +1,5 @@
 import { QueryFilter } from "../Helpers/QueryFilter.js";
+import { logger } from "../Logs/Logger.js";
 import UserModel from "../Models/UserModel.js";
 
 class UserService {
@@ -8,24 +9,26 @@ class UserService {
       user,
       { new: true }
     );
+    logger.info("UserService update done");
     return updatedUser;
   }
   async getUserUploads(userId) {
     const uploads = await UserModel.findOne({ _id: userId }).select("uploads");
+    logger.info("UserService getUserUploads done");
     return uploads;
   }
   async updateUserUploads(userId, uploads) {
     await UserModel.findOneAndUpdate({ _id: userId }, { $set: { uploads } });
+    logger.info("UserService UserUploads done");
   }
   async getOne(userId) {
-    if (!userId) {
-      throw new Error("get one");
-    }
     const users = await UserModel.findOne({ _id: userId });
+    logger.info("UserService getOne done");
     return users;
   }
   async getAll(query) {
     const users = await QueryFilter(UserModel, query);
+    logger.info("UserService getAll done");
     return users;
   }
 }

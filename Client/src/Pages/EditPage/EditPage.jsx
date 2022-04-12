@@ -38,6 +38,7 @@ const EditPage = (props) => {
         await postService.patchPost(id, updatedUpload);
         navigate("/");
       } else if (uploadType === "announcement") {
+        console.log(updatedUpload);
         await announcementService.patchAnnouncement(id, updatedUpload);
         navigate("/");
       } else {
@@ -61,8 +62,8 @@ const EditPage = (props) => {
         initialValues={{
           body: upload.body,
           title: upload.title,
-          photos: [],
           oldPhotos: upload.photos,
+          photos: [],
         }}
         validationSchema={PostOnCreateSchema}
         onSubmit={(values) => saveUploadChanges(values)}
@@ -91,6 +92,7 @@ const EditPage = (props) => {
             fieldName="photos"
             acceptedTypes="image/*"
             startingFiles={upload.photos}
+            deleteOnClick={true}
           />
 
           <Button

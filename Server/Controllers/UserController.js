@@ -4,8 +4,10 @@ class UserController {
   async getOne(req, res) {
     try {
       const users = await UserService.getOne(req.params.id);
+      logger.info("UserController getOne done");
       return res.json(users);
     } catch (e) {
+      logger.error(`UserController getOne. ${e.message}`);
       res.status(500).json(e);
     }
   }
@@ -13,8 +15,10 @@ class UserController {
   async getAll(req, res) {
     try {
       const users = await UserService.getAll(req.query);
+      logger.info("UserController getAll done");
       return res.json(users);
     } catch (e) {
+      logger.error(`UserController getAll. ${e.message}`);
       res.status(500).json(e);
     }
   }
@@ -33,8 +37,10 @@ class UserController {
         },
         req.userId
       );
+      logger.info("UserController update done");
       return res.json(updatedUser);
     } catch (e) {
+      logger.error(`UserController update. ${e.message}`);
       res.status(500).json(e);
     }
   }

@@ -1,3 +1,4 @@
+import { logger } from "../Logs/Logger.js";
 import AuthService from "../Services/AuthService.js";
 
 class AuthController {
@@ -5,8 +6,10 @@ class AuthController {
     try {
       const { email, password } = req.body;
       const user = await AuthService.login(email, password);
+      logger.error(`AuthController login done`);
       return res.json(user);
     } catch (e) {
+      logger.error(`AuthController login. ${e.message}`);
       res.status(500).json([e.message]);
     }
   }
@@ -23,8 +26,10 @@ class AuthController {
         age,
         uploads: [],
       });
+      logger.error(`AuthController register done`);
       return res.json(user);
     } catch (e) {
+      logger.error(`AuthController register. ${e.message}`);
       res.status(500).json([e.message]);
     }
   }
