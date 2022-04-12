@@ -19,3 +19,4 @@
 - chat???????? 
 - fully use of scss and correct imports
 - change password and email
+- virtual scroll
