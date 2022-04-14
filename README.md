@@ -11,12 +11,10 @@
 - likes
 - search or sort for uploads
 - avatar photo upload
-- posibility to add photos and videos to post
-- fake db
+- posibility to add videos to post
 - design???
 - interceptor for auth token
 - complete jwt token
 - chat???????? 
-- fully use of scss and correct imports
 - change password and email
 - virtual scroll
