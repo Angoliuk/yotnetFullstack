@@ -31,11 +31,11 @@ export const useAnnouncementService = () => {
   );
 
   const getUserAnnouncements = useCallback(
-    async (_id) => {
+    async (id) => {
       try {
         setAnnouncementLoading(true);
         const announcementsFromDB =
-          await apiAnnouncementService.getUserAnnouncementsApi(_id);
+          await apiAnnouncementService.getUserAnnouncementsApi(id);
         reduxAnnouncementService.setUserAnnouncementsRedux(announcementsFromDB);
       } catch (e) {
         throw e;
@@ -47,11 +47,11 @@ export const useAnnouncementService = () => {
   );
 
   const deleteAnnouncement = useCallback(
-    async (_id) => {
+    async (id) => {
       try {
         setAnnouncementLoading(true);
-        await apiAnnouncementService.deleteAnnouncementApi(_id);
-        reduxAnnouncementService.deleteAnnouncementRedux(_id);
+        await apiAnnouncementService.deleteAnnouncementApi(id);
+        reduxAnnouncementService.deleteAnnouncementRedux(id);
       } catch (e) {
         throw e;
       } finally {
@@ -62,7 +62,7 @@ export const useAnnouncementService = () => {
   );
 
   const patchAnnouncement = useCallback(
-    async (_id, changes) => {
+    async (id, changes) => {
       try {
         setAnnouncementLoading(true);
         await validate(changes, AnnouncementUpdateSchema);
@@ -79,7 +79,7 @@ export const useAnnouncementService = () => {
           }
         }
         const updatedAnnouncement =
-          await apiAnnouncementService.patchAnnouncementApi(_id, formData);
+          await apiAnnouncementService.patchAnnouncementApi(id, formData);
         reduxAnnouncementService.patchAnnouncementRedux(updatedAnnouncement);
       } catch (e) {
         throw e;

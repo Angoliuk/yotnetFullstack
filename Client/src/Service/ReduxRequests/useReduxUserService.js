@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../ReduxStorage/actions/userActions";
+import { login, logout } from "../../ReduxStorage/actions/userActions";
 import { setComments, setPosts } from "../../ReduxStorage/actions/postActions";
 import { setAnnouncements } from "../../ReduxStorage/actions/announcementActions";
 import { useCallback } from "react";
@@ -7,34 +7,72 @@ import { useCallback } from "react";
 export const useReduxUserService = () => {
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.postReducers.posts);
-  const announcements = useSelector((state) => state.postReducers.posts);
-  const comments = useSelector((state) => state.postReducers.posts);
+  const announcements = useSelector(
+    (state) => state.announcementReducers.announcements
+  );
+  const comments = useSelector((state) => state.postReducers.comments);
 
   const loginRedux = (loggedUser) => dispatch(login(loggedUser));
 
+  const logoutRedux = () => dispatch(logout());
+
   const updateUserRedux = useCallback(
     (updatedUser) => {
-      posts
-        .filter((post) => String(post.userId) === String(updatedUser._id))
-        .map((item) => (item.user = updatedUser));
-      comments
-        .filter((comment) => String(comment.userId) === String(updatedUser._id))
-        .map((item) => (item.user = updatedUser));
-      announcements
-        .filter(
-          (announcement) =>
-            String(announcement.userId) === String(updatedUser._id)
+      dispatch(
+        setComments(
+          comments
+            .filter(
+              (comment) => String(comment.userId) === String(updatedUser._id)
+            )
+            .map((item) => (item.user = updatedUser))
         )
-        .map((item) => (item.user = updatedUser));
-
-      dispatch(setComments(comments));
-      dispatch(setPosts(posts));
-      dispatch(setAnnouncements(announcements));
+      );
+      dispatch(
+        setPosts(
+          posts
+            .filter((post) => String(post.userId) === String(updatedUser._id))
+            .map((item) => (item.user = updatedUser))
+        )
+      );
+      dispatch(
+        setAnnouncements(
+          announcements
+            .filter(
+              (announcement) =>
+                String(announcement.userId) === String(updatedUser._id)
+            )
+            .map((item) => (item.user = updatedUser))
+        )
+      );
 
       dispatch(login({ ...updatedUser, accessToken: updatedUser.accessToken }));
     },
     [announcements, posts, dispatch, comments]
   );
 
-  return { loginRedux, updateUserRedux };
+  const deleteUserRedux = useCallback(
+    (userId) => {
+      dispatch(
+        setComments(
+          comments.filter(
+            (comment) => String(comment.userId) !== String(userId)
+          )
+        )
+      );
+      dispatch(
+        setPosts(posts.filter((post) => String(post.userId) !== String(userId)))
+      );
+      dispatch(
+        setAnnouncements(
+          announcements.filter(
+            (announcement) => String(announcement.userId) !== String(userId)
+          )
+        )
+      );
+      dispatch(logout());
+    },
+    [announcements, posts, dispatch, comments]
+  );
+
+  return { loginRedux, updateUserRedux, logoutRedux, deleteUserRedux };
 };

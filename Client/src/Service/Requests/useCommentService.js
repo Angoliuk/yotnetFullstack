@@ -17,10 +17,10 @@ export const useCommentService = () => {
   const { validate } = useValidator();
 
   const getComments = useCallback(
-    async (_id) => {
+    async (id) => {
       try {
         setCommentLoading(true);
-        const commentsFromDB = await apiCommentService.getCommentsApi(_id);
+        const commentsFromDB = await apiCommentService.getCommentsApi(id);
         reduxCommentService.setCommentsRedux(commentsFromDB);
       } catch (e) {
         throw e;
@@ -32,11 +32,11 @@ export const useCommentService = () => {
   );
 
   const deleteComment = useCallback(
-    async (_id) => {
+    async (id) => {
       try {
         setCommentLoading(true);
-        await apiCommentService.deleteCommentApi(_id);
-        reduxCommentService.deleteCommentRedux(_id);
+        await apiCommentService.deleteCommentApi(id);
+        reduxCommentService.deleteCommentRedux(id);
       } catch (e) {
         throw e;
       } finally {
@@ -47,12 +47,12 @@ export const useCommentService = () => {
   );
 
   const patchComment = useCallback(
-    async (_id, changes) => {
+    async (id, changes) => {
       try {
         setCommentLoading(true);
         await validate(changes, CommentUpdateSchema);
         const changedComment = await apiCommentService.patchCommentApi(
-          _id,
+          id,
           changes
         );
         reduxCommentService.patchCommentRedux({

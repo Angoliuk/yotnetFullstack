@@ -17,9 +17,9 @@ export const useApiAnnouncementService = () => {
   );
 
   const getUserAnnouncementsApi = useCallback(
-    async (_id) => {
+    async (id) => {
       const announcementsFromDB = await request(
-        `/announcements/200?_expand=user&userId_like=${_id}&_sort=createdAt&_order=desc`,
+        `/announcements/200?_expand=user&userId_like=${id}&_sort=createdAt&_order=desc`,
         "GET"
       );
       return announcementsFromDB;
@@ -28,8 +28,8 @@ export const useApiAnnouncementService = () => {
   );
 
   const deleteAnnouncementApi = useCallback(
-    async (_id) => {
-      await request(`/announcements/440/${_id}`, "DELETE", null, {
+    async (id) => {
+      await request(`/announcements/440/${id}`, "DELETE", null, {
         Authorization: `Bearer ${token}`,
       });
     },
@@ -37,9 +37,9 @@ export const useApiAnnouncementService = () => {
   );
 
   const patchAnnouncementApi = useCallback(
-    async (_id, changes) => {
+    async (id, changes) => {
       const updatedAnnouncement = await request(
-        `/announcements/440/${_id}`,
+        `/announcements/440/${id}`,
         "PATCH",
         changes,
         {

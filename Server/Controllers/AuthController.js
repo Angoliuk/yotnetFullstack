@@ -6,7 +6,7 @@ class AuthController {
     try {
       const { email, password } = req.body;
       const user = await AuthService.login(email, password);
-      logger.error(`AuthController login done`);
+      logger.info(`AuthController login done`);
       return res.json(user);
     } catch (e) {
       logger.error(`AuthController login. ${e.message}`);

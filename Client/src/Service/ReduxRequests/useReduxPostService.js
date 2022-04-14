@@ -43,7 +43,7 @@ export const useReduxPostService = () => {
   );
 
   const deletePostRedux = useCallback(
-    (_id) => dispatch(setPosts(posts.filter((post) => post._id !== _id))),
+    (id) => dispatch(setPosts(posts.filter((post) => post._id !== id))),
     [dispatch, posts]
   );
 

@@ -1,3 +1,4 @@
+import { logger } from "../Logs/Logger.js";
 import UserService from "../Services/UserService.js";
 
 class UserController {
@@ -19,6 +20,17 @@ class UserController {
       return res.json(users);
     } catch (e) {
       logger.error(`UserController getAll. ${e.message}`);
+      res.status(500).json(e);
+    }
+  }
+
+  async delete(req, res) {
+    try {
+      await UserService.delete(req.params.id);
+      logger.info("UserController delete done");
+      return res.sendStatus(200);
+    } catch (e) {
+      logger.error(`UserController delete. ${e.message}`);
       res.status(500).json(e);
     }
   }

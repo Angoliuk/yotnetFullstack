@@ -7,9 +7,9 @@ export const useApiCommentService = () => {
   const token = useSelector((state) => state.userReducers.accessToken);
 
   const getCommentsApi = useCallback(
-    async (_id) => {
+    async (id) => {
       const commentsFromDB = await request(
-        `/comments/200?postId_like=${_id}&_sort=createdAt&_order=desc&_expand=user`,
+        `/comments/200?postId_like=${id}&_sort=createdAt&_order=desc&_expand=user`,
         "GET"
       );
       return commentsFromDB;
@@ -18,8 +18,8 @@ export const useApiCommentService = () => {
   );
 
   const deleteCommentApi = useCallback(
-    async (_id) => {
-      await request(`/comments/440/${_id}`, "DELETE", null, {
+    async (id) => {
+      await request(`/comments/440/${id}`, "DELETE", null, {
         Authorization: `Bearer ${token}`,
       });
     },
@@ -27,9 +27,9 @@ export const useApiCommentService = () => {
   );
 
   const patchCommentApi = useCallback(
-    async (_id, changes) => {
+    async (id, changes) => {
       const changedComment = await request(
-        `/comments/440/${_id}`,
+        `/comments/440/${id}`,
         "PATCH",
         {
           ...changes,

@@ -25,18 +25,18 @@ export const useApiUserService = () => {
   );
 
   const getUserApi = useCallback(
-    async (_id) => {
-      const user = await request(`/users/200/${_id}`, "GET");
+    async (id) => {
+      const user = await request(`/users/200/${id}`, "GET");
       return user;
     },
     [request]
   );
 
   const updateUserApi = useCallback(
-    async (_id, user) => {
+    async (id, user) => {
       if (user.password === "") delete user.password;
 
-      const updatedUser = await request(`/440/users/${_id}`, "PATCH", user, {
+      const updatedUser = await request(`users/440/${id}`, "PATCH", user, {
         "content-type": "multipart/form-data",
         Authorization: `Bearer ${token}`,
       });
@@ -46,10 +46,20 @@ export const useApiUserService = () => {
     [request, token]
   );
 
+  const deleteUserApi = useCallback(
+    async (id) => {
+      await request(`users/440/${id}`, "DELETE", null, {
+        Authorization: `Bearer ${token}`,
+      });
+    },
+    [request, token]
+  );
+
   return {
     registerApi,
     loginApi,
     getUserApi,
     updateUserApi,
+    deleteUserApi,
   };
 };

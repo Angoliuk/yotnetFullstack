@@ -30,9 +30,9 @@ export const usePostService = () => {
   );
 
   const getUserPosts = useCallback(
-    async (_id) => {
+    async (id) => {
       try {
-        const postsFromDB = await apiPostService.getUserPostsApi(_id);
+        const postsFromDB = await apiPostService.getUserPostsApi(id);
         reduxPostService.setUserPostsRedux(postsFromDB);
       } catch (e) {
         throw e;
@@ -44,11 +44,11 @@ export const usePostService = () => {
   );
 
   const deletePost = useCallback(
-    async (_id) => {
+    async (id) => {
       try {
         setPostLoading(true);
-        await apiPostService.deletePostApi(_id);
-        reduxPostService.deletePostRedux(_id);
+        await apiPostService.deletePostApi(id);
+        reduxPostService.deletePostRedux(id);
       } catch (e) {
         throw e;
       } finally {
@@ -59,7 +59,7 @@ export const usePostService = () => {
   );
 
   const patchPost = useCallback(
-    async (_id, changes) => {
+    async (id, changes) => {
       try {
         setPostLoading(true);
         await validate(changes, PostUpdateSchema);
@@ -75,7 +75,7 @@ export const usePostService = () => {
             }
           }
         }
-        const updatedPost = await apiPostService.patchPostApi(_id, formData); //formData
+        const updatedPost = await apiPostService.patchPostApi(id, formData); //formData
         reduxPostService.patchPostRedux(updatedPost);
       } catch (e) {
         throw e;

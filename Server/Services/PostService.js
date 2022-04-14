@@ -3,6 +3,7 @@ import { QueryFilter } from "../Helpers/QueryFilter.js";
 import {
   AddToUserUploads,
   DeleteFromUserUploads,
+  DeletePostComments,
 } from "../Helpers/userUploads.js";
 import { DeleteFiles } from "../Helpers/DeleteFiles.js";
 import { logger } from "../Logs/Logger.js";
@@ -31,6 +32,7 @@ class PostService {
   async delete(postId, userId) {
     const postToDelete = await PostModel.findById({ _id: postId });
     DeleteFiles(postToDelete.photos);
+    await DeletePostComments(postId);
     await PostModel.findOneAndDelete({ _id: postId });
     await DeleteFromUserUploads(userId, postId);
     logger.info("PostService delete done");

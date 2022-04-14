@@ -2,6 +2,7 @@ import argon2 from "argon2";
 import { SALT, SECRET } from "../config.js";
 import UserModel from "../Models/UserModel.js";
 import jwt from "jsonwebtoken";
+import { logger } from "../Logs/Logger.js";
 
 const generateJWT = (_id) => {
   return jwt.sign(
@@ -26,7 +27,7 @@ class AuthService {
       logger.info("AuthService login done");
       return { ...candidate._doc, accessToken: token };
     } else {
-      logger.info("AuthService login. Wrong password");
+      logger.error("AuthService login. Wrong password");
       throw { message: "wrong password" };
     }
   }

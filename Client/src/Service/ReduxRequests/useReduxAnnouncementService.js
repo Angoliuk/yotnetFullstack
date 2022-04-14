@@ -49,10 +49,10 @@ export const useReduxAnnouncementService = () => {
   );
 
   const deleteAnnouncementRedux = useCallback(
-    (_id) => {
+    (id) => {
       dispatch(
         setAnnouncements(
-          announcements.filter((announcement) => announcement._id !== _id)
+          announcements.filter((announcement) => announcement._id !== id)
         )
       );
     },

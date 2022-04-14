@@ -1,4 +1,10 @@
 import { QueryFilter } from "../Helpers/QueryFilter.js";
+import {
+  DeleteFromUserUploads,
+  DeleteUserAnnouncements,
+  DeleteUserComments,
+  DeleteUserPosts,
+} from "../Helpers/userUploads.js";
 import { logger } from "../Logs/Logger.js";
 import UserModel from "../Models/UserModel.js";
 
@@ -30,6 +36,13 @@ class UserService {
     const users = await QueryFilter(UserModel, query);
     logger.info("UserService getAll done");
     return users;
+  }
+  async delete(userId) {
+    await DeleteUserComments(userId);
+    await DeleteUserAnnouncements(userId);
+    await DeleteUserPosts(userId);
+    await UserModel.deleteOne({ _id: userId });
+    logger.info("UserService delete done");
   }
 }
 

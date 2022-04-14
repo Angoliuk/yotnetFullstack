@@ -17,6 +17,7 @@ export const PATHS = {
   getUser: "/:access/:id",
   getUsers: "/:access",
   updateUser: "/:access/:id",
+  deleteUser: "/:access/:id",
 
   getPost: "/:access/:id",
   getPosts: "/:access",

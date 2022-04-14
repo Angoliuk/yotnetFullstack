@@ -26,8 +26,8 @@ export const useReduxCommentService = () => {
   );
 
   const deleteCommentRedux = useCallback(
-    (_id) =>
-      dispatch(setComments(comments.filter((comment) => comment._id !== _id))),
+    (id) =>
+      dispatch(setComments(comments.filter((comment) => comment._id !== id))),
     [comments, dispatch]
   );
 

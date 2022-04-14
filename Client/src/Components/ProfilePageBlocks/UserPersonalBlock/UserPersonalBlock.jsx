@@ -12,17 +12,30 @@ import { UserUpdateSchema } from "../../../Hooks/Validator/Schemas/Schemas";
 
 const UserPersonalBlock = (props) => {
   const { showAlertHandler, accessToken, userId, userInfo } = props;
-  const _id = useParams().id;
+  const id = useParams().id;
   const userService = useUserService();
 
   const updateUserProfile = async (user) => {
     try {
-      await userService.updateUser(_id, user, accessToken);
+      await userService.updateUser(id, user, accessToken);
       showAlertHandler({
         show: true,
         text: `Everything successfully saved`,
         type: "success",
       });
+    } catch (e) {
+      showAlertHandler({
+        show: true,
+        text: `${e}`,
+        type: "error",
+      });
+    }
+  };
+
+  const deleteUserProfile = async () => {
+    try {
+      await userService.deleteUser(userId);
+      // window.reload();
     } catch (e) {
       showAlertHandler({
         show: true,
@@ -38,47 +51,48 @@ const UserPersonalBlock = (props) => {
 
       <p className="profilePagePersonalName">
         Information about{" "}
-        {String(userId) === String(_id) ? "you" : userInfo.firstname}
+        {String(userId) === String(id) ? "you" : userInfo.firstname}
       </p>
-      {String(userId) === String(_id) ? (
-        <Formik
-          initialValues={{
-            firstname: userInfo.firstname,
-            lastname: userInfo.lastname,
-            age: userInfo.age,
-          }}
-          validationSchema={UserUpdateSchema}
-          onSubmit={(values) => updateUserProfile(values)}
-        >
-          <Form>
-            <div>
-              {/* <Input
+      {String(userId) === String(id) ? (
+        <>
+          <Formik
+            initialValues={{
+              firstname: userInfo.firstname,
+              lastname: userInfo.lastname,
+              age: userInfo.age,
+            }}
+            validationSchema={UserUpdateSchema}
+            onSubmit={(values) => updateUserProfile(values)}
+          >
+            <Form>
+              <div>
+                {/* <Input
                 name="password"
                 label="Password"
                 className="input personalInfoProfilePageInput"
                 type="password"
               /> */}
 
-              <Input
-                name="firstname"
-                label="Firstname"
-                className="input personalInfoProfilePageInput"
-              />
+                <Input
+                  name="firstname"
+                  label="Firstname"
+                  className="input personalInfoProfilePageInput"
+                />
 
-              <Input
-                name="lastname"
-                label="Lastname"
-                className="input personalInfoProfilePageInput"
-              />
+                <Input
+                  name="lastname"
+                  label="Lastname"
+                  className="input personalInfoProfilePageInput"
+                />
 
-              <Input
-                name="age"
-                label="Age"
-                className="input personalInfoProfilePageInput"
-                type="number"
-              />
+                <Input
+                  name="age"
+                  label="Age"
+                  className="input personalInfoProfilePageInput"
+                  type="number"
+                />
 
-              {/* <img
+                {/* <img
                 onClick={onChangeAvatar}
                 title="click to choose new avatar"
                 className="chosenAvatar"
@@ -86,7 +100,7 @@ const UserPersonalBlock = (props) => {
                 src={stateForInputs.avatar}
               /> */}
 
-              {/* {showAvatarsBlock &&
+                {/* {showAvatarsBlock &&
         Modal(
           <div className="avatarModalBlock">
             {avatarLinks.map((avatar, i) => {
@@ -104,15 +118,22 @@ const UserPersonalBlock = (props) => {
               );
             })}
         )} */}
-              <Button
-                type="Submit"
-                text="Save"
-                name="saveButton"
-                className="button personalInfoProfilePageButton"
-              />
-            </div>
-          </Form>
-        </Formik>
+                <Button
+                  type="Submit"
+                  text="Save"
+                  name="saveButton"
+                  className="button personalInfoProfilePageButton"
+                />
+              </div>
+            </Form>
+          </Formik>
+          <Button
+            text="Delete"
+            onClick={deleteUserProfile}
+            name="deleteButton"
+            className="button personalInfoProfilePageDeleteButton"
+          />
+        </>
       ) : (
         <div className="profilePagePersonalInfoBlock">
           <div>

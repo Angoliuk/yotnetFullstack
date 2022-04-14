@@ -1,11 +1,9 @@
 import { useCallback, useState } from "react";
 import { useApiUserService } from "../ApiRequests/useApiUserService";
 import { useReduxUserService } from "../ReduxRequests/useReduxUserService";
-import {
-  UserRegisterSchema,
-  UserUpdateSchema,
-} from "../../Hooks/Validator/Schemas/Schemas";
+import { UserUpdateSchema } from "../../Hooks/Validator/Schemas/Schemas";
 import { useValidator } from "../../Hooks/Validator/useValidator";
+import { useDispatch } from "react-redux";
 
 export const useUserService = () => {
   const [userLoading, setUserLoading] = useState(false);
@@ -54,7 +52,7 @@ export const useUserService = () => {
   );
 
   const updateUser = useCallback(
-    async (_id, user, token) => {
+    async (id, user, token) => {
       try {
         setUserLoading(true);
         await validate(user, UserUpdateSchema);
@@ -68,7 +66,7 @@ export const useUserService = () => {
             }
           }
         }
-        const updatedUser = await apiUserService.updateUserApi(_id, formData);
+        const updatedUser = await apiUserService.updateUserApi(id, formData);
         reduxUserService.updateUserRedux({
           ...updatedUser,
           accessToken: token,
@@ -84,10 +82,10 @@ export const useUserService = () => {
   );
 
   const getUser = useCallback(
-    async (_id) => {
+    async (id) => {
       try {
         setUserLoading(true);
-        const user = await apiUserService.getUserApi(_id);
+        const user = await apiUserService.getUserApi(id);
         return user;
       } catch (e) {
         throw e;
@@ -98,10 +96,27 @@ export const useUserService = () => {
     [apiUserService]
   );
 
+  const deleteUser = useCallback(
+    async (id) => {
+      try {
+        setUserLoading(true);
+        await apiUserService.deleteUserApi(id);
+        reduxUserService.deleteUserRedux(id);
+        // reduxUserService.logoutRedux();
+      } catch (e) {
+        throw e;
+      } finally {
+        setUserLoading(false);
+      }
+    },
+    [apiUserService, reduxUserService]
+  );
+
   return {
     register,
     login,
     updateUser,
+    deleteUser,
     userLoading,
     getUser,
   };

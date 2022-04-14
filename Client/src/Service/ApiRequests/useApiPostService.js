@@ -18,9 +18,9 @@ export const useApiPostService = () => {
   );
 
   const getUserPostsApi = useCallback(
-    async (_id) => {
+    async (id) => {
       const postsFromDB = await request(
-        `/posts/200?_expand=user&userId_like=${_id}&_sort=createdAt&_order=desc`,
+        `/posts/200?_expand=user&userId_like=${id}&_sort=createdAt&_order=desc`,
         "GET"
       );
       return postsFromDB;
@@ -29,8 +29,8 @@ export const useApiPostService = () => {
   );
 
   const deletePostApi = useCallback(
-    async (_id) => {
-      await request(`/posts/440/${_id}`, "DELETE", null, {
+    async (id) => {
+      await request(`/posts/440/${id}`, "DELETE", null, {
         Authorization: `Bearer ${token}`,
       });
     },
@@ -38,8 +38,8 @@ export const useApiPostService = () => {
   );
 
   const patchPostApi = useCallback(
-    async (_id, changes) => {
-      const updatedPost = await request(`/posts/440/${_id}`, "PATCH", changes, {
+    async (id, changes) => {
+      const updatedPost = await request(`/posts/440/${id}`, "PATCH", changes, {
         "content-type": "multipart/form-data",
         Authorization: `Bearer ${token}`,
       });

@@ -4,6 +4,7 @@ import { PATHS } from "../config.js";
 import FilesMiddleware from "../Middlewares/FilesMiddleware.js";
 import ValidationMiddleware from "../Middlewares/Validation/ValidationMiddleware.js";
 import AccessMiddleware from "../Middlewares/AccessMiddleware.js";
+import OwnerMiddleware from "../Middlewares/OwnerMiddleware.js";
 
 const UserRouter = new Router();
 
@@ -12,8 +13,8 @@ UserRouter.get(PATHS.getUsers, UserController.getAll);
 UserRouter.patch(
   PATHS.updateUser,
   [FilesMiddleware.array("avatar"), ValidationMiddleware, AccessMiddleware],
-
   UserController.update
 );
+UserRouter.delete(PATHS.deleteUser, [AccessMiddleware], UserController.delete);
 
 export default UserRouter;
