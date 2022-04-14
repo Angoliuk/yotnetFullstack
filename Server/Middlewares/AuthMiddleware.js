@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import { SECRET } from "../config.js";
 import { logger } from "../Logs/Logger.js";
 
 const AuthMiddleware = (req, res, next) => {
@@ -8,7 +7,7 @@ const AuthMiddleware = (req, res, next) => {
     const authHeader = req.headers.authorization;
     if (!authHeader) throw "No JWT token";
     const token = authHeader.split(" ")[1];
-    jwt.verify(token, SECRET, (e, tokenData) => {
+    jwt.verify(token, process.env.SECRET, (e, tokenData) => {
       if (e) {
         throw e;
       }

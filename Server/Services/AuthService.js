@@ -1,5 +1,4 @@
 import argon2 from "argon2";
-import { SALT, SECRET } from "../config.js";
 import UserModel from "../Models/UserModel.js";
 import jwt from "jsonwebtoken";
 import { logger } from "../Logs/Logger.js";
@@ -9,7 +8,7 @@ const generateJWT = (_id) => {
     {
       _id,
     },
-    SECRET,
+    process.env.SECRET,
     { expiresIn: "24h" }
   );
 };

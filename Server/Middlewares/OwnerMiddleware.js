@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import { SECRET } from "../config.js";
 import { logger } from "../Logs/Logger.js";
 import UserService from "../Services/UserService.js";
 
@@ -9,7 +8,7 @@ const OwnerMiddleware = async (req, res, next) => {
     const authHeader = req.headers.authorization;
     if (!authHeader) throw "No JWT token";
     const token = authHeader.split(" ")[1];
-    const userId = jwt.verify(token, SECRET, (e, tokenData) => {
+    const userId = jwt.verify(token, process.env.SECRET, (e, tokenData) => {
       if (e) {
         throw e;
       }

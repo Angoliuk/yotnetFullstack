@@ -1,12 +1,3 @@
-export const PORT = 5000;
-
-export const DB_URL =
-  "mongodb+srv://admin:admin@cluster0.xmujb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-
-export const SECRET = "Soi-hn&D#%v209Fsv7n=a,(d+Gs)&s^hSd#";
-
-export const SALT = 10;
-
 export const POST_PHOTOS_LIMIT = 10;
 export const ANNOUNCEMENT_PHOTOS_LIMIT = 2;
 
