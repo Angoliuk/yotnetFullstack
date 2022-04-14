@@ -5,7 +5,6 @@
 # TODO
 - TypeScript???
 - Axios
-- delete user 
 - auth with google
 - share post to social networks
 - likes
