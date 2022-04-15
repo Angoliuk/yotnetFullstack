@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
-import { useApiCommentService } from "../ApiRequests/useApiCommentService";
+import { ApiCommentService } from "../ApiRequests/ApiCommentService";
 import { useReduxCommentService } from "../ReduxRequests/UseReduxCommentService";
 import {
   CommentSchema,
@@ -10,17 +10,16 @@ import { useValidator } from "../../Hooks/Validator/useValidator";
 
 export const useCommentService = () => {
   const [commentLoading, setCommentLoading] = useState(false);
-  const apiCommentService = useApiCommentService();
   const reduxCommentService = useReduxCommentService();
   const user = useSelector((state) => state.userReducers);
-  const xTotalCount = apiCommentService.xTotalCount;
+  // const xTotalCount = apiCommentService.xTotalCount;
   const { validate } = useValidator();
 
   const getComments = useCallback(
     async (id) => {
       try {
         setCommentLoading(true);
-        const commentsFromDB = await apiCommentService.getCommentsApi(id);
+        const commentsFromDB = await ApiCommentService.getCommentsApi(id);
         reduxCommentService.setCommentsRedux(commentsFromDB);
       } catch (e) {
         throw e;
@@ -28,14 +27,14 @@ export const useCommentService = () => {
         setCommentLoading(false);
       }
     },
-    [apiCommentService, reduxCommentService]
+    [reduxCommentService]
   );
 
   const deleteComment = useCallback(
     async (id) => {
       try {
         setCommentLoading(true);
-        await apiCommentService.deleteCommentApi(id);
+        await ApiCommentService.deleteCommentApi(id);
         reduxCommentService.deleteCommentRedux(id);
       } catch (e) {
         throw e;
@@ -43,7 +42,7 @@ export const useCommentService = () => {
         setCommentLoading(false);
       }
     },
-    [apiCommentService, reduxCommentService]
+    [reduxCommentService]
   );
 
   const patchComment = useCallback(
@@ -51,7 +50,7 @@ export const useCommentService = () => {
       try {
         setCommentLoading(true);
         await validate(changes, CommentUpdateSchema);
-        const changedComment = await apiCommentService.patchCommentApi(
+        const changedComment = await ApiCommentService.patchCommentApi(
           id,
           changes
         );
@@ -65,7 +64,7 @@ export const useCommentService = () => {
         setCommentLoading(false);
       }
     },
-    [apiCommentService, reduxCommentService]
+    [reduxCommentService]
   );
 
   const createComment = useCallback(
@@ -73,8 +72,7 @@ export const useCommentService = () => {
       try {
         setCommentLoading(true);
         await validate(comment, CommentSchema);
-        console.log(comment);
-        const newCommentFromDB = await apiCommentService.createCommentApi(
+        const newCommentFromDB = await ApiCommentService.createCommentApi(
           comment
         );
         reduxCommentService.createCommentRedux(newCommentFromDB);
@@ -84,7 +82,7 @@ export const useCommentService = () => {
         setCommentLoading(false);
       }
     },
-    [apiCommentService, reduxCommentService]
+    [reduxCommentService]
   );
 
   return {
@@ -93,6 +91,5 @@ export const useCommentService = () => {
     patchComment,
     createComment,
     commentLoading,
-    xTotalCount,
   };
 };

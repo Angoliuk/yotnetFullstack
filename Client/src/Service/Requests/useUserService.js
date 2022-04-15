@@ -1,13 +1,11 @@
 import { useCallback, useState } from "react";
-import { useApiUserService } from "../ApiRequests/useApiUserService";
+import { ApiUserService } from "../ApiRequests/ApiUserService";
 import { useReduxUserService } from "../ReduxRequests/useReduxUserService";
 import { UserUpdateSchema } from "../../Hooks/Validator/Schemas/Schemas";
 import { useValidator } from "../../Hooks/Validator/useValidator";
-import { useDispatch } from "react-redux";
 
 export const useUserService = () => {
   const [userLoading, setUserLoading] = useState(false);
-  const apiUserService = useApiUserService();
   const reduxUserService = useReduxUserService();
   const { validate } = useValidator();
 
@@ -15,7 +13,7 @@ export const useUserService = () => {
     async (loginData) => {
       try {
         setUserLoading(true);
-        const user = await apiUserService.loginApi(loginData);
+        const user = await ApiUserService.loginApi(loginData);
         reduxUserService.loginRedux(user);
       } catch (e) {
         throw e;
@@ -23,7 +21,7 @@ export const useUserService = () => {
         setUserLoading(false);
       }
     },
-    [apiUserService, reduxUserService]
+    [reduxUserService]
   );
 
   const register = useCallback(
@@ -40,7 +38,7 @@ export const useUserService = () => {
             }
           }
         }
-        const user = await apiUserService.registerApi(formData);
+        const user = await ApiUserService.registerApi(formData);
         reduxUserService.loginRedux(user);
       } catch (e) {
         throw e;
@@ -48,7 +46,7 @@ export const useUserService = () => {
         setUserLoading(false);
       }
     },
-    [apiUserService, reduxUserService]
+    [reduxUserService]
   );
 
   const updateUser = useCallback(
@@ -66,7 +64,7 @@ export const useUserService = () => {
             }
           }
         }
-        const updatedUser = await apiUserService.updateUserApi(id, formData);
+        const updatedUser = await ApiUserService.updateUserApi(id, formData);
         reduxUserService.updateUserRedux({
           ...updatedUser,
           accessToken: token,
@@ -78,29 +76,26 @@ export const useUserService = () => {
         setUserLoading(false);
       }
     },
-    [apiUserService, reduxUserService]
+    [reduxUserService]
   );
 
-  const getUser = useCallback(
-    async (id) => {
-      try {
-        setUserLoading(true);
-        const user = await apiUserService.getUserApi(id);
-        return user;
-      } catch (e) {
-        throw e;
-      } finally {
-        setUserLoading(false);
-      }
-    },
-    [apiUserService]
-  );
+  const getUser = useCallback(async (id) => {
+    try {
+      setUserLoading(true);
+      const user = await ApiUserService.getUserApi(id);
+      return user;
+    } catch (e) {
+      throw e;
+    } finally {
+      setUserLoading(false);
+    }
+  }, []);
 
   const deleteUser = useCallback(
     async (id) => {
       try {
         setUserLoading(true);
-        await apiUserService.deleteUserApi(id);
+        await ApiUserService.deleteUserApi(id);
         reduxUserService.deleteUserRedux(id);
         // reduxUserService.logoutRedux();
       } catch (e) {
@@ -109,7 +104,7 @@ export const useUserService = () => {
         setUserLoading(false);
       }
     },
-    [apiUserService, reduxUserService]
+    [reduxUserService]
   );
 
   return {

@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { useApiPostService } from "../ApiRequests/useApiPostService";
+import { ApiPostService } from "../ApiRequests/ApiPostService";
 import { useReduxPostService } from "../ReduxRequests/useReduxPostService";
 import {
   PostSchema,
@@ -9,16 +9,15 @@ import { useValidator } from "../../Hooks/Validator/useValidator";
 
 export const usePostService = () => {
   const [postLoading, setPostLoading] = useState(false);
-  const apiPostService = useApiPostService();
   const reduxPostService = useReduxPostService();
-  const xTotalCount = apiPostService.xTotalCount;
+  // const xTotalCount = apiPostService.xTotalCount;
   const { validate } = useValidator();
 
   const getPosts = useCallback(
     async (page, limit) => {
       try {
         setPostLoading(true);
-        const postsFromDB = await apiPostService.getPostsApi(page, limit);
+        const postsFromDB = await ApiPostService.getPostsApi(page, limit);
         reduxPostService.setPostsRedux(postsFromDB);
       } catch (e) {
         throw e;
@@ -26,13 +25,13 @@ export const usePostService = () => {
         setPostLoading(false);
       }
     },
-    [apiPostService, reduxPostService]
+    [reduxPostService]
   );
 
   const getUserPosts = useCallback(
     async (id) => {
       try {
-        const postsFromDB = await apiPostService.getUserPostsApi(id);
+        const postsFromDB = await ApiPostService.getUserPostsApi(id);
         reduxPostService.setUserPostsRedux(postsFromDB);
       } catch (e) {
         throw e;
@@ -40,14 +39,14 @@ export const usePostService = () => {
         setPostLoading(false);
       }
     },
-    [apiPostService, reduxPostService]
+    [reduxPostService]
   );
 
   const deletePost = useCallback(
     async (id) => {
       try {
         setPostLoading(true);
-        await apiPostService.deletePostApi(id);
+        await ApiPostService.deletePostApi(id);
         reduxPostService.deletePostRedux(id);
       } catch (e) {
         throw e;
@@ -55,7 +54,7 @@ export const usePostService = () => {
         setPostLoading(false);
       }
     },
-    [apiPostService, reduxPostService]
+    [reduxPostService]
   );
 
   const patchPost = useCallback(
@@ -75,7 +74,7 @@ export const usePostService = () => {
             }
           }
         }
-        const updatedPost = await apiPostService.patchPostApi(id, formData); //formData
+        const updatedPost = await ApiPostService.patchPostApi(id, formData); //formData
         reduxPostService.patchPostRedux(updatedPost);
       } catch (e) {
         throw e;
@@ -83,7 +82,7 @@ export const usePostService = () => {
         setPostLoading(false);
       }
     },
-    [apiPostService, reduxPostService]
+    [reduxPostService]
   );
 
   const createPost = useCallback(
@@ -101,7 +100,7 @@ export const usePostService = () => {
             }
           }
         }
-        const newPostFromDB = await apiPostService.createPostApi(formData);
+        const newPostFromDB = await ApiPostService.createPostApi(formData);
         reduxPostService.createPostRedux(newPostFromDB);
       } catch (e) {
         throw e;
@@ -109,7 +108,7 @@ export const usePostService = () => {
         setPostLoading(false);
       }
     },
-    [apiPostService, reduxPostService]
+    [reduxPostService]
   );
 
   return {
@@ -119,6 +118,5 @@ export const usePostService = () => {
     getUserPosts,
     createPost,
     postLoading,
-    xTotalCount,
   };
 };

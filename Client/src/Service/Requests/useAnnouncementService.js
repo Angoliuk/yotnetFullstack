@@ -1,17 +1,16 @@
 import { useCallback, useState } from "react";
-import { useApiAnnouncementService } from "../ApiRequests/useApiAnnouncementService";
 import { useReduxAnnouncementService } from "../ReduxRequests/useReduxAnnouncementService";
 import {
   AnnouncementSchema,
   AnnouncementUpdateSchema,
 } from "../../Hooks/Validator/Schemas/Schemas";
 import { useValidator } from "../../Hooks/Validator/useValidator";
+import { ApiAnnouncementService } from "../ApiRequests/ApiAnnouncementService";
 
 export const useAnnouncementService = () => {
   const [announcementLoading, setAnnouncementLoading] = useState(false);
-  const apiAnnouncementService = useApiAnnouncementService();
   const reduxAnnouncementService = useReduxAnnouncementService();
-  const xTotalCount = apiAnnouncementService.xTotalCount;
+  // const xTotalCount = apiAnnouncementService.xTotalCount;
   const { validate } = useValidator();
 
   const getAnnouncements = useCallback(
@@ -19,7 +18,7 @@ export const useAnnouncementService = () => {
       try {
         setAnnouncementLoading(true);
         const announcementsFromDB =
-          await apiAnnouncementService.getAnnouncementsApi(page, limit);
+          await ApiAnnouncementService.getAnnouncementsApi(page, limit);
         reduxAnnouncementService.setAnnouncementsRedux(announcementsFromDB);
       } catch (e) {
         throw e;
@@ -27,7 +26,7 @@ export const useAnnouncementService = () => {
         setAnnouncementLoading(false);
       }
     },
-    [apiAnnouncementService, reduxAnnouncementService]
+    [reduxAnnouncementService]
   );
 
   const getUserAnnouncements = useCallback(
@@ -35,7 +34,7 @@ export const useAnnouncementService = () => {
       try {
         setAnnouncementLoading(true);
         const announcementsFromDB =
-          await apiAnnouncementService.getUserAnnouncementsApi(id);
+          await ApiAnnouncementService.getUserAnnouncementsApi(id);
         reduxAnnouncementService.setUserAnnouncementsRedux(announcementsFromDB);
       } catch (e) {
         throw e;
@@ -43,14 +42,14 @@ export const useAnnouncementService = () => {
         setAnnouncementLoading(false);
       }
     },
-    [apiAnnouncementService, reduxAnnouncementService]
+    [reduxAnnouncementService]
   );
 
   const deleteAnnouncement = useCallback(
     async (id) => {
       try {
         setAnnouncementLoading(true);
-        await apiAnnouncementService.deleteAnnouncementApi(id);
+        await ApiAnnouncementService.deleteAnnouncementApi(id);
         reduxAnnouncementService.deleteAnnouncementRedux(id);
       } catch (e) {
         throw e;
@@ -58,7 +57,7 @@ export const useAnnouncementService = () => {
         setAnnouncementLoading(false);
       }
     },
-    [apiAnnouncementService, reduxAnnouncementService]
+    [reduxAnnouncementService]
   );
 
   const patchAnnouncement = useCallback(
@@ -79,7 +78,7 @@ export const useAnnouncementService = () => {
           }
         }
         const updatedAnnouncement =
-          await apiAnnouncementService.patchAnnouncementApi(id, formData);
+          await ApiAnnouncementService.patchAnnouncementApi(id, formData);
         reduxAnnouncementService.patchAnnouncementRedux(updatedAnnouncement);
       } catch (e) {
         throw e;
@@ -87,7 +86,7 @@ export const useAnnouncementService = () => {
         setAnnouncementLoading(false);
       }
     },
-    [apiAnnouncementService, reduxAnnouncementService]
+    [reduxAnnouncementService]
   );
 
   const createAnnouncement = useCallback(
@@ -106,7 +105,7 @@ export const useAnnouncementService = () => {
           }
         }
         const newAnnouncementFromDB =
-          await apiAnnouncementService.createAnnouncementApi(formData);
+          await ApiAnnouncementService.createAnnouncementApi(formData);
         reduxAnnouncementService.createAnnouncementRedux(newAnnouncementFromDB);
       } catch (e) {
         throw e;
@@ -114,7 +113,7 @@ export const useAnnouncementService = () => {
         setAnnouncementLoading(false);
       }
     },
-    [apiAnnouncementService, reduxAnnouncementService]
+    [reduxAnnouncementService]
   );
 
   return {
@@ -124,6 +123,5 @@ export const useAnnouncementService = () => {
     getUserAnnouncements,
     createAnnouncement,
     announcementLoading,
-    xTotalCount,
   };
 };
