@@ -14,5 +14,6 @@ AuthRouter.post(
   AuthController.register
 );
 AuthRouter.post(PATHS.logout, AccessMiddleware, AuthController.logout);
+AuthRouter.get(PATHS.refresh, AccessMiddleware, AuthController.refresh);
 
 export default AuthRouter;

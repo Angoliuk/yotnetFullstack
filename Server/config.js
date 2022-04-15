@@ -5,6 +5,7 @@ export const PATHS = {
   login: "/:access/login",
   logout: "/:access/logout",
   register: "/:access/register",
+  refresh: "/:sccess/refresh",
 
   getUser: "/:access/:id",
   getUsers: "/:access",

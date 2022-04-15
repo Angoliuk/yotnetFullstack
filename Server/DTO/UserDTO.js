@@ -1,4 +1,5 @@
 export class UserDTO {
+  id;
   email;
   password;
   firstname;
@@ -8,6 +9,7 @@ export class UserDTO {
   uploads;
 
   constructor(model) {
+    this.id = model._id;
     this.email = model.email;
     this.password = model.password;
     this.firstname = model.firstname;

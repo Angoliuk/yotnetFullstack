@@ -1,4 +1,5 @@
 import TokenModel from "../Models/TokenModel.js";
+import jwt from "jsonwebtoken";
 
 class TokenService {
   async generateTokens(payload) {
