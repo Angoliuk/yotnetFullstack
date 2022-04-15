@@ -3,28 +3,28 @@ import { logger } from "../Logs/Logger.js";
 import AnnouncementService from "../Services/AnnouncementService.js";
 
 class AnnouncementController {
-  async getAll(req, res) {
+  async getAll(req, res, next) {
     try {
       const announcements = await AnnouncementService.getAll(req.query);
       logger.info("AnnouncementController getAll done");
       return res.json(announcements);
     } catch (e) {
       logger.error(`AnnouncementController getAll. ${e.message}`);
-      res.status(500).json(e);
+      next(e);
     }
   }
-  async getOne(req, res) {
+  async getOne(req, res, next) {
     try {
       const announcements = await AnnouncementService.get(req.params.id);
       logger.info("AnnouncementController getOne done");
       return res.json(announcements);
     } catch (e) {
       logger.error(`AnnouncementController getOne. ${e.message}`);
-      res.status(500).json(e);
+      next(e);
     }
   }
 
-  async update(req, res) {
+  async update(req, res, next) {
     try {
       const { title, body, userId, createdAt, updatedAt, oldPhotos } = req.body;
       const announcement = await AnnouncementService.update(req.params.id, {
@@ -39,22 +39,22 @@ class AnnouncementController {
       return res.json(announcement);
     } catch (e) {
       logger.error(`AnnouncementController update. ${e.message}`);
-      res.status(500).json(e);
+      next(e);
     }
   }
 
-  async delete(req, res) {
+  async delete(req, res, next) {
     try {
       await AnnouncementService.delete(req.params.id, req.userId);
       logger.info("AnnouncementController delete done");
       return res.sendStatus(200);
     } catch (e) {
       logger.error(`AnnouncementController delete. ${e.message}`);
-      res.status(500).json(e);
+      next(e);
     }
   }
 
-  async create(req, res) {
+  async create(req, res, next) {
     try {
       const { title, body, userId, createdAt, updatedAt } = req.body;
       const announcement = await AnnouncementService.create(
@@ -72,7 +72,7 @@ class AnnouncementController {
       res.json(announcement);
     } catch (e) {
       logger.error(`AnnouncementController create. ${e.message}`);
-      res.status(500).json(e);
+      next(e);
     }
   }
 }

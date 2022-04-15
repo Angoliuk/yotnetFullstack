@@ -3,28 +3,28 @@ import { logger } from "../Logs/Logger.js";
 import PostService from "../Services/PostService.js";
 
 class PostController {
-  async getAll(req, res) {
+  async getAll(req, res, next) {
     try {
       const posts = await PostService.getAll(req.query);
       logger.info("PostController getAll done");
       return res.json(posts);
     } catch (e) {
       logger.error(`PostController getAll. ${e.message}`);
-      res.status(500).json(e);
+      next(e);
     }
   }
-  async getOne(req, res) {
+  async getOne(req, res, next) {
     try {
       const posts = await PostService.get(req.params.id);
       logger.info("PostController getOne done");
       return res.json(posts);
     } catch (e) {
       logger.error(`PostController getOne. ${e.message}`);
-      res.status(500).json(e);
+      next(e);
     }
   }
 
-  async update(req, res) {
+  async update(req, res, next) {
     try {
       const { title, body, userId, createdAt, updatedAt, oldPhotos } = req.body;
       const post = await PostService.update(req.params.id, {
@@ -36,25 +36,25 @@ class PostController {
         photos: [...JSON.parse(oldPhotos), ...CreateExactPathes(req.files)],
       });
       logger.info("PostController update done");
-      return res.status(200).json(post);
+      return res.json(post);
     } catch (e) {
       logger.error(`PostController update. ${e.message}`);
-      res.status(500).json(e);
+      next(e);
     }
   }
 
-  async delete(req, res) {
+  async delete(req, res, next) {
     try {
       await PostService.delete(req.params.id, req.userId);
       logger.info("PostController delete done");
       return res.sendStatus(200);
     } catch (e) {
       logger.error(`PostController delete. ${e.message}`);
-      res.status(500).json(e);
+      next(e);
     }
   }
 
-  async create(req, res) {
+  async create(req, res, next) {
     try {
       const { title, body, userId, createdAt, updatedAt } = req.body;
       const post = await PostService.create(
@@ -72,7 +72,7 @@ class PostController {
       return res.json(post);
     } catch (e) {
       logger.error(`PostController create. ${e.message}`);
-      res.status(500).json(e);
+      next(e);
     }
   }
 }

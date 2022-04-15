@@ -6,46 +6,52 @@ import {
 import AnnouncementModel from "../Models/AnnouncementModel.js";
 import { DeleteFiles } from "../Helpers/DeleteFiles.js";
 import { logger } from "../Logs/Logger.js";
+import { AnnouncementDTO } from "../DTO/AnnouncementDTO.js";
 
 class AnnouncementService {
   async update(announcementId, announcementData) {
-    const announcement = await AnnouncementModel.findOneAndUpdate(
-      { _id: announcementId },
+    const announcement = await AnnouncementModel.findByIdAndUpdate(
+      announcementId,
       announcementData,
       { new: true }
     );
+    const announcementDTO = new AnnouncementDTO(announcement);
     logger.info("AnnouncementService update done");
-    return announcement;
+    return announcementDTO;
   }
+
   async getAll(query) {
     const announcements = await QueryFilter(AnnouncementModel, query);
+    const announcementsDTO = announcements.map(
+      (announcement) => new AnnouncementDTO(announcement)
+    );
     logger.info("AnnouncementService getAll done");
-    return announcements;
+    return announcementsDTO;
   }
+
   async getOne(announcementId) {
-    if (!announcementId) {
-      throw new Error("get one");
-    }
-    const announcements = await AnnouncementModel.findOne({
-      _id: announcementId,
-    });
+    const announcement = await AnnouncementModel.findById(announcementId);
+    const announcementDTO = new AnnouncementDTO(announcement);
     logger.info("AnnouncementService getOne done");
-    return announcements;
+    return announcementDTO;
   }
+
   async delete(announcementId, userId) {
-    const announcementToDelete = await AnnouncementModel.findById({
-      _id: announcementId,
-    });
+    const announcementToDelete = await AnnouncementModel.findById(
+      announcementId
+    );
     DeleteFiles(announcementToDelete.photos);
-    await AnnouncementModel.findOneAndDelete({ _id: announcementId });
+    await AnnouncementModel.findByIdAndDelete(announcementId);
     await DeleteFromUserUploads(userId, announcementId);
     logger.info("AnnouncementService delete done");
   }
+
   async create(announcementData, userId) {
     const announcement = await AnnouncementModel.create(announcementData);
     await AddToUserUploads(userId, announcement._id);
+    const announcementDTO = new AnnouncementDTO(announcement);
     logger.info("AnnouncementService create done");
-    return announcement;
+    return announcementDTO;
   }
 }
 

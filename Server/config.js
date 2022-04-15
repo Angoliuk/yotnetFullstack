@@ -3,6 +3,7 @@ export const ANNOUNCEMENT_PHOTOS_LIMIT = 2;
 
 export const PATHS = {
   login: "/:access/login",
+  logout: "/:access/logout",
   register: "/:access/register",
 
   getUser: "/:access/:id",

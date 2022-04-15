@@ -2,40 +2,40 @@ import { logger } from "../Logs/Logger.js";
 import UserService from "../Services/UserService.js";
 
 class UserController {
-  async getOne(req, res) {
+  async getOne(req, res, next) {
     try {
       const users = await UserService.getOne(req.params.id);
       logger.info("UserController getOne done");
       return res.json(users);
     } catch (e) {
       logger.error(`UserController getOne. ${e.message}`);
-      res.status(500).json(e);
+      next(e);
     }
   }
 
-  async getAll(req, res) {
+  async getAll(req, res, next) {
     try {
       const users = await UserService.getAll(req.query);
       logger.info("UserController getAll done");
       return res.json(users);
     } catch (e) {
       logger.error(`UserController getAll. ${e.message}`);
-      res.status(500).json(e);
+      next(e);
     }
   }
 
-  async delete(req, res) {
+  async delete(req, res, next) {
     try {
       await UserService.delete(req.params.id);
       logger.info("UserController delete done");
       return res.sendStatus(200);
     } catch (e) {
       logger.error(`UserController delete. ${e.message}`);
-      res.status(500).json(e);
+      next(e);
     }
   }
 
-  async update(req, res) {
+  async update(req, res, next) {
     try {
       const { email, password, firstname, lastname, avatar, age } = req.body;
       const updatedUser = await UserService.update(
@@ -53,7 +53,7 @@ class UserController {
       return res.json(updatedUser);
     } catch (e) {
       logger.error(`UserController update. ${e.message}`);
-      res.status(500).json(e);
+      next(e);
     }
   }
 }

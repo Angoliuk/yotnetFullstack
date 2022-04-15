@@ -25,7 +25,6 @@ export const DeletePostComments = async (postId) => {
   logger.info("Entered to DeletePostComments");
   const commentsToDelete = await CommentModel.find({ postId });
   commentsToDelete.forEach((comment) => {
-    logger.info(postId, comment);
     DeleteFromUserUploads(comment.userId, comment._id);
   });
   await CommentModel.deleteMany({ postId });
@@ -35,7 +34,6 @@ export const DeleteUserPosts = async (userId) => {
   logger.info("Entered to DeleteUserPosts");
   const postsToDelete = await PostModel.find({ userId });
   postsToDelete.forEach((post) => {
-    logger.info(userId, post);
     DeletePostComments(post._id);
     post?.photos && DeleteFiles(post.photos);
     DeleteFromUserUploads(userId, post._id);
@@ -47,7 +45,6 @@ export const DeleteUserAnnouncements = async (userId) => {
   logger.info("Entered to DeleteUserAnnouncements");
   const announcementsToDelete = await AnnouncementModel.find({ userId });
   announcementsToDelete.forEach((announcement) => {
-    logger.info(userId, announcement);
     announcement?.photos && DeleteFiles(announcement.photos);
     DeleteFromUserUploads(userId, announcement._id);
   });
@@ -58,7 +55,6 @@ export const DeleteUserComments = async (userId) => {
   logger.info("Entered to DeleteUserComments");
   const commentsToDelete = await CommentModel.find({ userId });
   commentsToDelete.forEach((comment) => {
-    logger.info(userId, comment);
     DeleteFromUserUploads(userId, comment._id);
   });
   await CommentModel.deleteMany({ userId });
