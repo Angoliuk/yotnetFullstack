@@ -50,7 +50,7 @@ const ProfilePage = (props) => {
       console.log(e);
       showAlertHandler({
         show: true,
-        text: `Error, try to reload this page. ${e}`,
+        text: `${e.message}`,
         type: "error",
       });
     }

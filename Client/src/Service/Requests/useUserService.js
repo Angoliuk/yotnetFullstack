@@ -39,6 +39,7 @@ export const useUserService = () => {
           }
         }
         const user = await ApiUserService.registerApi(formData);
+        console.log(user);
         reduxUserService.loginRedux(user.data);
       } catch (e) {
         throw e;

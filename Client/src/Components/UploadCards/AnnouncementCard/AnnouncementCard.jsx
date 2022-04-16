@@ -24,7 +24,7 @@ const AnnouncementCard = (props) => {
     } catch (e) {
       showAlertHandler({
         show: true,
-        text: `Error, try to delete post again. ${e}`,
+        text: `${e.message}`,
         type: "error",
       });
     }

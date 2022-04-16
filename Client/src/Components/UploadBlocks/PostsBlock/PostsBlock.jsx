@@ -23,7 +23,7 @@ const PostsBlock = (props) => {
     } catch (e) {
       showAlertHandler({
         show: true,
-        text: `Error, try to reload this page. ${e}`,
+        text: `${e.message}`,
         type: "error",
       });
     } finally {

@@ -24,7 +24,7 @@ const LoginPage = (props) => {
 
       showAlertHandler({
         show: true,
-        text: `${e}`,
+        text: `${e.message}`,
         type: "error",
       });
     }

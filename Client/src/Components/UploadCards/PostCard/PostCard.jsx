@@ -27,7 +27,7 @@ const PostCard = (props) => {
     } catch (e) {
       showAlertHandler({
         show: true,
-        text: `Error, try to reload this page. ${e}`,
+        text: `${e.message}`,
         type: "error",
       });
     }
@@ -39,7 +39,7 @@ const PostCard = (props) => {
     } catch (e) {
       showAlertHandler({
         show: true,
-        text: `Error, try to delete post again. ${e}`,
+        text: `${e.message}`,
         type: "error",
       });
     }

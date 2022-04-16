@@ -18,9 +18,9 @@ class AuthService {
       throw ApiError.BadRequestError("Wrong password");
     }
     const tokens = await TokenService.generateAndSaveToken(candidate._id);
-    const userDTO = new AuthUserDTO({ ...candidate, ...tokens });
+    const userDTO = new AuthUserDTO({ ...candidate._doc, ...tokens });
     logger.info("AuthService login done");
-    return userDTO;
+    return { ...userDTO };
   }
 
   async logout(refreshToken) {

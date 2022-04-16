@@ -37,7 +37,7 @@ const NewUploadBlock = (props) => {
     } catch (e) {
       showAlertHandler({
         show: true,
-        text: `${e}`,
+        text: `${e.message}`,
         type: "error",
       });
     } finally {

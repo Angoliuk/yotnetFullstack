@@ -29,7 +29,7 @@ const CommentCard = (props) => {
     } catch (e) {
       showAlertHandler({
         show: true,
-        text: `Error, try to delete comment again. ${e}`,
+        text: `${e.message}`,
         type: "error",
       });
     }
@@ -41,7 +41,7 @@ const CommentCard = (props) => {
     } catch (e) {
       showAlertHandler({
         show: true,
-        text: `${e}`,
+        text: `${e.message}`,
         type: "error",
       });
     } finally {

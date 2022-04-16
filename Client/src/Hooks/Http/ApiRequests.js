@@ -44,4 +44,58 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (e) => {
+    if (e.response) {
+      throw new Error(
+        e.response?.data?.message
+          ? `Error ${e.response.status}, ${e.response.statusText}. ${e.response.data.message}`
+          : `Error ${e.response.status}, ${e.response.statusText}`
+      );
+    } else if (e.request) {
+      throw new Error(
+        e.request?.data?.message
+          ? `Error ${e.request.status}, ${e.request.statusText}. ${e.request.data.message}`
+          : `Error ${e.request.status}, ${e.request.statusText}`
+      );
+    } else {
+      throw new Error(
+        e.status ? `Error ${e.status}, ${e.statusText}` : "Unknown error"
+      );
+    }
+  }
+);
+
 export default api;
+
+// const originalRequest = e.config;
+// if (
+//   e.response.status === "401" &&
+//   originalRequest &&
+//   !originalRequest._isRetry
+// ) {
+//   originalRequest._isRetry = true;
+//   try {
+//     const response = await axios.get("/refresh", {
+//       baseURL: API_URL,
+//       withCredentials: true,
+//     });
+//     localStorage.setItem("UserData", response);
+//     return apiAuth.request(originalRequest);
+//   } catch (e) {
+//     throw e;
+//   }
+// }
+
+// else if (e.request) {
+//   throw new Error(
+//     `${e.request.status}. ${
+//       e.request.message
+//         ? e.request.message
+//         : "No information about this error"
+//     }`
+//   );
+// }

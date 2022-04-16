@@ -9,29 +9,6 @@ const apiAuth = axios.create({
     "Access-Control-Allow-Methods": "GET,POST,DELETE,PATCH",
   },
 });
-// .catch((e) => {
-//   console.log(e);
-//   if (e.response) {
-//     console.log(e.response);
-//     throw new Error(
-//       `${e.response.status}. ${
-//         e.response.message
-//           ? e.response.message
-//           : "No information about this error"
-//       }`
-//     );
-//   } else if (e.request) {
-//     throw new Error(
-//       `${e.request.status}. ${
-//         e.request.message
-//           ? e.request.message
-//           : "No information about this error"
-//       }`
-//     );
-//   } else {
-//     throw new Error(e.status ? e.status : "Unknown error");
-//   }
-// });
 
 apiAuth.interceptors.request.use((config) => {
   if (config.data instanceof FormData) {
@@ -44,13 +21,14 @@ apiAuth.interceptors.request.use((config) => {
 });
 
 apiAuth.interceptors.response.use(
-  (config) => {
-    return config;
+  (response) => {
+    return response;
   },
-  async (error) => {
-    const originalRequest = error.config;
+  async (e) => {
+    console.log(e);
+    const originalRequest = e.config;
     if (
-      error.response.status === "401" &&
+      e.response.status === "401" &&
       originalRequest &&
       !originalRequest._isRetry
     ) {
@@ -65,9 +43,44 @@ apiAuth.interceptors.response.use(
       } catch (e) {
         throw e;
       }
+    } else {
+      if (e.response) {
+        throw new Error(
+          e.response?.data?.message
+            ? `Error ${e.response.status}, ${e.response.statusText}. ${e.response.data.message}`
+            : `Error ${e.response.status}, ${e.response.statusText}`
+        );
+      } else if (e.request) {
+        throw new Error(
+          e.request?.data?.message
+            ? `Error ${e.request.status}, ${e.request.statusText}. ${e.request.data.message}`
+            : `Error ${e.request.status}, ${e.request.statusText}`
+        );
+      } else {
+        throw new Error(
+          e.status ? `Error ${e.status}, ${e.statusText}` : "Unknown error"
+        );
+      }
     }
-    console.log(error);
-    throw error;
+    // if (e.response) {
+    //   throw new Error(
+    //     e.response?.data?.message
+    //       ? `${e.response.status}, ${e.response.statusText}. ${e.response.data.message}`
+    //       : `${e.response.status}, ${e.response.statusText}`
+    //   );
+    // } else if (e.request) {
+    //   throw new Error(
+    //     e.request?.data?.message
+    //       ? `${e.request.status}, ${e.request.statusText}. ${e.request.data.message}`
+    //       : `${e.request.status}, ${e.request.statusText}`
+    //   );
+    // } else {
+    //   throw new Error(
+    //     e.status ? `${e.status}, ${e.statusText}` : "Unknown error"
+    //   );
+    // }
+    // console.log(e);
+    // throw error;
   }
 );
 
