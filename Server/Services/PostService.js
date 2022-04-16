@@ -43,7 +43,6 @@ class PostService {
   }
 
   async create(postData, userId) {
-    console.log(postData, userId);
     const post = await PostModel.create(postData);
     await AddToUserUploads(userId, post._id);
     const postDTO = new PostDTO(post);

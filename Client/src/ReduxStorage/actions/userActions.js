@@ -15,7 +15,6 @@ export const autoLogin = () => {
 };
 
 export const login = (userInfo) => {
-  console.log(userInfo);
   localStorage.setItem("userData", JSON.stringify(userInfo));
   return {
     type: LOGIN,
