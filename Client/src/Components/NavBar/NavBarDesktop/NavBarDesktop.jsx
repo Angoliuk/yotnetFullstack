@@ -5,7 +5,7 @@ import { logout } from "../../../ReduxStorage/actions/userActions";
 import "./NavBarDesktop.scss";
 import AnnouncementsBlock from "../../UploadBlocks/AnnouncementsBlock/AnnouncementsBlock";
 const NavBarDesktop = (props) => {
-  const { isAuth, _id, logout, avatar, showAlertHandler } = props;
+  const { isAuth, id, logout, avatar, showAlertHandler } = props;
   return isAuth ? (
     <nav className="loggedNavBar">
       <NavLink className="navElem" to="/home">
@@ -23,7 +23,7 @@ const NavBarDesktop = (props) => {
 
       <AnnouncementsBlock text={true} showAlertHandler={showAlertHandler} />
 
-      <NavLink to={`/profile/${_id}`}>
+      <NavLink to={`/profile/${id}`}>
         <img
           className="profilePicNavBar"
           alt="profile pic"
@@ -65,7 +65,7 @@ const NavBarDesktop = (props) => {
 
 const mapStateToProps = (state) => ({
   isAuth: !!state.userReducers.accessToken,
-  _id: state.userReducers._id,
+  id: state.userReducers.id,
   avatar: state.userReducers.avatar,
 });
 

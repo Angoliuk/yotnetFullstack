@@ -52,7 +52,7 @@ export const QueryFilter = async (model, query) => {
     const dataWithExpand = [];
     for (let i = 0; i < data.length; i++) {
       const user = await UserService.getOne(data[i]._doc.userId);
-      dataWithExpand.push({ ...data[i]._doc, user });
+      dataWithExpand.push({ ...data[i]._doc, expanded: { user } });
     }
     return dataWithExpand;
   };

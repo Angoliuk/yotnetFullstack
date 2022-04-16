@@ -45,7 +45,7 @@ class AuthController {
         maxAge: 15 * 24 * 60 * 60 * 1000,
         httpOnly: true,
       });
-      logger.error(`AuthController register done`);
+      logger.info(`AuthController register done`);
       return res.json(user);
     } catch (e) {
       logger.error(`AuthController register. ${e.message}`);

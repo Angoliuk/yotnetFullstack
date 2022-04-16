@@ -19,7 +19,9 @@ export const useAnnouncementService = () => {
         setAnnouncementLoading(true);
         const announcementsFromDB =
           await ApiAnnouncementService.getAnnouncementsApi(page, limit);
-        reduxAnnouncementService.setAnnouncementsRedux(announcementsFromDB);
+        reduxAnnouncementService.setAnnouncementsRedux(
+          announcementsFromDB.data
+        );
       } catch (e) {
         throw e;
       } finally {
@@ -35,7 +37,9 @@ export const useAnnouncementService = () => {
         setAnnouncementLoading(true);
         const announcementsFromDB =
           await ApiAnnouncementService.getUserAnnouncementsApi(id);
-        reduxAnnouncementService.setUserAnnouncementsRedux(announcementsFromDB);
+        reduxAnnouncementService.setUserAnnouncementsRedux(
+          announcementsFromDB.data
+        );
       } catch (e) {
         throw e;
       } finally {
@@ -79,7 +83,9 @@ export const useAnnouncementService = () => {
         }
         const updatedAnnouncement =
           await ApiAnnouncementService.patchAnnouncementApi(id, formData);
-        reduxAnnouncementService.patchAnnouncementRedux(updatedAnnouncement);
+        reduxAnnouncementService.patchAnnouncementRedux(
+          updatedAnnouncement.data
+        );
       } catch (e) {
         throw e;
       } finally {
@@ -106,7 +112,9 @@ export const useAnnouncementService = () => {
         }
         const newAnnouncementFromDB =
           await ApiAnnouncementService.createAnnouncementApi(formData);
-        reduxAnnouncementService.createAnnouncementRedux(newAnnouncementFromDB);
+        reduxAnnouncementService.createAnnouncementRedux(
+          newAnnouncementFromDB.data
+        );
       } catch (e) {
         throw e;
       } finally {

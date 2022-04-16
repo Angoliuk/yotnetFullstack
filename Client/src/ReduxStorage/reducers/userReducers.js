@@ -6,7 +6,7 @@ const initialState = {
   lastname: null,
   age: null,
   accessToken: null,
-  _id: null,
+  id: null,
   avatar: null,
 };
 
@@ -19,7 +19,7 @@ export const userReducers = (state = initialState, action) => {
         lastName: null,
         age: null,
         accessToken: null,
-        _id: null,
+        id: null,
         avatar: null,
       };
 
@@ -30,7 +30,7 @@ export const userReducers = (state = initialState, action) => {
         lastname: action.payload.lastname,
         age: action.payload.age,
         accessToken: action.payload.accessToken,
-        _id: action.payload._id,
+        id: action.payload.id,
         avatar: action.payload.avatar,
       };
 

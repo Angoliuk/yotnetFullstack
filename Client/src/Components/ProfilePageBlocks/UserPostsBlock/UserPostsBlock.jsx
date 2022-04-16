@@ -6,21 +6,21 @@ import PostCard from "../../UploadCards/PostCard/PostCard";
 
 const UserPostsBlock = (props) => {
   const { showAlertHandler, userId, posts, userInfo } = props;
-  const _id = useParams().id;
+  const id = useParams().id;
 
-  const userPosts = posts.filter((post) => String(post.userId) === String(_id));
+  const userPosts = posts.filter((post) => String(post.userId) === String(id));
 
   return userPosts.length > 0 ? (
     <div className="profilePagePostsBlock">
       <p className="profilePagePostsName">
-        {String(userId) === String(_id) ? "Your" : userInfo.firstname} posts
+        {String(userId) === String(id) ? "Your" : userInfo.firstname} posts
       </p>
 
       {userPosts.map((post, i) => (
         <PostCard
           showAlertHandler={showAlertHandler}
           key={i}
-          postId={post._id}
+          postId={post.id}
         />
       ))}
     </div>
@@ -32,7 +32,7 @@ const UserPostsBlock = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  userId: state.userReducers._id,
+  userId: state.userReducers.id,
   posts: state.postReducers.posts,
 });
 

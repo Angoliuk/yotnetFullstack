@@ -20,7 +20,7 @@ export const useCommentService = () => {
       try {
         setCommentLoading(true);
         const commentsFromDB = await ApiCommentService.getCommentsApi(id);
-        reduxCommentService.setCommentsRedux(commentsFromDB);
+        reduxCommentService.setCommentsRedux(commentsFromDB.data);
       } catch (e) {
         throw e;
       } finally {
@@ -55,7 +55,7 @@ export const useCommentService = () => {
           changes
         );
         reduxCommentService.patchCommentRedux({
-          ...changedComment,
+          ...changedComment.data,
           user: user,
         });
       } catch (e) {
@@ -75,7 +75,7 @@ export const useCommentService = () => {
         const newCommentFromDB = await ApiCommentService.createCommentApi(
           comment
         );
-        reduxCommentService.createCommentRedux(newCommentFromDB);
+        reduxCommentService.createCommentRedux(newCommentFromDB.data);
       } catch (e) {
         throw e;
       } finally {

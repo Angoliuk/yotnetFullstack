@@ -16,7 +16,7 @@ export const useReduxCommentService = () => {
 
       const newComments = commentsFromDB.filter(
         (commentFromDB) =>
-          comments.find((comment) => comment._id === commentFromDB._id) ===
+          comments.find((comment) => comment.id === commentFromDB.id) ===
           undefined
       );
 
@@ -27,7 +27,7 @@ export const useReduxCommentService = () => {
 
   const deleteCommentRedux = useCallback(
     (id) =>
-      dispatch(setComments(comments.filter((comment) => comment._id !== id))),
+      dispatch(setComments(comments.filter((comment) => comment.id !== id))),
     [comments, dispatch]
   );
 
@@ -35,7 +35,7 @@ export const useReduxCommentService = () => {
     (changedComment) => {
       const newComments = comments.slice(0);
       const commentIndex = comments.findIndex(
-        (comment) => comment._id === changedComment._id
+        (comment) => comment.id === changedComment.id
       );
       newComments[commentIndex] = {
         ...changedComment,
@@ -51,13 +51,18 @@ export const useReduxCommentService = () => {
         addComments([
           {
             ...newCommentFromDB,
-            user: {
-              _id: user._id,
-              firstname: user.firstname,
-              lastname: user.lastname,
-              email: user.email,
-              age: user.age,
-              avatar: user?.avatar ? user.avatar : "https://picsum.photos/200",
+            expanded: {
+              ...newCommentFromDB?.expanded,
+              user: {
+                id: user.id,
+                firstname: user.firstname,
+                lastname: user.lastname,
+                email: user.email,
+                age: user.age,
+                avatar: user?.avatar
+                  ? user.avatar
+                  : "https://picsum.photos/200",
+              },
             },
           },
         ])

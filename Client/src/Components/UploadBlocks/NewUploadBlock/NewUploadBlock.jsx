@@ -27,7 +27,7 @@ const NewUploadBlock = (props) => {
         body: values.body,
         createdAt: new Date(),
         updatedAt: new Date(),
-        userId: userInfo._id,
+        userId: userInfo.id,
         photos: values.photos,
       };
 

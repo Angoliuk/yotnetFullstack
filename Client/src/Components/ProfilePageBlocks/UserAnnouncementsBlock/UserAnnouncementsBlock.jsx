@@ -6,23 +6,23 @@ import "./UserAnnouncementsBlock.scss";
 
 const UserAnnouncementsBlock = (props) => {
   const { userId, announcements, userInfo } = props;
-  const _id = useParams().id;
+  const id = useParams().id;
 
   const userAnnouncements = announcements.filter(
-    (announcement) => String(announcement.userId) === String(_id)
+    (announcement) => String(announcement.userId) === String(id)
   );
 
   return userAnnouncements && userAnnouncements.length > 0 ? (
     <div className="profilePageAnnouncementsBlock">
       <p className="profilePageAnnouncementsName">
-        {String(userId) === String(_id) ? "Your " : userInfo.firstname}
+        {String(userId) === String(id) ? "Your " : userInfo.firstname}
         announcements
       </p>
 
       {userAnnouncements.map((announcement) => (
         <AnnouncementCard
-          key={announcement._id}
-          announcementId={announcement._id}
+          key={announcement.id}
+          announcementId={announcement.id}
         />
       ))}
     </div>
@@ -34,7 +34,7 @@ const UserAnnouncementsBlock = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  userId: state.userReducers._id,
+  userId: state.userReducers.id,
   announcements: state.announcementReducers.announcements,
 });
 

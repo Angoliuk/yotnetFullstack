@@ -4,7 +4,6 @@ import { PATHS } from "../config.js";
 import FilesMiddleware from "../Middlewares/FilesMiddleware.js";
 import ValidationMiddleware from "../Middlewares/Validation/ValidationMiddleware.js";
 import AccessMiddleware from "../Middlewares/AccessMiddleware.js";
-import OwnerMiddleware from "../Middlewares/OwnerMiddleware.js";
 
 const UserRouter = new Router();
 

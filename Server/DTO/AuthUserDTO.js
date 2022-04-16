@@ -1,4 +1,4 @@
-import { UserDTO } from "./UserDTO";
+import { UserDTO } from "./UserDTO.js";
 
 export class AuthUserDTO extends UserDTO {
   accessToken;

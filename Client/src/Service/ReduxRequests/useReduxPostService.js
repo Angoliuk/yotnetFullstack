@@ -14,10 +14,9 @@ export const useReduxPostService = () => {
   const setPostsRedux = useCallback(
     (postsFromDB) => {
       if (!postsFromDB) return null;
-
       const newPosts = postsFromDB.filter(
         (postFromDB) =>
-          posts.find((post) => post._id === postFromDB._id) === undefined
+          posts.find((post) => post.id === postFromDB.id) === undefined
       );
       //filter posts that are already in storage
       if (!newPosts) return null;
@@ -33,7 +32,7 @@ export const useReduxPostService = () => {
 
       const newPosts = postsFromDB.filter(
         (postFromDB) =>
-          posts.find((post) => post._id === postFromDB._id) === undefined
+          posts.find((post) => post.id === postFromDB.id) === undefined
       );
       if (!newPosts) return null;
 
@@ -43,15 +42,18 @@ export const useReduxPostService = () => {
   );
 
   const deletePostRedux = useCallback(
-    (id) => dispatch(setPosts(posts.filter((post) => post._id !== id))),
+    (id) => dispatch(setPosts(posts.filter((post) => post.id !== id))),
     [dispatch, posts]
   );
 
   const patchPostRedux = useCallback(
     (updatedPost) => {
       const newPosts = posts.slice(0);
-      const postIndex = posts.findIndex((post) => post._id === updatedPost._id);
-      newPosts[postIndex] = { ...updatedPost, user: user };
+      const postIndex = posts.findIndex((post) => post.id === updatedPost.id);
+      newPosts[postIndex] = {
+        ...updatedPost,
+        expanded: { ...updatedPost?.expanded, user: user },
+      };
       dispatch(setPosts(newPosts));
     },
     [dispatch, posts, user]
@@ -63,13 +65,18 @@ export const useReduxPostService = () => {
         addPosts([
           {
             ...newPostFromDB,
-            user: {
-              _id: user._id,
-              firstname: user.firstname,
-              lastname: user.lastname,
-              email: user.email,
-              age: user.age,
-              avatar: user?.avatar ? user.avatar : "https://picsum.photos/200",
+            expanded: {
+              ...newPostFromDB?.expanded,
+              user: {
+                id: user.id,
+                firstname: user.firstname,
+                lastname: user.lastname,
+                email: user.email,
+                age: user.age,
+                avatar: user?.avatar
+                  ? user.avatar
+                  : "https://picsum.photos/200",
+              },
             },
           },
         ])

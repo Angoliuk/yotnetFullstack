@@ -19,7 +19,7 @@ export const useReduxAnnouncementService = () => {
       const newAnnouncements = announcementsFromDB.filter(
         (announcementFromDB) =>
           announcements.find(
-            (announcement) => announcement._id === announcementFromDB._id
+            (announcement) => announcement.id === announcementFromDB.id
           ) === undefined
       );
       //filter announcements that are already in storage
@@ -38,7 +38,7 @@ export const useReduxAnnouncementService = () => {
       const newAnnouncements = announcementsFromDB.filter(
         (announcementsFromDB) =>
           announcements.find(
-            (announcement) => announcement._id === announcementsFromDB._id
+            (announcement) => announcement.id === announcementsFromDB.id
           ) === undefined
       );
       if (!newAnnouncements) return null;
@@ -52,7 +52,7 @@ export const useReduxAnnouncementService = () => {
     (id) => {
       dispatch(
         setAnnouncements(
-          announcements.filter((announcement) => announcement._id !== id)
+          announcements.filter((announcement) => announcement.id !== id)
         )
       );
     },
@@ -63,7 +63,7 @@ export const useReduxAnnouncementService = () => {
     (updatedAnnouncement) => {
       const newAnnouncements = announcements.slice(0);
       const announcementIndex = announcements.findIndex(
-        (announcement) => announcement._id === updatedAnnouncement._id
+        (announcement) => announcement.id === updatedAnnouncement.id
       );
       newAnnouncements[announcementIndex] = {
         ...updatedAnnouncement,
@@ -80,13 +80,18 @@ export const useReduxAnnouncementService = () => {
         addAnnouncements([
           {
             ...newAnnouncementFromDB,
-            user: {
-              _id: user._id,
-              firstname: user.firstname,
-              lastname: user.lastname,
-              email: user.email,
-              age: user.age,
-              avatar: user?.avatar ? user.avatar : "https://picsum.photos/200",
+            expanded: {
+              ...newAnnouncementFromDB?.expanded,
+              user: {
+                id: user.id,
+                firstname: user.firstname,
+                lastname: user.lastname,
+                email: user.email,
+                age: user.age,
+                avatar: user?.avatar
+                  ? user.avatar
+                  : "https://picsum.photos/200",
+              },
             },
           },
         ])

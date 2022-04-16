@@ -18,7 +18,7 @@ class AuthService {
       throw ApiError.BadRequestError("Wrong password");
     }
     const tokens = await TokenService.generateAndSaveToken(candidate._id);
-    const userDTO = new AuthUserDTO({ ...candidate._doc, ...tokens });
+    const userDTO = new AuthUserDTO({ ...candidate, ...tokens });
     logger.info("AuthService login done");
     return userDTO;
   }
@@ -35,12 +35,11 @@ class AuthService {
       throw ApiError.BadRequestError("User already exists");
     }
     const hashedPassword = await argon2.hash(userData.password);
-    const user = new UserModel({
+    const user = await UserModel.create({
       ...userData,
       password: hashedPassword,
     });
-    await user.save();
-    const tokens = await TokenService.generateAndSaveToken(user._doc._id);
+    const tokens = await TokenService.generateAndSaveToken(user._id);
     const userDTO = new AuthUserDTO({ ...user._doc, ...tokens });
     logger.info("AuthService register done");
     return userDTO;

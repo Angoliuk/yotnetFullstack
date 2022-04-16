@@ -14,7 +14,7 @@ import { useUserService } from "../../Service/Requests/useUserService";
 
 const ProfilePage = (props) => {
   const { showAlertHandler } = props;
-  const _id = useParams().id;
+  const id = useParams().id;
   const postService = usePostService();
   const userService = useUserService();
   const announcementService = useAnnouncementService();
@@ -36,13 +36,13 @@ const ProfilePage = (props) => {
   const dataRequest = useCallback(async () => {
     try {
       if (section === "personal") {
-        const user = await userService.getUser(_id);
+        const user = await userService.getUser(id);
         delete user.password;
         setUserInfo(user);
       } else if (section === "announcements") {
-        await postService.getUserPosts(_id);
+        await postService.getUserPosts(id);
       } else if (section === "posts") {
-        await announcementService.getUserAnnouncements(_id);
+        await announcementService.getUserAnnouncements(id);
       } else {
         throw new Error("unknown info section");
       }
@@ -54,7 +54,7 @@ const ProfilePage = (props) => {
         type: "error",
       });
     }
-  }, [section, _id, showAlertHandler]);
+  }, [section, id, showAlertHandler]);
 
   const changeSection = (e) => setSection(e.target.name);
 

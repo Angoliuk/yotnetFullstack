@@ -5,7 +5,7 @@ import { logout } from "../../../ReduxStorage/actions/userActions";
 import "./NavBarMobile.scss";
 import AnnouncementsBlock from "../../UploadBlocks/AnnouncementsBlock/AnnouncementsBlock";
 const NavBarMobile = (props) => {
-  const { isAuth, _id, logout, showAlertHandler } = props;
+  const { isAuth, id, logout, showAlertHandler } = props;
   const [showMenu, setShowMenu] = useState(false);
   const handleShowMenu = () => setShowMenu(!showMenu);
 
@@ -30,7 +30,7 @@ const NavBarMobile = (props) => {
         <div className="menuModalNavBarMobile">
           <NavLink to="/home">Home</NavLink>
           <hr className="hrMenuNavBarMobile" />
-          <NavLink to={`/profile/${_id}`}>Profile</NavLink>
+          <NavLink to={`/profile/${id}`}>Profile</NavLink>
           <hr className="hrMenuNavBarMobile" />
           <p
             onClick={() => {
@@ -81,7 +81,7 @@ const NavBarMobile = (props) => {
 
 const mapStateToProps = (state) => ({
   isAuth: !!state.userReducers.accessToken,
-  _id: state.userReducers._id,
+  id: state.userReducers.id,
 });
 
 const mapDispatchToProps = (dispatch) => ({

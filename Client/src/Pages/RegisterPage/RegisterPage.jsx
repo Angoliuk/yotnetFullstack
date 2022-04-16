@@ -9,6 +9,7 @@ import { useUserService } from "../../Service/Requests/useUserService";
 import { Form, Formik } from "formik";
 import { Input } from "../../Components/Common/Input/Input";
 import { UserRegisterSchema } from "../../Hooks/Validator/Schemas/Schemas";
+import { GoogleLogin } from "react-google-login";
 
 const RegisterPage = (props) => {
   const userService = useUserService();
@@ -121,6 +122,13 @@ const RegisterPage = (props) => {
           <Button type="Submit" text="Register" name="registerButton" />
         </Form>
       </Formik>
+      <GoogleLogin
+        clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+        buttonText="Login"
+        onSuccess={(response) => console.log(response)}
+        onFailure={(response) => console.log(response)}
+        cookiePolicy={"single_host_origin"}
+      />
     </div>
   );
 };

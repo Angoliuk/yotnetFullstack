@@ -160,7 +160,7 @@ const UserPersonalBlock = (props) => {
 
 const mapStateToProps = (state) => ({
   accessToken: state.userReducers.accessToken,
-  userId: state.userReducers._id,
+  userId: state.userReducers.id,
 });
 
 export default connect(mapStateToProps)(UserPersonalBlock);

@@ -22,16 +22,16 @@ export const useReduxUserService = () => {
         setComments(
           comments
             .filter(
-              (comment) => String(comment.userId) === String(updatedUser._id)
+              (comment) => String(comment.userId) === String(updatedUser.id)
             )
-            .map((item) => (item.user = updatedUser))
+            .map((item) => (item.expanded.user = updatedUser))
         )
       );
       dispatch(
         setPosts(
           posts
-            .filter((post) => String(post.userId) === String(updatedUser._id))
-            .map((item) => (item.user = updatedUser))
+            .filter((post) => String(post.userId) === String(updatedUser.id))
+            .map((item) => (item.expanded.user = updatedUser))
         )
       );
       dispatch(
@@ -39,9 +39,9 @@ export const useReduxUserService = () => {
           announcements
             .filter(
               (announcement) =>
-                String(announcement.userId) === String(updatedUser._id)
+                String(announcement.userId) === String(updatedUser.id)
             )
-            .map((item) => (item.user = updatedUser))
+            .map((item) => (item.expanded.user = updatedUser))
         )
       );
 

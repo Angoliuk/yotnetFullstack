@@ -7,11 +7,10 @@
     "server-dependencies": "cd Server && npm i",
     "client-dependencies": "cd Client && npm i",
     "install-project-dependencies": "npm i && npm run server-dependencies && npm run client-dependencies",
-
     "server": "npm run start --prefix ./Server",
     "client": "npm run start --prefix ./Client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
-    },
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

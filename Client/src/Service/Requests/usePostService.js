@@ -18,7 +18,7 @@ export const usePostService = () => {
       try {
         setPostLoading(true);
         const postsFromDB = await ApiPostService.getPostsApi(page, limit);
-        reduxPostService.setPostsRedux(postsFromDB);
+        reduxPostService.setPostsRedux(postsFromDB.data);
       } catch (e) {
         throw e;
       } finally {
@@ -32,7 +32,7 @@ export const usePostService = () => {
     async (id) => {
       try {
         const postsFromDB = await ApiPostService.getUserPostsApi(id);
-        reduxPostService.setUserPostsRedux(postsFromDB);
+        reduxPostService.setUserPostsRedux(postsFromDB.data);
       } catch (e) {
         throw e;
       } finally {
@@ -75,7 +75,7 @@ export const usePostService = () => {
           }
         }
         const updatedPost = await ApiPostService.patchPostApi(id, formData); //formData
-        reduxPostService.patchPostRedux(updatedPost);
+        reduxPostService.patchPostRedux(updatedPost.data);
       } catch (e) {
         throw e;
       } finally {
@@ -101,7 +101,7 @@ export const usePostService = () => {
           }
         }
         const newPostFromDB = await ApiPostService.createPostApi(formData);
-        reduxPostService.createPostRedux(newPostFromDB);
+        reduxPostService.createPostRedux(newPostFromDB.data);
       } catch (e) {
         throw e;
       } finally {

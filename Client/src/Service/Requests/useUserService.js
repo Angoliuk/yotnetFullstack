@@ -14,7 +14,7 @@ export const useUserService = () => {
       try {
         setUserLoading(true);
         const user = await ApiUserService.loginApi(loginData);
-        reduxUserService.loginRedux(user);
+        reduxUserService.loginRedux(user.data);
       } catch (e) {
         throw e;
       } finally {
@@ -39,7 +39,7 @@ export const useUserService = () => {
           }
         }
         const user = await ApiUserService.registerApi(formData);
-        reduxUserService.loginRedux(user);
+        reduxUserService.loginRedux(user.data);
       } catch (e) {
         throw e;
       } finally {
@@ -66,7 +66,7 @@ export const useUserService = () => {
         }
         const updatedUser = await ApiUserService.updateUserApi(id, formData);
         reduxUserService.updateUserRedux({
-          ...updatedUser,
+          ...updatedUser.data,
           accessToken: token,
         });
         // reduxUserService.loginRedux(updatedUser);
@@ -83,7 +83,7 @@ export const useUserService = () => {
     try {
       setUserLoading(true);
       const user = await ApiUserService.getUserApi(id);
-      return user;
+      return user.data;
     } catch (e) {
       throw e;
     } finally {

@@ -20,6 +20,8 @@ const LoginPage = (props) => {
       await userService.login(loginData);
       navigate("/home");
     } catch (e) {
+      console.log(e);
+
       showAlertHandler({
         show: true,
         text: `${e}`,

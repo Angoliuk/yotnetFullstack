@@ -3,29 +3,24 @@ import api from "../../Hooks/Http/ApiRequests";
 
 export class ApiUserService {
   static loginApi = async (loginData) => {
-    const user = await api.post("/auth/200/login", loginData);
-    return user;
+    return await api.post("/auth/200/login", loginData);
   };
 
   static registerApi = async (registerData) => {
-    const user = await api.post("/auth/200/register", registerData);
-    return user;
+    return await api.post("/auth/200/register", registerData);
   };
 
   static getUserApi = async (id) => {
-    const user = await api.get(`/users/200/${id}`);
-    return user;
+    return await api.get(`/users/200/${id}`);
   };
 
   static updateUserApi = async (id, user) => {
     if (user.password === "") delete user.password;
 
-    const updatedUser = await apiAuth.patch(`users/440/${id}`, user);
-
-    return updatedUser;
+    return await apiAuth.patch(`users/440/${id}`, user);
   };
 
   static deleteUserApi = async (id) => {
-    await apiAuth.delete(`users/440/${id}`);
+    return await apiAuth.delete(`users/440/${id}`);
   };
 }

@@ -16,7 +16,7 @@ const CommentCard = (props) => {
   const { showAlertHandler, comments, userId, commentId } = props;
   const commentService = useCommentService();
 
-  const comment = comments.find((comment) => comment._id === commentId);
+  const comment = comments.find((comment) => comment.id === commentId);
   const createdAtDate = new Date(comment.createdAt).toLocaleString();
 
   const [editingComment, setEditingComment] = useState(false);
@@ -100,8 +100,8 @@ const CommentCard = (props) => {
                 alt="author pic"
                 className="commentAuthorPic"
                 src={
-                  comment?.user?.avatar
-                    ? comment.user.avatar
+                  comment?.expanded?.user?.avatar
+                    ? comment.expanded.user.avatar
                     : "https://picsum.photos/60"
                 }
               />
@@ -110,14 +110,14 @@ const CommentCard = (props) => {
 
           <div className="commentInfoTextBlock">
             <p>
-              {comment.user.firstname} {comment.user.lastname}
+              {comment.expanded.user.firstname} {comment.expanded.user.lastname}
             </p>
             <p className="commentDate">{createdAtDate}</p>
           </div>
         </div>
 
         <div>
-          {userId === comment.user._id && editingComment === false && (
+          {userId === comment.expanded.user.id && editingComment === false && (
             <Button
               text="…"
               name={`showButtonsForUserCommentsText${commentId}`}
@@ -133,7 +133,7 @@ const CommentCard = (props) => {
       </div>
 
       <div>
-        {userId === comment.user._id && editingComment ? (
+        {userId === comment.expanded.user.id && editingComment ? (
           <Formik
             initialValues={{ body: comment.body }}
             validationSchema={CommentUpdateSchema}

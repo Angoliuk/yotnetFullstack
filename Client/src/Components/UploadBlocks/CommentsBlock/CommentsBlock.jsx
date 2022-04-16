@@ -23,7 +23,7 @@ const CommentsBlock = (props) => {
         createdAt: new Date(),
         updatedAt: new Date(),
         postId: postId,
-        userId: userInfo._id,
+        userId: userInfo.id,
       });
     } catch (e) {
       showAlertHandler({
@@ -42,9 +42,9 @@ const CommentsBlock = (props) => {
     return commentsForPost && commentsForPost.length > 0 ? (
       commentsForPost.map((comment) => (
         <CommentCard
-          key={comment._id}
-          commentId={comment._id}
-          userId={userInfo._id}
+          key={comment.id}
+          commentId={comment.id}
+          userId={userInfo.id}
           showAlertHandler={showAlertHandler}
         />
       ))
@@ -128,7 +128,7 @@ const CommentsBlock = (props) => {
         </svg>
       </p>
     );
-  }, [comments, postId, userInfo._id, showAlertHandler]);
+  }, [comments, postId, userInfo.id, showAlertHandler]);
 
   return (
     <div>

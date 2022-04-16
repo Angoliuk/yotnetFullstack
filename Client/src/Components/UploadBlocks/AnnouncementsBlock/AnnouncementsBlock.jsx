@@ -8,7 +8,7 @@ import { useAnnouncementService } from "../../../Service/Requests/useAnnouncemen
 
 const AnnouncementsBlock = (props) => {
   const announcementService = useAnnouncementService();
-  const { _id, announcements, showAlertHandler, text } = props;
+  const { id, announcements, showAlertHandler, text } = props;
 
   const [showAnnouncement, setShowAnnouncement] = useState(false);
   const [pageNum, setPageNum] = useState(1);
@@ -65,14 +65,14 @@ const AnnouncementsBlock = (props) => {
         announcements.map((announcement) => (
           <AnnouncementCard
             showAlertHandler={showAlertHandler}
-            key={announcement._id + _id}
-            announcementId={announcement._id}
+            key={announcement.id + id}
+            announcementId={announcement.id}
           />
         ))
       ) : (
         <p>Announcements not found</p>
       ),
-    [announcements, _id, showAlertHandler]
+    [announcements, id, showAlertHandler]
   );
 
   return (
@@ -167,7 +167,7 @@ const AnnouncementsBlock = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  _id: state.userReducers._id,
+  id: state.userReducers.id,
   announcements: state.announcementReducers.announcements,
 });
 

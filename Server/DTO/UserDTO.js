@@ -17,5 +17,8 @@ export class UserDTO {
     this.avatar = model.avatar;
     this.age = model.age;
     this.uploads = model.uploads;
+    if (model?.expanded) {
+      this.expanded = model.expanded;
+    }
   }
 }

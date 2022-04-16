@@ -62,7 +62,7 @@ const PostsBlock = (props) => {
         <PostCard
           showAlertHandler={showAlertHandler}
           key={i}
-          postId={post._id}
+          postId={post.id}
         />
       )),
     [posts, showAlertHandler]

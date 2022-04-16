@@ -5,5 +5,5 @@ export const logger = createLogger({
     return `[${info.level.toLocaleUpperCase()}] - ${info.message}`;
   }),
   level: "info",
-  transports: [new transports.Console({ level: "info" })],
+  transports: [new transports.Console({ level: "debug" })],
 });

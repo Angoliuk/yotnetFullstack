@@ -3,20 +3,12 @@ import jwt from "jsonwebtoken";
 
 class TokenService {
   async generateTokens(payload) {
-    const accessToken = jwt.sign(
-      {
-        payload,
-      },
-      process.env.SECRET,
-      { expiresIn: "15m" }
-    );
-    const refreshToken = jwt.sign(
-      {
-        payload,
-      },
-      process.env.SECRET_REFRESH,
-      { expiresIn: "15d" }
-    );
+    const accessToken = jwt.sign(payload, process.env.SECRET, {
+      expiresIn: "15m",
+    });
+    const refreshToken = jwt.sign(payload, process.env.SECRET_REFRESH, {
+      expiresIn: "15d",
+    });
     return { accessToken, refreshToken };
   }
 
@@ -52,8 +44,8 @@ class TokenService {
   }
 
   async generateAndSaveToken(id) {
-    const tokens = await generateTokens(id);
-    await saveToken(id, tokens.refreshToken);
+    const tokens = await this.generateTokens({ id });
+    await this.saveToken(id, tokens.refreshToken);
     return tokens;
   }
 }

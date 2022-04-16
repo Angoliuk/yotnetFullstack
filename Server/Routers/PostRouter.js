@@ -6,8 +6,10 @@ import AccessMiddleware from "../Middlewares/AccessMiddleware.js";
 import ValidationMiddleware from "../Middlewares/Validation/ValidationMiddleware.js";
 
 const PostRouter = new Router();
+console.log(1);
 PostRouter.get(PATHS.getPosts, PostController.getAll);
 PostRouter.get(PATHS.getPost, PostController.getOne);
+console.log(1);
 PostRouter.delete(PATHS.deletePost, [AccessMiddleware], PostController.delete);
 PostRouter.patch(
   PATHS.updatePost,

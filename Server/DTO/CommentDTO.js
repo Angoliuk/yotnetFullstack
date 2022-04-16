@@ -13,5 +13,8 @@ export class CommentDTO {
     this.userId = model.postId;
     this.createdAt = model.createdAt;
     this.updatedAt = model.updatedAt;
+    if (model?.expanded) {
+      this.expanded = model.expanded;
+    }
   }
 }

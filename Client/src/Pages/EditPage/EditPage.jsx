@@ -23,9 +23,9 @@ const EditPage = (props) => {
 
   const upload =
     uploadType === "post"
-      ? posts.find((post) => String(id) === String(post._id))
+      ? posts.find((post) => String(id) === String(post.id))
       : announcements.find(
-          (announcement) => String(id) === String(announcement._id)
+          (announcement) => String(id) === String(announcement.id)
         );
 
   const saveUploadChanges = async (post) => {

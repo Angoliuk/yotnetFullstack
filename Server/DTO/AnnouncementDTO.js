@@ -15,5 +15,8 @@ export class AnnouncementDTO {
     this.createdAt = model.createdAt;
     this.updatedAt = model.updatedAt;
     this.photos = model.photos;
+    if (model?.expanded) {
+      this.expanded = model.expanded;
+    }
   }
 }

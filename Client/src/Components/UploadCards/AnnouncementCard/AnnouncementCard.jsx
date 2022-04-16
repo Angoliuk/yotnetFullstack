@@ -14,7 +14,7 @@ const AnnouncementCard = (props) => {
     useState(false);
 
   const announcement = announcements.find(
-    (announcement) => announcement._id === announcementId
+    (announcement) => announcement.id === announcementId
   );
   const createdAtDate = new Date(announcement.createdAt).toLocaleString();
 
@@ -80,8 +80,8 @@ const AnnouncementCard = (props) => {
                 alt="author pic"
                 className="announcementAuthorPic"
                 src={
-                  announcement?.user?.avatar
-                    ? announcement.user.avatar
+                  announcement?.expanded?.user?.avatar
+                    ? announcement.expanded.user.avatar
                     : "https://picsum.photos/60"
                 }
               />
@@ -90,14 +90,15 @@ const AnnouncementCard = (props) => {
 
           <div>
             <p>
-              {announcement.user.firstname} {announcement.user.lastname}
+              {announcement.expanded.user.firstname}{" "}
+              {announcement.expanded.user.lastname}
             </p>
             <p className="announcementDate">{createdAtDate}</p>
           </div>
         </div>
 
         <div>
-          {userInfo._id === announcement.user._id && (
+          {userInfo.id === announcement.expanded.user.id && (
             <Button
               text="…"
               name={`showButtonsForUserAnnouncementsText${announcementId}`}

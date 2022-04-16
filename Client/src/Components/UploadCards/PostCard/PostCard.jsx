@@ -14,7 +14,7 @@ const PostCard = (props) => {
   const commentService = useCommentService();
   const postService = usePostService();
 
-  const post = posts.find((post) => post._id === postId);
+  const post = posts.find((post) => post.id === postId);
   const createdAtDate = new Date(post.createdAt).toLocaleString();
 
   const [showButtonsForUserPosts, setShowButtonsForUserPosts] = useState(false);
@@ -105,8 +105,8 @@ const PostCard = (props) => {
                 alt="author pic"
                 className="postAuthorPic"
                 src={
-                  post?.user?.avatar
-                    ? post.user.avatar
+                  post?.expanded?.user?.avatar
+                    ? post.expanded.user.avatar
                     : "https://picsum.photos/60"
                 }
               />
@@ -115,14 +115,14 @@ const PostCard = (props) => {
 
           <div className="postInfoTextBlock">
             <p>
-              {post.user.firstname} {post.user.lastname}
+              {post.expanded.user.firstname} {post.expanded.user.lastname}
             </p>
             <p className="postDate">{createdAtDate}</p>
           </div>
         </div>
 
         <div>
-          {userInfo._id === post.user._id && (
+          {userInfo.id === post.expanded.user.id && (
             <Button
               text="…"
               name={`showButtonsForUserPostsText${postId}`}
