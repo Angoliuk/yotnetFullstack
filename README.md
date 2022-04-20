@@ -3,7 +3,7 @@
 2. run "npm run dev"
 
 # TODO
-- TypeScript???
+- TypeScript
 - auth with google
 - share post to social networks
 - likes
@@ -13,4 +13,8 @@
 - design???
 - chat???????? 
 - change password and email
+- verify account with email letter 
 - virtual scroll
+- delete unused photo on update or error
+- phone  accessability
+- performance and accessability check
