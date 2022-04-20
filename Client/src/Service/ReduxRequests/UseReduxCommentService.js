@@ -39,6 +39,10 @@ export const useReduxCommentService = () => {
       );
       newComments[commentIndex] = {
         ...changedComment,
+        expanded: {
+          ...changedComment?.expanded,
+          user: user,
+        },
       };
       dispatch(setComments(newComments));
     },
@@ -53,16 +57,7 @@ export const useReduxCommentService = () => {
             ...newCommentFromDB,
             expanded: {
               ...newCommentFromDB?.expanded,
-              user: {
-                id: user.id,
-                firstname: user.firstname,
-                lastname: user.lastname,
-                email: user.email,
-                age: user.age,
-                avatar: user?.avatar
-                  ? user.avatar
-                  : "https://picsum.photos/200",
-              },
+              user: user,
             },
           },
         ])

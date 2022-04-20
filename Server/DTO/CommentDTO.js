@@ -10,7 +10,7 @@ export class CommentDTO {
     this.id = model._id;
     this.body = model.body;
     this.userId = model.userId;
-    this.userId = model.postId;
+    this.postId = model.postId;
     this.createdAt = model.createdAt;
     this.updatedAt = model.updatedAt;
     if (model?.expanded) {

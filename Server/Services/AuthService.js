@@ -20,12 +20,11 @@ class AuthService {
     const tokens = await TokenService.generateAndSaveToken(candidate._id);
     const userDTO = new AuthUserDTO({ ...candidate._doc, ...tokens });
     logger.info("AuthService login done");
-    return { ...userDTO };
+    return { data: userDTO, refreshToken: tokens.refreshToken };
   }
 
   async logout(refreshToken) {
-    const token = await TokenService.removeToken(refreshToken);
-    return token;
+    await TokenService.removeToken(refreshToken);
   }
 
   async register(userData) {
@@ -42,21 +41,23 @@ class AuthService {
     const tokens = await TokenService.generateAndSaveToken(user._id);
     const userDTO = new AuthUserDTO({ ...user._doc, ...tokens });
     logger.info("AuthService register done");
-    return userDTO;
+    return { data: userDTO, refreshToken: tokens.refreshToken };
   }
 
   async refresh(refreshToken) {
     if (!refreshToken) {
       ApiError.UnauthorizedError();
     }
-    const userData = TokenService.validateRefreshToken(refreshToken);
+    const userData = await TokenService.validateRefreshToken(refreshToken);
     const dbToken = await TokenService.findToken(refreshToken);
+    console.log(userData);
+    console.log(dbToken);
     if (!dbToken || !userData) {
       throw ApiError.UnauthorizedError();
     }
-    const user = UserModel.findById(userData.id);
-    const tokens = await TokenService.generateAndSaveToken(user._id);
-    const userDTO = new AuthUserDTO({ ...user, ...tokens });
+    const user = await UserModel.findById(userData.userId);
+    const tokens = await TokenService.generateTokens({ userId: user._id });
+    const userDTO = new AuthUserDTO({ ...user._doc, ...tokens });
     logger.info("AuthService refesh done");
     return userDTO;
   }

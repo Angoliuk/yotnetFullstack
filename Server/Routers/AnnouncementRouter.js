@@ -2,8 +2,9 @@ import { Router } from "express";
 import AnnouncementController from "../Controllers/AnnouncementController.js";
 import { PATHS, ANNOUNCEMENT_PHOTOS_LIMIT } from "../config.js";
 import FilesMiddleware from "../Middlewares/FilesMiddleware.js";
-import AccessMiddleware from "../Middlewares/AccessMiddleware.js";
 import ValidationMiddleware from "../Middlewares/Validation/ValidationMiddleware.js";
+import OwnerMiddleware from "../Middlewares/OwnerMiddleware.js";
+import AuthMiddleware from "../Middlewares/AuthMiddleware.js";
 
 const AnnouncementRouter = new Router();
 
@@ -11,7 +12,7 @@ AnnouncementRouter.get(PATHS.getAnnouncements, AnnouncementController.getAll);
 AnnouncementRouter.get(PATHS.getAnnouncement, AnnouncementController.getOne);
 AnnouncementRouter.delete(
   PATHS.deleteAnnouncement,
-  [AccessMiddleware],
+  OwnerMiddleware,
   AnnouncementController.delete
 );
 AnnouncementRouter.patch(
@@ -19,7 +20,7 @@ AnnouncementRouter.patch(
   [
     FilesMiddleware.array("photos", ANNOUNCEMENT_PHOTOS_LIMIT),
     ValidationMiddleware,
-    AccessMiddleware,
+    OwnerMiddleware,
   ],
   AnnouncementController.update
 );
@@ -28,7 +29,7 @@ AnnouncementRouter.post(
   [
     FilesMiddleware.array("photos", ANNOUNCEMENT_PHOTOS_LIMIT),
     ValidationMiddleware,
-    AccessMiddleware,
+    AuthMiddleware,
   ],
   AnnouncementController.create
 );

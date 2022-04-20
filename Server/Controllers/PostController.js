@@ -66,7 +66,7 @@ class PostController {
           updatedAt,
           photos: CreateExactPathes(req.files),
         },
-        req.userId
+        userId
       );
       logger.info("PostController create done");
       return res.json(post);

@@ -12,10 +12,11 @@ const validate = async (schema, data) => {
 
 const ValidationMiddleware = async (req, res, next) => {
   try {
-    console.log(req.originalUrl, req.body);
+    console.log(req);
     const reqInfo = req.originalUrl.split("/");
-    const schemaName = ["login", "register"].includes(reqInfo[3])
-      ? reqInfo[3]
+    console.log(reqInfo);
+    const schemaName = ["login", "register"].includes(reqInfo[2])
+      ? reqInfo[2]
       : reqInfo[1];
     const schema = schemas[req.method][schemaName];
     if (!schema) throw ["Wrong schema path"];

@@ -11,7 +11,6 @@ import { useValidator } from "../../Hooks/Validator/useValidator";
 export const useCommentService = () => {
   const [commentLoading, setCommentLoading] = useState(false);
   const reduxCommentService = useReduxCommentService();
-  const user = useSelector((state) => state.userReducers);
   // const xTotalCount = apiCommentService.xTotalCount;
   const { validate } = useValidator();
 
@@ -54,10 +53,7 @@ export const useCommentService = () => {
           id,
           changes
         );
-        reduxCommentService.patchCommentRedux({
-          ...changedComment.data,
-          user: user,
-        });
+        reduxCommentService.patchCommentRedux(changedComment.data);
       } catch (e) {
         throw e;
       } finally {

@@ -16,6 +16,7 @@ class CommentService {
         new: true,
       }
     );
+    console.log(comment);
     const commentDTO = new CommentDTO(comment);
     logger.info("CommentService update done");
     return commentDTO;

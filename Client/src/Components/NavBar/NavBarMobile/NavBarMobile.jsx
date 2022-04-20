@@ -1,13 +1,28 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { logout } from "../../../ReduxStorage/actions/userActions";
 import "./NavBarMobile.scss";
 import AnnouncementsBlock from "../../UploadBlocks/AnnouncementsBlock/AnnouncementsBlock";
+import { useUserService } from "../../../Service/Requests/useUserService";
 const NavBarMobile = (props) => {
-  const { isAuth, id, logout, showAlertHandler } = props;
+  const { isAuth, id, showAlertHandler } = props;
   const [showMenu, setShowMenu] = useState(false);
+  const userService = useUserService();
   const handleShowMenu = () => setShowMenu(!showMenu);
+
+  const logout = async () => {
+    try {
+      await userService.logout();
+    } catch (e) {
+      showAlertHandler({
+        show: true,
+        text: `${e.message}`,
+        type: "error",
+      });
+    } finally {
+      handleShowMenu();
+    }
+  };
 
   return isAuth ? (
     <>
@@ -32,14 +47,7 @@ const NavBarMobile = (props) => {
           <hr className="hrMenuNavBarMobile" />
           <NavLink to={`/profile/${id}`}>Profile</NavLink>
           <hr className="hrMenuNavBarMobile" />
-          <p
-            onClick={() => {
-              logout();
-              handleShowMenu();
-            }}
-          >
-            Logout
-          </p>
+          <p onClick={logout}>Logout</p>
           <hr className="hrMenuNavBarMobile" />
           <p onClick={handleShowMenu}>Back</p>
           <hr className="hrMenuNavBarMobile" />
@@ -84,8 +92,4 @@ const mapStateToProps = (state) => ({
   id: state.userReducers.id,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  logout: () => dispatch(logout()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(NavBarMobile);
+export default connect(mapStateToProps)(NavBarMobile);

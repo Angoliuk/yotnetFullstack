@@ -1,31 +1,33 @@
-import jwt from "jsonwebtoken";
 import ApiError from "../Exceptions/ApiError.js";
 import { logger } from "../Logs/Logger.js";
+import TokenService from "../Services/TokenService.js";
 import UserService from "../Services/UserService.js";
 
 const OwnerMiddleware = async (req, res, next) => {
   try {
     logger.info("Entered to OwnerMiddleware");
     const authHeader = req.headers.authorization;
-    if (!authHeader) throw "No JWT token";
+    if (!authHeader) throw next(ApiError.UnauthorizedError());
     const token = authHeader.split(" ")[1];
-    const tokenData = TokenService.validateAccessToken(token);
+    const tokenData = await TokenService.validateAccessToken(token);
     if (!tokenData) throw next(ApiError.UnauthorizedError());
-    req.userId = tokenData._id;
-    const uploadId = req._parsedUrl.pathname.split("/")[2];
-    const userUploads = await UserService.getUserUploads(tokenData._id);
+    req.userId = tokenData.userId;
+    const uploadId = req.params.id;
+    const userUploads = await UserService.getUserUploads(tokenData.userId);
     if (
-      !userUploads.uploads.find(
+      userUploads.uploads.find(
         (userUploadId) => String(userUploadId) === String(uploadId)
       ) ||
-      userId !== uploadId
+      // delete yourself
+      tokenData.userId === uploadId
     ) {
+      next();
+    } else {
       next(ApiError.ForbiddenError());
     }
-    next();
   } catch (e) {
     logger.error(`OwnerMiddleware. ${e.message}`);
-    next(ApiError.ForbiddenError());
+    next(ApiError.UnauthorizedError());
   }
 };
 export default OwnerMiddleware;

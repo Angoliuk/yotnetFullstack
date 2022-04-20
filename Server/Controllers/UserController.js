@@ -1,4 +1,5 @@
 import { logger } from "../Logs/Logger.js";
+import TokenService from "../Services/TokenService.js";
 import UserService from "../Services/UserService.js";
 
 class UserController {
@@ -26,7 +27,9 @@ class UserController {
 
   async delete(req, res, next) {
     try {
+      const { refreshToken } = req.cookies;
       await UserService.delete(req.params.id);
+      await TokenService.removeToken(refreshToken);
       logger.info("UserController delete done");
       return res.sendStatus(200);
     } catch (e) {

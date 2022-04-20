@@ -11,13 +11,13 @@ import { Form, Formik } from "formik";
 import { UserUpdateSchema } from "../../../Hooks/Validator/Schemas/Schemas";
 
 const UserPersonalBlock = (props) => {
-  const { showAlertHandler, accessToken, userId, userInfo } = props;
+  const { showAlertHandler, userId, userInfo } = props;
   const id = useParams().id;
   const userService = useUserService();
 
   const updateUserProfile = async (user) => {
     try {
-      await userService.updateUser(id, user, accessToken);
+      await userService.updateUser(id, user);
       showAlertHandler({
         show: true,
         text: `Everything successfully saved`,
@@ -159,7 +159,6 @@ const UserPersonalBlock = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  accessToken: state.userReducers.accessToken,
   userId: state.userReducers.id,
 });
 

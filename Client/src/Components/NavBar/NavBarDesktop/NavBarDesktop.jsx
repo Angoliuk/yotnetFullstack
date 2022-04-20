@@ -1,11 +1,25 @@
 import React from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { logout } from "../../../ReduxStorage/actions/userActions";
 import "./NavBarDesktop.scss";
 import AnnouncementsBlock from "../../UploadBlocks/AnnouncementsBlock/AnnouncementsBlock";
+import { useUserService } from "../../../Service/Requests/useUserService";
 const NavBarDesktop = (props) => {
-  const { isAuth, id, logout, avatar, showAlertHandler } = props;
+  const { isAuth, id, avatar, showAlertHandler } = props;
+  const userService = useUserService();
+
+  const logout = async () => {
+    try {
+      await userService.logout();
+    } catch (e) {
+      showAlertHandler({
+        show: true,
+        text: `${e.message}`,
+        type: "error",
+      });
+    }
+  };
+
   return isAuth ? (
     <nav className="loggedNavBar">
       <NavLink className="navElem" to="/home">
@@ -31,12 +45,7 @@ const NavBarDesktop = (props) => {
         />
       </NavLink>
 
-      <p
-        className="navElem navElemLogout"
-        onClick={() => {
-          logout();
-        }}
-      >
+      <p className="navElem navElemLogout" onClick={logout}>
         <svg
           width="36px"
           height="36px"
@@ -69,8 +78,4 @@ const mapStateToProps = (state) => ({
   avatar: state.userReducers.avatar,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  logout: () => dispatch(logout()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(NavBarDesktop);
+export default connect(mapStateToProps)(NavBarDesktop);

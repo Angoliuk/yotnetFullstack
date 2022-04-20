@@ -67,16 +67,7 @@ export const useReduxPostService = () => {
             ...newPostFromDB,
             expanded: {
               ...newPostFromDB?.expanded,
-              user: {
-                id: user.id,
-                firstname: user.firstname,
-                lastname: user.lastname,
-                email: user.email,
-                age: user.age,
-                avatar: user?.avatar
-                  ? user.avatar
-                  : "https://picsum.photos/200",
-              },
+              user: user,
             },
           },
         ])

@@ -24,6 +24,30 @@ export const useUserService = () => {
     [reduxUserService]
   );
 
+  const logout = useCallback(async () => {
+    try {
+      setUserLoading(true);
+      await ApiUserService.logoutApi();
+      reduxUserService.logoutRedux();
+    } catch (e) {
+      throw e;
+    } finally {
+      setUserLoading(false);
+    }
+  }, [reduxUserService]);
+
+  const refresh = useCallback(async () => {
+    try {
+      setUserLoading(true);
+      const user = await ApiUserService.refreshApi();
+      reduxUserService.loginRedux(user);
+    } catch (e) {
+      throw e;
+    } finally {
+      setUserLoading(false);
+    }
+  }, [reduxUserService]);
+
   const register = useCallback(
     async (registerData) => {
       try {
@@ -51,7 +75,7 @@ export const useUserService = () => {
   );
 
   const updateUser = useCallback(
-    async (id, user, token) => {
+    async (id, user) => {
       try {
         setUserLoading(true);
         await validate(user, UserUpdateSchema);
@@ -66,10 +90,7 @@ export const useUserService = () => {
           }
         }
         const updatedUser = await ApiUserService.updateUserApi(id, formData);
-        reduxUserService.updateUserRedux({
-          ...updatedUser.data,
-          accessToken: token,
-        });
+        reduxUserService.updateUserRedux(updatedUser.data);
         // reduxUserService.loginRedux(updatedUser);
       } catch (e) {
         throw e;
@@ -114,6 +135,8 @@ export const useUserService = () => {
     updateUser,
     deleteUser,
     userLoading,
+    logout,
     getUser,
+    refresh,
   };
 };

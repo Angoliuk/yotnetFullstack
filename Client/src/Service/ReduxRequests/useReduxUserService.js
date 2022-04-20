@@ -45,7 +45,13 @@ export const useReduxUserService = () => {
         )
       );
 
-      dispatch(login({ ...updatedUser, accessToken: updatedUser.accessToken }));
+      dispatch(
+        login({
+          ...updatedUser,
+          accessToken: JSON.parse(localStorage.getItem("userData"))
+            ?.accessToken,
+        })
+      );
     },
     [announcements, posts, dispatch, comments]
   );

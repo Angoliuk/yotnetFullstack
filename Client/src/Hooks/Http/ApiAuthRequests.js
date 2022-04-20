@@ -26,19 +26,21 @@ apiAuth.interceptors.response.use(
   },
   async (e) => {
     console.log(e);
+    console.log(e.response.status);
     const originalRequest = e.config;
     if (
-      e.response.status === "401" &&
+      e.response.status === 401 &&
       originalRequest &&
       !originalRequest._isRetry
     ) {
       originalRequest._isRetry = true;
       try {
-        const response = await axios.get("/refresh", {
+        const response = await axios.get("auth/refresh", {
           baseURL: API_URL,
           withCredentials: true,
         });
-        localStorage.setItem("UserData", response);
+        localStorage.setItem("userData", JSON.stringify(response.data));
+
         return apiAuth.request(originalRequest);
       } catch (e) {
         throw e;

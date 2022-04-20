@@ -39,6 +39,8 @@ const api = axios.create({
 
 api.interceptors.request.use((config) => {
   if (config.data instanceof FormData) {
+    config.headers = { ...config.headers, contentType: "multipart/form-data" };
+
     // Object.assign(config.headers, config.data.getHeaders());
   }
   return config;

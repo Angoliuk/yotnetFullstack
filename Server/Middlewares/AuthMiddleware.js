@@ -11,7 +11,7 @@ const AuthMiddleware = async (req, res, next) => {
     const tokenData = await TokenService.validateAccessToken(token);
     if (!tokenData) throw next(ApiError.UnauthorizedError());
     console.log(tokenData);
-    req.userId = tokenData.id;
+    req.userId = tokenData.userId;
     next();
   } catch (e) {
     logger.error(`AuthMiddleware. ${e.message}`);

@@ -2,21 +2,20 @@ import { Router } from "express";
 import PostController from "../Controllers/PostController.js";
 import { PATHS, POST_PHOTOS_LIMIT } from "../config.js";
 import FilesMiddleware from "../Middlewares/FilesMiddleware.js";
-import AccessMiddleware from "../Middlewares/AccessMiddleware.js";
 import ValidationMiddleware from "../Middlewares/Validation/ValidationMiddleware.js";
+import OwnerMiddleware from "../Middlewares/OwnerMiddleware.js";
+import AuthMiddleware from "../Middlewares/AuthMiddleware.js";
 
 const PostRouter = new Router();
-console.log(1);
 PostRouter.get(PATHS.getPosts, PostController.getAll);
 PostRouter.get(PATHS.getPost, PostController.getOne);
-console.log(1);
-PostRouter.delete(PATHS.deletePost, [AccessMiddleware], PostController.delete);
+PostRouter.delete(PATHS.deletePost, OwnerMiddleware, PostController.delete);
 PostRouter.patch(
   PATHS.updatePost,
   [
     FilesMiddleware.array("photos", POST_PHOTOS_LIMIT),
     ValidationMiddleware,
-    AccessMiddleware,
+    OwnerMiddleware,
   ],
   PostController.update
 );
@@ -25,9 +24,8 @@ PostRouter.post(
   [
     FilesMiddleware.array("photos", POST_PHOTOS_LIMIT),
     ValidationMiddleware,
-    AccessMiddleware,
+    AuthMiddleware,
   ],
-
   PostController.create
 );
 
