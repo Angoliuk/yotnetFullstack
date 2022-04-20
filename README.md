@@ -4,7 +4,6 @@
 
 # TODO
 - TypeScript???
-- Axios
 - auth with google
 - share post to social networks
 - likes
@@ -12,8 +11,6 @@
 - avatar photo upload
 - posibility to add videos to post
 - design???
-- interceptor for auth token
-- complete jwt token
 - chat???????? 
 - change password and email
 - virtual scroll
